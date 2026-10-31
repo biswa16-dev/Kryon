@@ -1,12 +1,8 @@
-import os
 import math
 import re
 import numpy as np
 from typing import List, Optional
 import httpx
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 class DenseEmbedder:
@@ -16,11 +12,11 @@ class DenseEmbedder:
         self,
         model_name: str = "all-MiniLM-L6-v2",
         dim: int = 384,
-        ollama_url: Optional[str] = None
+        ollama_url: str = "http://localhost:11434"
     ):
         self.model_name = model_name
         self.dim = dim
-        self.ollama_url = ollama_url or os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+        self.ollama_url = ollama_url
         self._ollama_available: Optional[bool] = None
 
     def check_ollama(self) -> bool:

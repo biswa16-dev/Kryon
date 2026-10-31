@@ -101,18 +101,18 @@ RAG/
 git clone https://github.com/biswa16-dev/Kryon.git
 cd Kryon
 pip install -r requirements.txt
-cp .env.example .env
 ```
 
-### 2. Configure Environment Variables (`.env`)
-Edit `.env` if you need custom ports, thresholds, or an optional local Ollama model:
+### 2. Configuration (`.env`)
+Create a `.env` file (optional, defaults work out-of-the-box):
 ```env
 HOST=127.0.0.1
 PORT=8000
 ENVIRONMENT=development
+DATA_DIR=data/raw
+CHUNK_SIZE=512
+CHUNK_OVERLAP=50
 CONFIDENCE_THRESHOLD=0.50
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=qwen2.5:7b
 ```
 
 ### 3. Run the Server
@@ -124,7 +124,7 @@ Open your browser and navigate to:
 http://127.0.0.1:8000
 ```
 
-### 3. API Endpoints
+### 4. API Endpoints
 - `POST /api/v1/query`: Execute a grounded RAG query
 - `GET /api/v1/documents`: List all ingested documents and chunk stats
 - `POST /api/v1/documents/upload`: Upload and index new documents

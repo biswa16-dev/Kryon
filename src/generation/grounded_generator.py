@@ -40,12 +40,12 @@ class GroundedRAGGenerator:
 
     def __init__(
         self,
-        ollama_url: Optional[str] = None,
-        model_name: Optional[str] = None,
+        ollama_url: str = "http://localhost:11434",
+        model_name: str = "qwen2.5:7b",
         confidence_threshold: Optional[float] = None,
     ):
-        self.ollama_url = ollama_url or os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-        self.model_name = model_name or os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
+        self.ollama_url = ollama_url
+        self.model_name = model_name
         if confidence_threshold is None:
             try:
                 self.confidence_threshold = float(os.getenv("CONFIDENCE_THRESHOLD", "0.50"))
