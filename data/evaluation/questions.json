@@ -1,0 +1,253 @@
+[
+  {
+    "id": "Q01",
+    "category": "attendance",
+    "question": "What is the minimum attendance percentage required to be eligible for the End-Semester Examination?",
+    "ground_truth_answer": "A minimum of 75% aggregate attendance is required. In integrated courses, 75% must be maintained separately in both theory and lab components.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "2.1 Minimum Attendance Mandate",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q02",
+    "category": "attendance",
+    "question": "Under what conditions can attendance shortage be condoned, and what is the minimum percentage allowed for condonation?",
+    "ground_truth_answer": "Attendance between 65% and 74.9% may be condoned by the Academic Council for serious medical illness requiring hospitalization or representing the University in authorized competitions. A non-refundable fee of ₹1,500 ($25) per course applies. Attendance below 65% cannot be condoned under any circumstances.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "2.2 Condonation of Attendance Shortage",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q03",
+    "category": "attendance",
+    "question": "What happens if a student has an attendance below 65%?",
+    "ground_truth_answer": "Attendance below 65% cannot be condoned under any circumstances. The student receives the grade 'FA' (Failed due to Attendance) and must re-register for the course in a subsequent semester.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "2.2 Condonation of Attendance Shortage",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q04",
+    "category": "credits",
+    "question": "How many total credits are required to graduate with a 4-year B.Tech degree?",
+    "ground_truth_answer": "A student must earn a minimum of 160 credits to graduate with a 4-year B.Tech degree.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "1.1 Credit Definition",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q05",
+    "category": "credits",
+    "question": "How many additional credits are needed for B.Tech with Honours?",
+    "ground_truth_answer": "An additional 20 credits through approved advanced/research courses or MOOCs with prior Dean (Academics) approval are required.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "1.1 Credit Definition",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q06",
+    "category": "course_registration",
+    "question": "What is the deadline for course add/drop and course withdrawal?",
+    "ground_truth_answer": "Course add/drop requests must be submitted within 10 instructional working days from the commencement of the semester. Course withdrawal without academic penalty (grade 'W') is permissible up to the end of the 8th week.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "1.2 Semester Load and Course Registration",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q07",
+    "category": "grading",
+    "question": "What is the minimum mark required to pass a theory course?",
+    "ground_truth_answer": "A student must obtain at least 40% in the End-Semester Examination (24/60 marks) and an overall aggregate of at least 45% in CIA + ESE combined.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "3.1 Continuous Internal Assessment (CIA) and End-Semester Exam (ESE)",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q08",
+    "category": "grading",
+    "question": "What grade point corresponds to letter grade A and A+?",
+    "ground_truth_answer": "Letter grade 'A+' corresponds to 9.0 grade points (80%-89%), and letter grade 'A' corresponds to 8.0 grade points (70%-79%).",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "3.2 10-Point Letter Grading Scale",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q09",
+    "category": "probation",
+    "question": "What CGPA triggers Academic Probation and what are the consequences of remaining on probation?",
+    "ground_truth_answer": "A CGPA below 5.00 triggers Academic Probation. If on probation for two consecutive semesters, the student's registration is suspended for one academic year.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "4.1 Academic Probation Criteria",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q10",
+    "category": "honors",
+    "question": "What are the criteria for First Class with Distinction / Honours?",
+    "ground_truth_answer": "A CGPA of 8.50 and above, having passed all courses in the first attempt within the standard 4-year duration.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "4.2 Degree Classification",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q11",
+    "category": "re_evaluation",
+    "question": "What is the time window and fee to apply for re-evaluation of answer scripts?",
+    "ground_truth_answer": "Candidates may apply within 15 calendar days from result declaration. Fee is ₹500 for scrutiny and ₹1,200 for re-evaluation per course.",
+    "expected_sources": ["academic_regulations_2024.md"],
+    "target_section": "5.1 Re-evaluation Process",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q12",
+    "category": "examination",
+    "question": "How late can a student enter the examination hall after the exam starts?",
+    "ground_truth_answer": "Late entry is strictly prohibited after 30 minutes from the commencement of the examination.",
+    "expected_sources": ["examination_and_malpractice_code.md"],
+    "target_section": "1.1 Hall Ticket Eligibility",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q13",
+    "category": "examination",
+    "question": "What electronic items are permitted inside the examination hall?",
+    "ground_truth_answer": "Only non-programmable scientific calculators (models fx-991MS / fx-82MS or equivalent specified in course rubric) are permitted. Mobile phones, smartwatches, and bluetooth devices are strictly prohibited.",
+    "expected_sources": ["examination_and_malpractice_code.md"],
+    "target_section": "1.2 Permitted and Prohibited Articles",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q14",
+    "category": "malpractice",
+    "question": "What is the penalty for Category II malpractice such as carrying a mobile phone or crib notes?",
+    "ground_truth_answer": "Cancellation of performance in that course PLUS cancellation of all examinations registered in that semester, and debarred from registering for any examination for one full subsequent semester.",
+    "expected_sources": ["examination_and_malpractice_code.md"],
+    "target_section": "Category II: Severe Copying and Electronic Contraband",
+    "difficulty": "hard",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q15",
+    "category": "malpractice",
+    "question": "What are the penalties for Category IV malpractice (impersonation)?",
+    "ground_truth_answer": "Permanent expulsion of the student from university rolls, lodging of a First Information Report (FIR) under impersonation laws, and lifetime disqualification.",
+    "expected_sources": ["examination_and_malpractice_code.md"],
+    "target_section": "Category IV: Impersonation",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q16",
+    "category": "examination",
+    "question": "How many backlog courses can a student register for in a single supplementary examination?",
+    "ground_truth_answer": "A maximum of 5 backlog courses may be registered in a single supplementary examination term at ₹800 ($12) per course.",
+    "expected_sources": ["examination_and_malpractice_code.md"],
+    "target_section": "3.1 Eligibility for Supplementary Exams",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q17",
+    "category": "laboratory",
+    "question": "What percentage of laboratory experiments must be completed by the final lab session?",
+    "ground_truth_answer": "Students must complete at least 85% of practical experiments to be allowed to appear in the End-Semester Practical Examination.",
+    "expected_sources": ["laboratory_and_attendance_policy.md"],
+    "target_section": "1.1 Strict 75% Laboratory Attendance",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q18",
+    "category": "laboratory",
+    "question": "What is the minimum passing mark for laboratory courses?",
+    "ground_truth_answer": "A student must achieve at least 50% overall (25 out of 50 marks) to receive a passing grade in laboratory courses.",
+    "expected_sources": ["laboratory_and_attendance_policy.md"],
+    "target_section": "1.2 Laboratory Evaluation Breakdown",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q19",
+    "category": "syllabus",
+    "question": "What is the prerequisite for CS301 Database Management Systems?",
+    "ground_truth_answer": "CS201 (Data Structures and Algorithms) is the prerequisite for CS301 Database Management Systems.",
+    "expected_sources": ["cs_curriculum_and_syllabus.md"],
+    "target_section": "CS301: Database Management Systems",
+    "difficulty": "easy",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q20",
+    "category": "syllabus",
+    "question": "What are the prerequisites for CS302 Operating Systems Architecture?",
+    "ground_truth_answer": "CS201 (Data Structures and Algorithms) and CS204 (Computer Organization and Architecture).",
+    "expected_sources": ["cs_curriculum_and_syllabus.md"],
+    "target_section": "CS302: Operating Systems Architecture",
+    "difficulty": "medium",
+    "is_in_scope": true
+  },
+  {
+    "id": "Q21",
+    "category": "out_of_scope",
+    "question": "What are the cafeteria lunch hours and what is on Friday's menu?",
+    "ground_truth_answer": "REFUSAL: The official academic documents do not contain cafeteria hours or menu details.",
+    "expected_sources": [],
+    "target_section": "None",
+    "difficulty": "easy",
+    "is_in_scope": false
+  },
+  {
+    "id": "Q22",
+    "category": "out_of_scope",
+    "question": "How do I book tickets for the annual college music fest?",
+    "ground_truth_answer": "REFUSAL: The official academic regulations and syllabus documents do not cover college fest ticketing.",
+    "expected_sources": [],
+    "target_section": "None",
+    "difficulty": "easy",
+    "is_in_scope": false
+  },
+  {
+    "id": "Q23",
+    "category": "out_of_scope",
+    "question": "What are the rules for gym membership and swimming pool access in the hostel?",
+    "ground_truth_answer": "REFUSAL: Hostel recreational amenities and gym policies are not covered in the academic regulations.",
+    "expected_sources": [],
+    "target_section": "None",
+    "difficulty": "easy",
+    "is_in_scope": false
+  },
+  {
+    "id": "Q24",
+    "category": "out_of_scope",
+    "question": "Can I bring my pet dog to the university residential campus?",
+    "ground_truth_answer": "REFUSAL: Residential pet guidelines are not part of the academic syllabus and examination regulations.",
+    "expected_sources": [],
+    "target_section": "None",
+    "difficulty": "easy",
+    "is_in_scope": false
+  },
+  {
+    "id": "Q25",
+    "category": "out_of_scope",
+    "question": "What is the price of a student parking pass for a four-wheeler?",
+    "ground_truth_answer": "REFUSAL: Campus parking fee structures are outside the scope of academic regulations.",
+    "expected_sources": [],
+    "target_section": "None",
+    "difficulty": "easy",
+    "is_in_scope": false
+  }
+]
+
