@@ -768,7 +768,7 @@
     }
 
     .btn-send {
-      background: linear-gradient(135deg, #2f6bff, #5a4cf5);
+      background: linear-gradient(135deg, #2f6bff, #4f46e5);
       color: #ffffff;
       border: none;
       border-radius: 999px;
@@ -781,8 +781,8 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(47, 107, 255, 0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(47, 107, 255, 0.25);
+      transition: all 0.2s ease;
     }
 
     .composer-card .btn-send {
@@ -798,7 +798,8 @@
 
     .btn-send:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(47, 107, 255, 0.45);
+      box-shadow: 0 4px 14px rgba(47, 107, 255, 0.35);
+      background: linear-gradient(135deg, #2558df, #4338ca);
     }
 
     /* Quick Action Cards */
@@ -1511,6 +1512,30 @@
       color: #16a34a;
     }
 
+    .btn-remove-doc {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      border-radius: 8px;
+      padding: 5px 11px;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .btn-remove-doc:hover {
+      background: #fee2e2;
+      border-color: #dc2626;
+      color: #b91c1c;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       nav.hero-nav {
@@ -1847,7 +1872,7 @@
             <h2>Official Academic Regulations Repository</h2>
             <p style="color: var(--sub); font-size: 13.5px; margin-top: 4px;">Verified source of truth documents indexed into FAISS vector space and BM25 lexicon.</p>
           </div>
-          <button class="btn-send" onclick="fetchDocuments()">Refresh Index</button>
+          <button class="btn-send" id="btn-refresh-index" onclick="triggerRefreshIndex()">Refresh Index</button>
         </div>
 
         <!-- INTERACTIVE DOCUMENT DROPZONE -->
@@ -1857,7 +1882,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
           </div>
           <div class="dropzone-title">Drop your Academic Regulations, Syllabi, Sheets, or Images here</div>
-          <div class="dropzone-desc">Drag & drop PDF, Word (.docx, .doc), Excel (.xlsx, .xls, .csv), Images (.png, .jpg, .webp), or Markdown/Text files here. They will be automatically parsed, section-split, and indexed into FAISS + BM25 with zero manual setup.</div>
+          <div class="dropzone-desc">Drag & drop PDF, Word (.docx, .doc), Excel (.xlsx, .xls, .csv), Images (.png, .jpg, .webp), or Markdown/Text files here.</div>
           <button type="button" class="btn-browse" onclick="document.getElementById('file-upload-input').click();">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
             <span>Browse Files</span>
@@ -2800,18 +2825,66 @@
         .replace(/\*(.*?)\*/g, "<em>$1</em>");
     }
 
+    async function triggerRefreshIndex() {
+      const btn = document.getElementById("btn-refresh-index");
+      const statusBox = document.getElementById("upload-status");
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="pulse-dot" style="display:inline-block; vertical-align:middle; width:7px; height:7px; margin-right:6px; background:#fff;"></span> Refreshing...`;
+      }
+      if (statusBox) {
+        statusBox.className = "upload-status-box uploading";
+        statusBox.style.display = "flex";
+        statusBox.innerHTML = `
+          <div class="pulse-dot"></div>
+          <span>Re-scanning knowledge repository and re-indexing FAISS & BM25...</span>
+        `;
+      }
+      try {
+        const res = await fetch("/api/v1/documents/refresh", { method: "POST" });
+        const data = await res.json();
+        if (statusBox) {
+          statusBox.className = "upload-status-box success";
+          statusBox.innerHTML = `<span>✓ ${data.message || 'Repository re-indexed successfully.'}</span>`;
+          setTimeout(() => { statusBox.style.display = "none"; }, 4000);
+        }
+        await fetchDocuments();
+      } catch (err) {
+        await fetchDocuments();
+        if (statusBox) statusBox.style.display = "none";
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = "Refresh Index";
+        }
+      }
+    }
+
     async function fetchDocuments() {
       const container = document.getElementById("docs-table-container");
       try {
         const res = await fetch("/api/v1/documents");
         const data = await res.json();
-        let rows = data.documents.map(d => `
+        if (!data.documents || data.documents.length === 0) {
+          container.innerHTML = `<div style="padding: 28px; text-align: center; color: var(--sub); font-size: 14px;">No documents indexed yet. Upload university regulations or syllabi above to begin.</div>`;
+          return;
+        }
+        let rows = data.documents.map((d, idx) => `
           <tr>
-            <td><strong>${d.title}</strong></td>
+            <td>
+              <strong>${d.title}</strong>
+              ${idx === 0 ? '<span class="score-pill green" style="margin-left: 6px; font-size: 10.5px; padding: 2px 6px;">LATEST</span>' : ''}
+            </td>
             <td><code>${d.filename}</code></td>
             <td>${d.sections_count} Sections</td>
             <td><span class="score-pill">${d.chunks_count} Chunks</span></td>
             <td><code>${d.sha256}...</code></td>
+            <td style="text-align: right;">
+              <button type="button" class="btn-remove-doc" onclick="removeDocument('${encodeURIComponent(d.filename)}')" title="Remove this document from knowledge base">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Remove</span>
+              </button>
+            </td>
           </tr>
         `).join("");
 
@@ -2824,6 +2897,7 @@
                 <th>Sections</th>
                 <th>Indexed Chunks</th>
                 <th>SHA-256 Checksum</th>
+                <th style="text-align: right;">Action</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -2831,6 +2905,43 @@
         `;
       } catch (err) {
         container.innerHTML = `<p style="color:#dc2626;">Error fetching documents: ${err.message}</p>`;
+      }
+    }
+
+    async function removeDocument(encodedFilename) {
+      const filename = decodeURIComponent(encodedFilename);
+      if (!confirm(`Are you sure you want to remove "${filename}" from the repository?\nThis will erase its chunks from the RAG search index.`)) {
+        return;
+      }
+
+      const statusBox = document.getElementById("upload-status");
+      if (statusBox) {
+        statusBox.className = "upload-status-box uploading";
+        statusBox.style.display = "flex";
+        statusBox.innerHTML = `
+          <div class="pulse-dot"></div>
+          <span>Removing <strong>${filename}</strong> and updating RAG vector index...</span>
+        `;
+      }
+
+      try {
+        const res = await fetch(`/api/v1/documents/${encodeURIComponent(filename)}`, {
+          method: "DELETE"
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || "Failed to delete document.");
+        }
+
+        if (statusBox) {
+          statusBox.className = "upload-status-box success";
+          statusBox.innerHTML = `<span>✓ Successfully removed <strong>${filename}</strong> and refreshed search index.</span>`;
+          setTimeout(() => { statusBox.style.display = "none"; }, 4000);
+        }
+        await fetchDocuments();
+      } catch (err) {
+        alert("Error removing document: " + err.message);
+        if (statusBox) statusBox.style.display = "none";
       }
     }
 

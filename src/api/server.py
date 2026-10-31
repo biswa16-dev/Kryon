@@ -37,6 +37,7 @@ class RAGSystem:
         self.data_dir = Path(data_dir or os.getenv("DATA_DIR", "data/raw"))
         self.parsed_docs: List[ParsedDocument] = []
         self.chunks: List[TextChunk] = []
+        self._last_index_time: float = 0.0
         self.embedder = DenseEmbedder()
         self.vector_store = FAISSVectorStore(self.embedder)
         self.bm25 = BM25Retriever()
@@ -60,20 +61,44 @@ class RAGSystem:
             ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".tiff"
         }
 
-        for path in self.data_dir.iterdir():
-            if path.is_file() and path.suffix.lower() in supported_exts:
-                try:
-                    doc = DocumentParser.parse_file(path)
-                    self.parsed_docs.append(doc)
-                    doc_chunks = ChunkingEngine.chunk_document(
-                        doc, strategy="recursive", chunk_size=chunk_size, chunk_overlap=chunk_overlap
-                    )
-                    self.chunks.extend(doc_chunks)
-                except Exception as e:
-                    print(f"Error parsing document {path.name}: {e}")
+        # Sort files with most recently modified/uploaded first
+        files = [p for p in self.data_dir.iterdir() if p.is_file() and p.suffix.lower() in supported_exts]
+        files.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+
+        for path in files:
+            try:
+                doc = DocumentParser.parse_file(path)
+                self.parsed_docs.append(doc)
+                doc_chunks = ChunkingEngine.chunk_document(
+                    doc, strategy="recursive", chunk_size=chunk_size, chunk_overlap=chunk_overlap
+                )
+                self.chunks.extend(doc_chunks)
+            except Exception as e:
+                print(f"Error parsing document {path.name}: {e}")
 
         self.vector_store.add_chunks(self.chunks)
         self.bm25.fit(self.chunks)
+        self._last_index_time = time.time()
+
+    def sync_if_needed(self) -> bool:
+        """Auto-rescan data_dir if any file was added, removed, or modified."""
+        supported_exts = {
+            ".md", ".markdown", ".txt", ".pdf", ".docx", ".doc",
+            ".xlsx", ".xls", ".csv", ".tsv", ".json",
+            ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".tiff"
+        }
+        current_files = [p for p in self.data_dir.iterdir() if p.is_file() and p.suffix.lower() in supported_exts]
+        indexed_names = {d.filename for d in self.parsed_docs}
+
+        if len(current_files) != len(self.parsed_docs) or any(p.name not in indexed_names for p in current_files):
+            self.load_and_index()
+            return True
+
+        if any(p.stat().st_mtime > getattr(self, "_last_index_time", 0.0) for p in current_files):
+            self.load_and_index()
+            return True
+
+        return False
 
     def query(self, req: QueryRequest) -> GenerationResult:
         # 1. Retrieve candidates
@@ -135,6 +160,7 @@ def execute_query(req: QueryRequest):
 
 @app.get("/api/v1/documents")
 def list_documents():
+    rag_system.sync_if_needed()
     docs_summary = []
     for doc in rag_system.parsed_docs:
         doc_chunks = [c for c in rag_system.chunks if c.doc_id == doc.doc_id]
@@ -153,15 +179,55 @@ def list_documents():
     return {"total_documents": len(docs_summary), "documents": docs_summary}
 
 
+@app.post("/api/v1/documents/refresh")
+def refresh_documents_index():
+    rag_system.load_and_index()
+    return {
+        "status": "success",
+        "message": f"Successfully re-scanned repository. Indexed {len(rag_system.parsed_docs)} documents and {len(rag_system.chunks)} chunks.",
+        "documents_count": len(rag_system.parsed_docs),
+        "chunks_count": len(rag_system.chunks),
+    }
+
+
 @app.post("/api/v1/documents/upload")
 async def upload_document(file: UploadFile = File(...)):
     target_path = rag_system.data_dir / file.filename
     content = await file.read()
     with open(target_path, "wb") as f:
         f.write(content)
+    # Touch mtime to current timestamp so it sorts to the top
+    try:
+        now = time.time()
+        os.utime(target_path, (now, now))
+    except Exception:
+        pass
     # Re-index
     rag_system.load_and_index()
     return {"message": f"Successfully ingested and indexed {file.filename}"}
+
+
+@app.delete("/api/v1/documents/{filename}")
+def delete_document(filename: str):
+    clean_name = Path(filename).name
+    target_path = (rag_system.data_dir / clean_name).resolve()
+
+    # Safety check against path traversal
+    data_dir_resolved = rag_system.data_dir.resolve()
+    if not str(target_path).startswith(str(data_dir_resolved)):
+        raise HTTPException(status_code=400, detail="Invalid filename parameter.")
+
+    if not target_path.exists() or not target_path.is_file():
+        raise HTTPException(status_code=404, detail=f"Document '{clean_name}' not found.")
+
+    try:
+        target_path.unlink()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to delete '{clean_name}': {str(e)}")
+
+    # Re-index to update vector index and BM25 index
+    rag_system.load_and_index()
+    return {"message": f"Successfully removed '{clean_name}' and updated search index."}
 
 
 @app.get("/api/v1/experiments")
