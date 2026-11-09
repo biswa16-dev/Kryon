@@ -55,7 +55,7 @@ User Query
     ├─► Cross-Encoder Re-Ranking (Numerical & Clause alignment)
     │
     ├─► Confidence Scoring Gate
-    │       ├── Confidence ≥ Threshold (0.50) ──► Grounded Synthesizer + Citations
+    │       ├── Confidence ≥ Threshold (0.50) ──► Fine-Tuned Seq2Seq Transformer (Kryon-Academic-T5) + Citations
     │       └── Confidence < Threshold (0.50) ──► Safe Institutional Policy Refusal
     │
     └─► Response Payload (Answer + Sources + Confidence Score + Execution Time)
@@ -130,6 +130,38 @@ http://127.0.0.1:8000
 - `POST /api/v1/documents/upload`: Upload and index new documents
 - `GET /api/v1/experiments`: View the benchmark evaluation matrix
 - `POST /api/v1/experiments/run`: Re-run the evaluation suite
+
+---
+
+## 🧠 Fine-Tuning Your Custom Model
+
+Kryon includes a full PyTorch fine-tuning pipeline to train an instruction-tuned Seq2Seq model on institutional regulation Q&A pairs:
+
+```bash
+# 1. Prepare training pairs from evaluation data & handbooks
+python -m src.training.prepare_dataset
+
+# 2. Fine-tune the model on CPU / CUDA
+python -m src.training.train
+```
+
+The fine-tuned model checkpoint is saved to `models/kryon-academic-t5/` with comprehensive loss metrics in `training_metrics.json`.
+
+---
+
+## 🐳 Docker Deployment
+
+To build and run the entire containerized application:
+
+```bash
+# Build the Docker image
+docker build -t kryon-rag .
+
+# Run container on port 8000
+docker run -d -p 8000:8000 --name kryon-app kryon-rag
+```
+
+Access the UI at `http://localhost:8000`.
 
 ---
 

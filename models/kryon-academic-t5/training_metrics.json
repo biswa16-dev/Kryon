@@ -1,0 +1,19 @@
+{
+  "model_name": "kryon-academic-t5",
+  "base_model": "google/flan-t5-small",
+  "epochs": 4,
+  "batch_size": 4,
+  "learning_rate": 0.0002,
+  "samples_count": 25,
+  "initial_loss": 2.7514,
+  "final_loss": 1.416,
+  "loss_history": [
+    2.7514,
+    1.9999,
+    1.8578,
+    1.416
+  ],
+  "training_duration_seconds": 166.98,
+  "device": "cpu",
+  "timestamp": "2026-11-09T18:34:18Z"
+}

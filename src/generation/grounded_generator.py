@@ -1,6 +1,7 @@
 import os
 import re
 import time
+from pathlib import Path
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel
 import httpx
@@ -56,6 +57,53 @@ class GroundedRAGGenerator:
         self._last_ollama_check: float = 0.0
         self._ollama_online: bool = False
         self._detected_model: Optional[str] = None
+
+        # Fine-Tuned Local Neural Seq2Seq Model
+        self.model_dir = Path("models/kryon-academic-t5")
+        self._neural_model = None
+        self._neural_tokenizer = None
+        self._init_neural_model()
+
+    def _init_neural_model(self):
+        """Loads the fine-tuned Seq2Seq model weights if available on disk."""
+        if self.model_dir.exists() and (self.model_dir / "model.safetensors").exists():
+            try:
+                from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+                self._neural_tokenizer = AutoTokenizer.from_pretrained(str(self.model_dir))
+                self._neural_model = AutoModelForSeq2SeqLM.from_pretrained(str(self.model_dir))
+                self._neural_model.eval()
+                print(f"[Generator] Loaded custom fine-tuned model from {self.model_dir}")
+            except Exception as e:
+                print(f"[Generator] Neural model load skipped: {e}")
+
+    def _generate_neural_answer(self, query: str, scored_chunks: List[ScoredChunk]) -> Optional[str]:
+        """Generates smart grounded answers using the custom fine-tuned academic Seq2Seq model."""
+        if not self._neural_model or not self._neural_tokenizer:
+            return None
+        try:
+            import torch
+            context_passages = " ".join([c.chunk.text.strip().replace("\n", " ") for c in scored_chunks[:3]])
+            context_passages = context_passages[:550]
+
+            prompt = f"question: {query} context: {context_passages}"
+            inputs = self._neural_tokenizer(prompt, return_tensors="pt", max_length=512, truncation=True)
+
+            with torch.no_grad():
+                outputs = self._neural_model.generate(
+                    **inputs,
+                    max_new_tokens=120,
+                    num_beams=3,
+                    early_stopping=True
+                )
+            gen_text = self._neural_tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+
+            if len(gen_text) > 8:
+                top = scored_chunks[0].chunk
+                citation_line = f"\n\n> 📄 **Verified Handbook Source**: `{top.filename}` (§{top.section_heading}, Page {top.page_number})"
+                return gen_text + citation_line
+        except Exception as e:
+            print(f"[Neural Generation Error]: {e}")
+        return None
 
     def _get_active_ollama_model(self) -> Optional[str]:
         now = time.time()
@@ -220,18 +268,24 @@ class GroundedRAGGenerator:
             f"Clear Student Guidance:"
         )
 
-        ollama_res = self._query_ollama(prompt)
-        if ollama_res:
-            ollama_answer, active_model = ollama_res
-            answer = ollama_answer.strip()
-            # Append formal citation line
-            top = scored_chunks[0].chunk
-            answer += f"\n\n> **Verified Citation**: `[Source: {top.filename}, §{top.section_heading}, Page {top.page_number}]`"
-            model_used = f"Ollama ({active_model})"
+        # 1. Primary: Custom Fine-Tuned Seq2Seq Transformer Model
+        neural_res = self._generate_neural_answer(query, scored_chunks)
+        if neural_res:
+            answer = neural_res
+            model_used = "Fine-Tuned Seq2Seq Transformer (Kryon-Academic-T5)"
         else:
-            # Deterministic, grounded extractor
-            answer = self._extract_grounded_factual_summary(query, scored_chunks)
-            model_used = "Grounded Extractive Synthesizer (Local)"
+            # 2. Secondary: Intelligent local LLM via Ollama if online
+            ollama_res = self._query_ollama(prompt)
+            if ollama_res:
+                ollama_answer, active_model = ollama_res
+                answer = ollama_answer.strip()
+                top = scored_chunks[0].chunk
+                answer += f"\n\n> **Verified Citation**: `[Source: {top.filename}, §{top.section_heading}, Page {top.page_number}]`"
+                model_used = f"Ollama ({active_model})"
+            else:
+                # 3. Fallback: Deterministic grounded extractor
+                answer = self._extract_grounded_factual_summary(query, scored_chunks)
+                model_used = "Grounded Extractive Synthesizer (Local)"
 
         exec_time = (time.time() - t0) * 1000
 

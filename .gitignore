@@ -74,3 +74,10 @@ eggs/
 *.egg-info/
 *.egg
 
+# Large Model Weights (exceeds GitHub 100MB limit; train locally with python -m src.training.train)
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+
