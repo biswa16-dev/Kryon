@@ -81,3 +81,7 @@ eggs/
 *.pth
 *.onnx
 
+# Local test scratchpad
+scratch/
+
+

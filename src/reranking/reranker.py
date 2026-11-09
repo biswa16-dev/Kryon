@@ -4,7 +4,7 @@ from src.retrieval.hybrid import ScoredChunk
 
 
 class CrossEncoderReRanker:
-    """Re-ranks retrieved chunks based on deep query-document semantic alignment and numerical clause match."""
+    """Re-ranks retrieved chunks based on deep query-document semantic alignment, domain awareness, and numerical clause match."""
 
     def __init__(self, model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"):
         self.model_name = model_name
@@ -42,12 +42,38 @@ class CrossEncoderReRanker:
             if any(term in heading for term in query_terms):
                 heading_boost = 0.20
 
+            # Domain scenario relevance boost (CGPA classification, attendance condonation, pass marks)
+            domain_boost = 0.0
+            q_lower = query.lower()
+            if any(term in q_lower for term in ["cgpa", "gpa", "sgpa", "standing", "classification", "probation"]):
+                if any(h in heading for h in ["classification", "probation", "standing"]):
+                    domain_boost += 0.35
+                elif "grading" in heading or "calculation" in heading:
+                    domain_boost += 0.15
+
+            if any(term in q_lower for term in ["attendance", "condon", "absent", "shortage", "write exam"]):
+                if any(h in heading for h in ["attendance", "condonation"]):
+                    domain_boost += 0.35
+
+            if any(term in q_lower for term in ["pass", "mark", "cia", "ese", "evaluation", "internal"]):
+                if any(h in heading for h in ["assessment", "grading", "internal"]):
+                    domain_boost += 0.30
+
+            if any(term in q_lower for term in ["malpractice", "phone", "mobile", "cheat", "impersonat", "calculator"]):
+                if any(h in heading for h in ["malpractice", "discipline", "prohibited", "hall ticket"]):
+                    domain_boost += 0.35
+
+            if any(term in q_lower for term in ["lab", "laboratory", "experiment", "practical"]):
+                if any(h in heading for h in ["laboratory", "experiment", "practical"]):
+                    domain_boost += 0.35
+
             # Calibrate combined cross-encoder confidence
             new_score = (
-                item.score * 0.40
-                + overlap_ratio * 0.35
+                item.score * 0.30
+                + overlap_ratio * 0.25
                 + num_match_boost
                 + heading_boost
+                + domain_boost
             )
             calibrated_score = max(0.0, min(1.0, new_score))
 
@@ -69,4 +95,3 @@ class CrossEncoderReRanker:
             item.rank = idx + 1
 
         return reranked[:top_k]
-
