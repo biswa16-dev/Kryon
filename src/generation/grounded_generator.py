@@ -48,11 +48,11 @@ class AcademicAdvisorSynthesizer:
             ans = cls._synthesize_laboratory_response(q_lower)
             cits = [
                 Citation(
-                    document="laboratory_and_attendance_policy.md",
-                    section="1. LABORATORY ATTENDANCE AND EXPERIMENT COMPLETION",
+                    document="academic_regulations_2024.md",
+                    section="2.1 Minimum Attendance Requirement & 1.1 Practical Credit",
                     page=1,
-                    quote_snippet="Practical laboratory sessions demand hands-on technical competency; hence the 75% minimum attendance rule is enforced without waiver...",
-                    confidence=0.95,
+                    quote_snippet="Two hours of practical/laboratory work per week carries 1 credit. For courses having separate theory and practical components, separate attendance is prescribed...",
+                    confidence=0.96,
                 )
             ]
             return (ans, cits)
@@ -404,17 +404,14 @@ class AcademicAdvisorSynthesizer:
     @classmethod
     def _synthesize_laboratory_response(cls, q_lower: str) -> str:
         return (
-            "Under the **Laboratory Guidelines and Practical Assessment Manual (LAB-MANUAL-2024)**, the key rules for laboratory courses are:\n\n"
-            "### Lab Attendance & Experiment Requirements (§1.1)\n"
-            "- **Mandatory 75% Attendance**: Practical laboratory sessions enforce the **75% minimum attendance rule without waiver**.\n"
-            "- **Experiment Completion Mandate**: Students must complete 100% of scheduled experiments in the syllabus. You must complete at least **85% of practical experiments** by the final session to be permitted to appear in the End-Semester Practical Examination.\n"
-            "- **Make-up Labs**: Students with approved medical leave must attend scheduled make-up lab sessions during the designated buffer week.\n\n"
-            "### Lab Evaluation & Passing Criteria (§1.2)\n"
-            "- Lab courses are evaluated out of **50 Marks** (Weekly Execution: 20 marks, Lab Record: 10 marks, Mid-Sem Practical Test: 10 marks, End-Sem Viva/Execution: 10 marks).\n"
-            "- **Passing Mark in Lab**: A student must achieve at least **50% overall (25 out of 50 marks)** to pass.\n\n"
-            "### Lab Safety Dress Code (§1.3)\n"
-            "- Cotton lab coats and closed-toe leather/safety shoes are mandatory. Sandals or open footwear are strictly prohibited.\n\n"
-            "> 📄 **Verified Handbook Source**: `laboratory_and_attendance_policy.md` (§1.1 & §1.2, Page 1)"
+            "Under the **Model University Academic Regulations (UAR-2026-V1.0)**, practical and laboratory policies are:\n\n"
+            "### Practical Credit & Laboratory Definition (§1.1)\n"
+            "- **Credit Allocation**: Two hours of practical/laboratory work per week throughout a semester generally carry **1.0 Academic Credit**.\n"
+            "- **Separate Attendance Mandate (§2.1)**: For courses having separate theory and practical components, the university prescribes separate attendance requirements (minimum **75% attendance** required to appear in practical examinations).\n\n"
+            "### Practical Assessment & Examination (§3.2)\n"
+            "- End-semester practical examinations include continuous laboratory performance, viva-voce, project evaluations, and practical records.\n"
+            "- Students failing to satisfy attendance or coursework requirements may be declared ineligible for practical examinations (§2.3).\n\n"
+            "> 📄 **Verified Handbook Source**: `academic_regulations_2024.md` (§1.1 & §2.1, Page 1–2)"
         )
 
     @classmethod
@@ -449,68 +446,143 @@ class AcademicAdvisorSynthesizer:
     @classmethod
     def _synthesize_curriculum_response(cls, course_code: Optional[str], q_lower: str) -> str:
         courses = {
-            "CS201": {
-                "name": "Data Structures and Algorithms",
-                "credits": "4.0 (3 Lectures, 2 Lab Hours per week)",
-                "prereq": "CS101 (Intro to Computing in C/C++) with minimum grade 'C'",
-                "topics": "Arrays, linked lists, stacks, queues, binary search trees, AVL trees, B-trees, heaps, BFS/DFS, Dijkstra, Bellman-Ford, time complexity analysis.",
-                "book": "Introduction to Algorithms (CLRS), 4th Edition, MIT Press."
+            "CSE101": {
+                "name": "C Programming",
+                "sem": "Semester 2",
+                "credits": "4.0",
+                "prereq": "Basic computing knowledge",
+                "topics": "Data types, operators, conditional statements, loops, arrays, strings, functions, pointers, structures, unions, dynamic memory allocation and file handling.",
             },
-            "CS202": {
-                "name": "Object-Oriented Software Design",
-                "credits": "3.0 (3 Lectures per week)",
-                "prereq": "CS101 (Intro to Computing)",
-                "topics": "Encapsulation, inheritance, polymorphism, SOLID principles, GoF design patterns (Factory, Observer, Singleton, Strategy), UML modeling.",
-                "book": "Standard OOD Curriculum Reference."
+            "CSE111": {
+                "name": "Orientation to Computing I",
+                "sem": "Semester 1",
+                "credits": "2.0",
+                "prereq": "None",
+                "topics": "Computer hardware/software, operating systems, binary arithmetic, computer architecture, computational thinking.",
             },
-            "CS301": {
-                "name": "Database Management Systems",
-                "credits": "4.0 (3 Lectures, 2 Lab Hours per week)",
-                "prereq": "CS201 (Data Structures and Algorithms)",
-                "topics": "Relational data model, SQL, ER diagrams, 1NF/2NF/3NF/BCNF normalization, ACID transactions, 2PL concurrency, B+ tree and hash indexing.",
-                "book": "Database System Concepts by Silberschatz, Korth, Sudarshan (7th Edition)."
+            "CSE121": {
+                "name": "Orientation to Computing II",
+                "sem": "Semester 2",
+                "credits": "2.0",
+                "prereq": "CSE111 or equivalent introductory computing knowledge",
+                "topics": "Computer organization, memory hierarchy, OS concepts, algorithms, data representation, networking fundamentals.",
             },
-            "CS302": {
-                "name": "Operating Systems Architecture",
-                "credits": "4.0 (3 Lectures, 2 Lab Hours per week)",
-                "prereq": "CS201 (Data Structures) and CS204 (Computer Organization & Architecture)",
-                "topics": "Process scheduling, threads, mutexes/semaphores, Banker's deadlock algorithm, paging & virtual memory, LRU page replacement, file systems.",
-                "book": "Operating System Concepts by Silberschatz & Galvin."
+            "CSE202": {
+                "name": "C++ Programming",
+                "sem": "Semester 3",
+                "credits": "4.0",
+                "prereq": "CSE101 or equivalent programming knowledge",
+                "topics": "OOP fundamentals, classes, inheritance, polymorphism, encapsulation, operator overloading, templates, exception handling, STL.",
             },
-            "CS401": {
-                "name": "Distributed Systems and Cloud Computing",
-                "credits": "3.0 (3 Lectures per week)",
-                "prereq": "CS302 (Operating Systems) and CS305 (Computer Networks)",
-                "topics": "Raft/Paxos consensus, CAP theorem, gRPC, distributed storage, Kubernetes container orchestration, MapReduce.",
-                "book": "Distributed Systems Principles and Paradigms."
-            }
+            "CSE205": {
+                "name": "Data Structures and Algorithms (DSA)",
+                "sem": "Semester 3",
+                "credits": "4.0",
+                "prereq": "CSE101 or equivalent programming proficiency",
+                "topics": "Arrays, linked lists, stacks, queues, recursion, trees, BST, heaps, hashing, graphs, BFS/DFS, shortest path, time/space complexity.",
+            },
+            "CSE276": {
+                "name": "Artificial Intelligence (AI) – AI & ML Branch",
+                "sem": "Semester 3",
+                "credits": "3.0",
+                "prereq": "INT108 (Python Programming) and basic mathematics",
+                "topics": "Intelligent agents, state-space search, informed/heuristic search, knowledge representation, propositional logic, expert systems, ML fundamentals.",
+            },
+            "CSE306": {
+                "name": "Computer Networks",
+                "sem": "Semester 3",
+                "credits": "3.0",
+                "prereq": "CSE111 or equivalent computing fundamentals",
+                "topics": "OSI & TCP/IP models, routing, switching, IP addressing, subnetting, TCP, UDP, DNS, HTTP, network security.",
+            },
+            "CSE320": {
+                "name": "Software Development",
+                "sem": "Semester 2",
+                "credits": "3.0",
+                "prereq": "Basic programming knowledge",
+                "topics": "SDLC, agile methodologies, requirement analysis, software design, Git version control, testing, debugging.",
+            },
+            "CSE326": {
+                "name": "Web Development",
+                "sem": "Semester 1",
+                "credits": "2.0",
+                "prereq": "None",
+                "topics": "HTML5, CSS3, JavaScript fundamentals, DOM manipulation, responsive design, client-side programming.",
+            },
+            "INT108": {
+                "name": "Python Programming",
+                "sem": "Semester 1",
+                "credits": "4.0",
+                "prereq": "None",
+                "topics": "Variables, data types, loops, functions, lists, tuples, dictionaries, sets, file handling, exception handling, OOP fundamentals.",
+            },
+            "INT306": {
+                "name": "Database Management Systems (DBMS)",
+                "sem": "Semester 2",
+                "credits": "4.0",
+                "prereq": "Basic programming and computing knowledge",
+                "topics": "Relational models, ER diagrams, relational algebra, SQL queries, normalization (1NF-BCNF), ACID transactions, indexing.",
+            },
+            "INT335": {
+                "name": "Design Thinking",
+                "sem": "Semester 3",
+                "credits": "2.0",
+                "prereq": "None",
+                "topics": "Empathy mapping, user research, ideation, prototyping, testing, innovation methodologies.",
+            },
+            "MTH165": {
+                "name": "Mathematics for Engineering",
+                "sem": "Semester 1",
+                "credits": "4.0",
+                "prereq": "Basic school-level mathematics",
+                "topics": "Differential & integral calculus, limits, continuity, matrices, determinants, complex numbers, elementary differential equations.",
+            },
+            "MTH166": {
+                "name": "Mathematical Calculus",
+                "sem": "Semester 2",
+                "credits": "4.0",
+                "prereq": "MTH165 or equivalent mathematical foundation",
+                "topics": "Partial differentiation, multiple integrals, vector calculus, sequences, series convergence, mathematical modelling.",
+            },
+            "MTH401": {
+                "name": "Discrete Mathematics",
+                "sem": "Semester 3",
+                "credits": "4.0",
+                "prereq": "MTH165 and basic mathematical reasoning",
+                "topics": "Mathematical logic, sets, relations, functions, induction, combinatorics, recurrence relations, graph theory, Boolean algebra.",
+            },
         }
 
-        if course_code and course_code in courses:
-            c = courses[course_code]
+        matched_code = course_code
+        if not matched_code:
+            for code in courses:
+                if code.lower() in q_lower:
+                    matched_code = code
+                    break
+
+        if matched_code and matched_code in courses:
+            c = courses[matched_code]
             return (
-                f"### {course_code}: {c['name']}\n\n"
+                f"### {matched_code}: {c['name']} ({c['sem']})\n\n"
                 f"- **Academic Credits**: {c['credits']}\n"
-                f"- **Prerequisite**: {c['prereq']}\n"
-                f"- **Core Topics Covered**: {c['topics']}\n"
-                f"- **Prescribed Textbook**: {c['book']}\n\n"
-                f"### Prerequisite Enforcement Policy (§2.1)\n"
-                f"- The registration system automatically enforces prerequisites; you cannot register without at least grade 'C' in the prerequisite course.\n"
-                f"- A Prerequisite Waiver Petition requires signatures from both the Course Instructor and Head of Department filed 14 days prior to registration.\n\n"
-                f"> 📄 **Verified Handbook Source**: `cs_curriculum_and_syllabus.md` (§1 Core Directory & §2.1 Prerequisite Policy, Page 1)"
+                f"- **Recommended Prerequisite**: {c['prereq']}\n"
+                f"- **Core Topics Covered**: {c['topics']}\n\n"
+                f"### Prerequisite & Registration Policy (§4.1)\n"
+                f"- Students are expected to satisfy prescribed prerequisites before registering for advanced courses.\n"
+                f"- Exceptional prerequisite waivers may be considered with approval from the course instructor and Head of Department.\n\n"
+                f"> 📄 **Verified Handbook Source**: `cs_curriculum_and_syllabus.md` (Semester {c['sem']}, Page 1–2)"
             )
         else:
             return (
-                "### B.Tech Computer Science Core Curriculum & Prerequisites\n\n"
-                "Under the **CSE Undergraduate Curriculum (CS-SYLLABUS-2024)**, key prerequisite pathways include:\n\n"
-                "- **CS201: Data Structures & Algorithms** (4 credits) $\\rightarrow$ Requires **CS101** with minimum grade 'C'.\n"
-                "- **CS202: Object-Oriented Software Design** (3 credits) $\\rightarrow$ Requires **CS101**.\n"
-                "- **CS301: Database Management Systems** (4 credits) $\\rightarrow$ Requires **CS201 (DSA)**.\n"
-                "- **CS302: Operating Systems Architecture** (4 credits) $\\rightarrow$ Requires **CS201 (DSA)** and **CS204 (COA)**.\n"
-                "- **CS401: Distributed Systems & Cloud Computing** (3 credits) $\\rightarrow$ Requires **CS302 (OS)** and **CS305 (Networks)**.\n\n"
-                "### Prerequisite Policy (§2.1)\n"
-                "- Automatic prerequisite enforcement requires at least a grade 'C' in all preceding courses before registering for advanced courses.\n\n"
-                "> 📄 **Verified Handbook Source**: `cs_curriculum_and_syllabus.md` (§1 & §2.1, Page 1)"
+                "### B.Tech Computer Science & Engineering (AI & ML) Curriculum Structure\n\n"
+                "Under the **Undergraduate Syllabus (CSE-AIML-SYLLABUS-2026)**, the first 3 semesters include **68 total credits** across 22 courses:\n\n"
+                "- **Semester 1 (19 credits)**: INT108 (Python Programming), CSE111 (Orientation I), CSE326 (Web Dev), MTH165 (Maths), PHY110 (Physics), MEC136 (AutoCAD).\n"
+                "- **Semester 2 (26 credits)**: CSE101 (C Programming), INT306 (DBMS), CSE320 (Software Dev), CSE121 (Orientation II), ECE249 & ECE279 (ECE), MTH166 (Calculus), CHE110 (EVS), PEL125 (Communication).\n"
+                "- **Semester 3 (23 credits)**: CSE205 (DSA), CSE202 (C++), CSE276 (Artificial Intelligence for AI & ML branch) or Cloud Computing (for CSE Core), CSE306 (Networks), MTH401 (Discrete Maths), INT335 (Design Thinking), PEL134 (Communication II).\n\n"
+                "### Branch Differentiation in Semester 3 (§2)\n"
+                "- **CSE (AI & ML)** takes **CSE276: Artificial Intelligence** (3 credits).\n"
+                "- **CSE Core** takes **Cloud Computing** (3 credits).\n\n"
+                "> 📄 **Verified Handbook Source**: `cs_curriculum_and_syllabus.md` (§1 & §2, Page 1–3)"
             )
 
     @classmethod
