@@ -94,31 +94,24 @@ RAG/
 
 ---
 
-## 🚀 Quickstart & Setup
+## 🚀 How to Run Locally
 
-### 1. Requirements & Installation
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/biswa16-dev/Kryon.git
 cd Kryon
+```
+
+### 2. Install Dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### 2. Configuration (`.env`)
-Create a `.env` file (optional, defaults work out-of-the-box):
-```env
-HOST=127.0.0.1
-PORT=8000
-ENVIRONMENT=development
-DATA_DIR=data/raw
-CHUNK_SIZE=512
-CHUNK_OVERLAP=50
-CONFIDENCE_THRESHOLD=0.50
-```
-
-### 3. Run the Server
+### 3. Start the Server
 ```bash
 python run_server.py
 ```
+
 Open your browser and navigate to:
 ```
 http://127.0.0.1:8000
