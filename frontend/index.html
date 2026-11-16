@@ -107,10 +107,16 @@
       color: #000;
     }
 
+    .nav-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 8px;
+    }
+
     .nav-cta-wrap {
       display: inline-block;
       position: relative;
-      margin-left: 10px;
     }
 
     .nav-cta-wrap::before {
@@ -134,50 +140,27 @@
       bottom: -8px;
     }
 
-    .signin-pill {
+    .signin-pill,
+    .btn-login {
       position: relative;
       z-index: 2;
       background: #111;
-      color: #fff;
+      color: #fff !important;
       padding: 10px 21px;
       border-radius: 999px;
-      font-weight: 500;
+      font-weight: 500 !important;
       text-decoration: none;
       transition: transform 0.25s ease, background 0.2s ease;
       display: inline-block;
       cursor: pointer;
-    }
-
-    .signin-pill:hover {
-      transform: translateY(-1px);
-      background: #000;
-    }
-
-    .btn-login {
-      position: relative;
-      z-index: 2;
-      color: #1a1a1a !important;
-      text-decoration: none;
-      font-weight: 500;
-      padding: 9px 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
       line-height: 1;
     }
 
+    .signin-pill:hover,
     .btn-login:hover {
-      background: #ffffff !important;
-      border-color: rgba(0, 0, 0, 0.35);
-      color: #000 !important;
       transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      background: #000 !important;
+      color: #fff !important;
     }
 
     /* Copy block */
@@ -1570,6 +1553,12 @@
         padding: 22px 18px 0;
       }
       .nav-links { display: none; }
+      .nav-actions { gap: 8px; margin-left: 0; }
+      .signin-pill,
+      .btn-login {
+        padding: 8px 14px;
+        font-size: 12px;
+      }
       div.copy { top: 20%; }
       div.logos { gap: 14px 24px; font-size: 13px; }
       .left-rail { display: none; }
@@ -1600,11 +1589,15 @@
         <a href="#assistant" onclick="showView('app', 'experiments')">Benchmarks</a>
         <a href="#assistant">Resources</a>
         <a href="#assistant">Company</a>
-        <a href="#assistant" class="btn-login" onclick="showView('app', 'chat')">Log In</a>
       </div>
 
-      <div class="nav-cta-wrap">
-        <a href="#assistant" class="signin-pill" onclick="showView('app', 'chat')">Sign Up</a>
+      <div class="nav-actions">
+        <div class="nav-cta-wrap">
+          <a href="#assistant" class="btn-login" onclick="showView('app', 'chat')">Log In</a>
+        </div>
+        <div class="nav-cta-wrap">
+          <a href="#assistant" class="signin-pill" onclick="showView('app', 'chat')">Sign Up</a>
+        </div>
       </div>
     </nav>
 
