@@ -96,15 +96,12 @@
       gap: clamp(16px, 2.2vw, 32px);
     }
 
-    .nav-links a {
+    .nav-links span {
       color: #3a3a3a;
-      text-decoration: none;
-      transition: color 0.2s ease;
       font-weight: 400;
-    }
-
-    .nav-links a:hover {
-      color: #000;
+      cursor: default;
+      user-select: none;
+      pointer-events: none;
     }
 
     .nav-actions {
@@ -1608,11 +1605,11 @@
       </a>
 
       <div class="nav-links">
-        <a href="#assistant" onclick="showView('app', 'chat')">Assistant</a>
-        <a href="#assistant" onclick="showView('app', 'docs')">Regulations</a>
-        <a href="#assistant" onclick="showView('app', 'docs')">Syllabus</a>
-        <a href="#assistant" onclick="showView('app', 'experiments')">Benchmarks</a>
-        <a href="#assistant" onclick="showView('app', 'chat')">Grounding</a>
+        <span>Assistant</span>
+        <span>Regulations</span>
+        <span>Syllabus</span>
+        <span>Benchmarks</span>
+        <span>Grounding</span>
       </div>
 
       <div class="nav-actions">
