@@ -153,6 +153,33 @@
       background: #000;
     }
 
+    .btn-login {
+      position: relative;
+      z-index: 2;
+      color: #1a1a1a !important;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .btn-login:hover {
+      background: #ffffff !important;
+      border-color: rgba(0, 0, 0, 0.35);
+      color: #000 !important;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
     /* Copy block */
     div.copy {
       position: absolute;
@@ -1573,7 +1600,7 @@
         <a href="#assistant" onclick="showView('app', 'experiments')">Benchmarks</a>
         <a href="#assistant">Resources</a>
         <a href="#assistant">Company</a>
-        <a href="#assistant" onclick="showView('app', 'chat')">Sign In</a>
+        <a href="#assistant" class="btn-login" onclick="showView('app', 'chat')">Log In</a>
       </div>
 
       <div class="nav-cta-wrap">
