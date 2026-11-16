@@ -66,10 +66,9 @@
       z-index: 3;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 36px clamp(20px, 4vw, 56px) 0;
+      justify-content: center;
+      gap: clamp(18px, 2.6vw, 40px);
+      padding-top: 36px;
       font-size: 13.5px;
     }
 
@@ -89,6 +88,30 @@
       width: 16px;
       height: 18px;
       fill: currentColor;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 2.2vw, 32px);
+    }
+
+    .nav-links a {
+      color: #3a3a3a;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-weight: 400;
+    }
+
+    .nav-links a:hover {
+      color: #000;
+    }
+
+    .nav-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 8px;
     }
 
     .nav-cta-wrap {
@@ -124,9 +147,10 @@
       color: #fff !important;
       padding: 10px 21px;
       border-radius: 999px;
+      border: 1px solid #111;
       font-weight: 500 !important;
       text-decoration: none;
-      transition: transform 0.25s ease, background 0.2s ease;
+      transition: transform 0.25s ease, background 0.2s ease, border-color 0.2s ease;
       display: inline-block;
       cursor: pointer;
       line-height: 1;
@@ -135,7 +159,32 @@
     .signin-pill:hover {
       transform: translateY(-1px);
       background: #000 !important;
+      border-color: #000 !important;
       color: #fff !important;
+    }
+
+    .btn-login {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      color: #111 !important;
+      padding: 10px 21px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      font-weight: 500 !important;
+      text-decoration: none;
+      transition: transform 0.25s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      display: inline-block;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-1px);
+      background: #ffffff !important;
+      border-color: rgba(0, 0, 0, 0.35);
+      color: #000 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     /* Copy block */
@@ -1524,11 +1573,15 @@
     /* Responsive */
     @media (max-width: 768px) {
       nav.hero-nav {
+        justify-content: space-between;
         padding: 22px 18px 0;
       }
-      .signin-pill {
-        padding: 8px 16px;
-        font-size: 12.5px;
+      .nav-links { display: none; }
+      .nav-actions { gap: 8px; margin-left: 0; }
+      .signin-pill,
+      .btn-login {
+        padding: 8px 14px;
+        font-size: 12px;
       }
       div.copy { top: 20%; }
       div.logos { gap: 14px 24px; font-size: 13px; }
@@ -1554,8 +1607,21 @@
         <span>Kryon</span>
       </a>
 
-      <div class="nav-cta-wrap">
-        <a href="#assistant" class="signin-pill" onclick="showView('app', 'chat')">Sign Up</a>
+      <div class="nav-links">
+        <a href="#assistant" onclick="showView('app', 'chat')">Platform</a>
+        <a href="#assistant" onclick="showView('app', 'docs')">Regulations</a>
+        <a href="#assistant" onclick="showView('app', 'experiments')">Benchmarks</a>
+        <a href="#assistant">Resources</a>
+        <a href="#assistant">Company</a>
+      </div>
+
+      <div class="nav-actions">
+        <div class="nav-cta-wrap">
+          <a href="#assistant" class="btn-login" onclick="showView('app', 'chat')">Log In</a>
+        </div>
+        <div class="nav-cta-wrap">
+          <a href="#assistant" class="signin-pill" onclick="showView('app', 'chat')">Sign Up</a>
+        </div>
       </div>
     </nav>
 
