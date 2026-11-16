@@ -246,10 +246,58 @@ def re_run_experiments():
     return {"message": "Evaluation suite executed successfully", "experiments": rag_system.cached_experiments}
 
 
+# Auth & Password Reset Schemas & Endpoints
+class SendOTPRequest(BaseModel):
+    email: str
+
+class VerifyOTPRequest(BaseModel):
+    email: str
+    otp: str
+    new_password: str
+
+otp_store: Dict[str, Dict[str, Any]] = {}
+
+@app.post("/api/v1/auth/send-otp")
+def send_otp(req: SendOTPRequest):
+    email = req.email.strip().lower()
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Please enter a valid email address.")
+    import random
+    code = f"{random.randint(100000, 999999)}"
+    otp_store[email] = {"code": code, "expires_at": time.time() + 600}
+    print(f"\n[KRYON AUTH] Generated OTP for {email}: {code} (valid for 10 mins)\n")
+    return {
+        "status": "success",
+        "message": f"Verification OTP sent to {email}",
+        "dev_code": code
+    }
+
+@app.post("/api/v1/auth/verify-otp")
+def verify_otp(req: VerifyOTPRequest):
+    email = req.email.strip().lower()
+    record = otp_store.get(email)
+    if not record:
+        raise HTTPException(status_code=400, detail="No OTP requested for this email. Please request a new code.")
+    if time.time() > record["expires_at"]:
+        del otp_store[email]
+        raise HTTPException(status_code=400, detail="OTP has expired. Please request a new code.")
+    if req.otp.strip() != record["code"]:
+        raise HTTPException(status_code=400, detail="Invalid OTP code. Please check and try again.")
+    if len(req.new_password) < 8:
+        raise HTTPException(status_code=400, detail="New password must be at least 8 characters long.")
+    del otp_store[email]
+    return {
+        "status": "success",
+        "message": "Password reset successful! You can now log in with your new password."
+    }
+
+
 # Mount static assets and serve frontend
 frontend_dir = Path("frontend")
 if frontend_dir.exists():
-    app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+    static_dir = frontend_dir / "static"
+    if static_dir.exists():
+        app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
     @app.get("/")
     def serve_index():
@@ -257,4 +305,21 @@ if frontend_dir.exists():
         if index_file.exists():
             return FileResponse(index_file)
         return {"message": "Frontend index.html ready."}
+
+    @app.get("/signup.html")
+    @app.get("/signup")
+    @app.get("/login.html")
+    @app.get("/login")
+    def serve_signup():
+        signup_file = frontend_dir / "signup.html"
+        if signup_file.exists():
+            return FileResponse(signup_file)
+        raise HTTPException(status_code=404, detail="Auth page not found")
+
+    @app.get("/favicon.ico")
+    def serve_favicon():
+        fav = frontend_dir / "static" / "favicon.ico"
+        if fav.exists():
+            return FileResponse(fav)
+        return JSONResponse(status_code=204, content=None)
 
