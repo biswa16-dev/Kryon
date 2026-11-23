@@ -627,64 +627,65 @@
       color: #ef4444;
     }
 
-    /* Hero Nav User Badge */
+    /* Hero Nav User Badge - Compact Pill like Image 2 */
     .hero-user-badge {
       display: none;
       align-items: center;
-      gap: 12px;
-      padding: 4px 14px 4px 6px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
+      gap: 7px;
+      padding: 3px 8px 3px 4px;
+      background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 30px;
+      border-radius: 9999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1;
+    }
+
+    .hero-user-badge:hover {
+      border-color: rgba(0, 0, 0, 0.16);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
     }
 
     .hero-user-avatar {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #2f6bff, #5a4cf5);
+      background: linear-gradient(135deg, #3b71fe, #5b50f6);
       color: #ffffff;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .hero-user-name {
       font-size: 13.5px;
       font-weight: 600;
-      color: #0f172a;
-    }
-
-    .hero-btn-go {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #2f6bff;
-      text-decoration: none;
-      padding: 4px 10px;
-      border-radius: 14px;
-      background: rgba(47, 107, 255, 0.08);
-      transition: background 0.15s ease;
-    }
-
-    .hero-btn-go:hover {
-      background: rgba(47, 107, 255, 0.15);
+      color: #1e293b;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
     }
 
     .hero-btn-signout {
       background: transparent;
       border: none;
-      font-size: 12.5px;
-      font-weight: 500;
-      color: #94a3b8;
+      padding: 2px;
+      margin-left: 1px;
+      color: #8b98a5;
       cursor: pointer;
-      transition: color 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease, transform 0.15s ease;
+      line-height: 1;
     }
 
     .hero-btn-signout:hover {
       color: #ef4444;
+      transform: scale(1.08);
     }
 
     /* Auth Gate Modal */
@@ -2066,15 +2067,24 @@
       </div>
 
       <div class="nav-actions">
-        <div class="nav-cta-wrap" id="hero-auth-guest">
-          <a href="signup.html?mode=login" class="btn-login">Log In</a>
-          <a href="signup.html?mode=signup" class="signin-pill">Sign Up</a>
+        <div id="hero-auth-guest" style="display: flex; align-items: center; gap: 12px;">
+          <div class="nav-cta-wrap">
+            <a href="signup.html?mode=login" class="btn-login">Log In</a>
+          </div>
+          <div class="nav-cta-wrap">
+            <a href="signup.html?mode=signup" class="signin-pill">Sign Up</a>
+          </div>
         </div>
-        <div id="hero-auth-user" class="hero-user-badge">
-          <div class="hero-user-avatar" id="hero-nav-avatar">K</div>
-          <span class="hero-user-name" id="hero-nav-name">Biswajit Roy</span>
-          <a href="#assistant" class="hero-btn-go" onclick="showView('app', 'chat')">Assistant →</a>
-          <button class="hero-btn-signout" onclick="handleSignOut()">Sign Out</button>
+        <div id="hero-auth-user" class="hero-user-badge" onclick="showView('app', 'chat')" title="Open AI Assistant">
+          <div class="hero-user-avatar" id="hero-nav-avatar">S.</div>
+          <span class="hero-user-name" id="hero-nav-name">Shubhi</span>
+          <button class="hero-btn-signout" onclick="event.stopPropagation(); handleSignOut()" title="Sign Out">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
@@ -3036,7 +3046,8 @@
         if (heroGuest) heroGuest.style.display = "none";
         if (heroUser) {
           heroUser.style.display = "flex";
-          if (heroAvatar) heroAvatar.innerText = initials;
+          const dotInitial = shortName ? (shortName[0].toUpperCase() + ".") : (initials ? initials[0] + "." : "K.");
+          if (heroAvatar) heroAvatar.innerText = dotInitial;
           if (heroName) heroName.innerText = shortName;
         }
       } else {
@@ -3097,7 +3108,6 @@
       localStorage.removeItem("kryon_user");
       syncUserInterface();
       closeUserDropdown();
-      alert("You have been signed out from Kryon.");
       showView("hero");
     }
 
@@ -3124,19 +3134,12 @@
     }
 
     function handleQuickGoogleAuth() {
-      const name = prompt("Google SSO - Enter your Display Name:", "Biswajit Roy") || "Biswajit Roy";
-      const email = prompt("Google SSO - Enter your Google Email:", "biswajit@university.edu") || "biswajit@university.edu";
-
-      const first = name.split(" ")[0] || "User";
-      const last = name.split(" ").slice(1).join(" ") || "";
-      const initials = ((first[0] || "K") + (last[0] || "")).toUpperCase();
-
       const userObj = {
-        name: name,
-        firstName: first,
-        lastName: last,
-        email: email,
-        initials: initials,
+        name: "Google Student",
+        firstName: "Student",
+        lastName: "User",
+        email: "student@university.edu",
+        initials: "S.",
         authType: "google",
         loggedInAt: Date.now()
       };
@@ -3736,8 +3739,12 @@
         }
         await fetchDocuments();
       } catch (err) {
-        alert("Error removing document: " + err.message);
-        if (statusBox) statusBox.style.display = "none";
+        if (statusBox) {
+          statusBox.className = "upload-status-box error";
+          statusBox.innerHTML = `<span>⚠️ Error removing document: ${err.message}</span>`;
+          statusBox.style.display = "block";
+          setTimeout(() => { statusBox.style.display = "none"; }, 5000);
+        }
       }
     }
 

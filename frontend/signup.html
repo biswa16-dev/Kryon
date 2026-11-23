@@ -576,8 +576,8 @@
       const emailInput = document.getElementById("forgot-email");
       const email = emailInput.value.trim();
       if (!email || !email.includes("@")) {
-        alert("Please enter a valid email address.");
         emailInput.focus();
+        emailInput.classList.add("border-red-400");
         return;
       }
 
@@ -673,13 +673,12 @@
       inputs.forEach(i => enteredOtp += i.value);
 
       if (enteredOtp.length !== 6) {
-        alert("Please enter the complete 6-digit OTP code.");
+        inputs[0].focus();
         return;
       }
 
       const newPassword = document.getElementById("otp-new-password").value;
       if (!newPassword || newPassword.length < 8) {
-        alert("New password must be at least 8 symbols long.");
         document.getElementById("otp-new-password").focus();
         return;
       }
@@ -698,15 +697,14 @@
         if (!res.ok) {
           throw new Error(data.detail || "Invalid OTP");
         }
-        alert("Password updated successfully! You can now log in with your new credentials.");
         switchView("login");
       } catch (err) {
         // Fallback local check
         if (enteredOtp === activeOtpCode) {
-          alert("Password updated successfully! You can now log in with your new credentials.");
           switchView("login");
         } else {
-          alert("Verification failed: " + err.message);
+          const firstBox = document.querySelectorAll(".otp-input")[0];
+          if (firstBox) firstBox.focus();
         }
       } finally {
         btn.innerText = "Verify OTP & Update Password";

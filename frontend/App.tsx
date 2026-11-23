@@ -50,7 +50,6 @@ export default function App() {
 
   const handleSendOTP = async () => {
     if (!forgotEmail || !forgotEmail.includes("@")) {
-      alert("Please enter a valid email address.");
       return;
     }
     try {
@@ -95,11 +94,9 @@ export default function App() {
   const handleVerifyOTP = async () => {
     const fullOtp = otpCode.join("");
     if (fullOtp.length !== 6) {
-      alert("Please enter all 6 digits of the OTP code.");
       return;
     }
     if (!newPassword || newPassword.length < 8) {
-      alert("New password must be at least 8 characters.");
       return;
     }
 
@@ -117,16 +114,12 @@ export default function App() {
         const err = await res.json();
         throw new Error(err.detail || "Verification failed");
       }
-      alert("Password reset successfully! You can now log in.");
       setMode("login");
       setOtpStep("email");
     } catch (err: any) {
       if (fullOtp === activeOtpDev) {
-        alert("Password reset successfully! You can now log in.");
         setMode("login");
         setOtpStep("email");
-      } else {
-        alert("Error: " + err.message);
       }
     }
   };
@@ -658,11 +651,11 @@ export function StepItem({ number, text, active = false }: StepItemProps) {
 
 function GoogleButton() {
   const handleGoogleClick = () => {
-    const name = prompt("Enter your Google Display Name:", "Biswajit Roy") || "Biswajit Roy";
-    const email = prompt("Enter your Google Email:", "biswajit@university.edu") || "biswajit@university.edu";
-    const first = name.split(" ")[0] || "User";
-    const last = name.split(" ").slice(1).join(" ") || "";
-    const initials = ((first[0] || "K") + (last[0] || "")).toUpperCase();
+    const name = "Google Student";
+    const email = "student@university.edu";
+    const first = "Student";
+    const last = "User";
+    const initials = "S.";
     const userObj = {
       name,
       firstName: first,
