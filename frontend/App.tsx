@@ -222,7 +222,19 @@ export default function App() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    alert("Logged in to Kryon: " + email);
+                    let accounts = [];
+                    try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(err){}
+                    const found = accounts.find((a: any) => a.email && a.email.toLowerCase() === email.toLowerCase());
+                    let userObj: any;
+                    if (found) {
+                      userObj = { ...found, loggedInAt: Date.now(), authType: "credentials" };
+                    } else {
+                      const prefix = (email.split("@")[0] || "User").replace(/[._\-+]/g, " ");
+                      const name = prefix.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+                      const initials = (name.split(" ")[0]?.[0] || "K") + (name.split(" ")[1]?.[0] || "");
+                      userObj = { name, firstName: name.split(" ")[0], lastName: name.split(" ")[1] || "", email, initials: initials.toUpperCase(), authType: "credentials", loggedInAt: Date.now() };
+                    }
+                    localStorage.setItem("kryon_user", JSON.stringify(userObj));
                     window.location.href = "/#assistant";
                   }}
                   className="space-y-4.5 sm:space-y-5"
@@ -329,7 +341,24 @@ export default function App() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    alert("Account registered successfully: " + firstName);
+                    const fullName = (firstName + " " + lastName).trim();
+                    const initials = ((firstName[0] || "K") + (lastName[0] || "")).toUpperCase();
+                    const userObj = {
+                      name: fullName,
+                      firstName,
+                      lastName,
+                      email,
+                      initials,
+                      authType: "credentials",
+                      loggedInAt: Date.now()
+                    };
+                    localStorage.setItem("kryon_user", JSON.stringify(userObj));
+                    let accounts = [];
+                    try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(err){}
+                    const existingIdx = accounts.findIndex((a: any) => a.email && a.email.toLowerCase() === email.toLowerCase());
+                    if (existingIdx >= 0) accounts[existingIdx] = userObj;
+                    else accounts.push(userObj);
+                    localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
                     window.location.href = "/#assistant";
                   }}
                   className="space-y-4.5 sm:space-y-5"
@@ -628,13 +657,29 @@ export function StepItem({ number, text, active = false }: StepItemProps) {
 }
 
 function GoogleButton() {
+  const handleGoogleClick = () => {
+    const name = prompt("Enter your Google Display Name:", "Biswajit Roy") || "Biswajit Roy";
+    const email = prompt("Enter your Google Email:", "biswajit@university.edu") || "biswajit@university.edu";
+    const first = name.split(" ")[0] || "User";
+    const last = name.split(" ").slice(1).join(" ") || "";
+    const initials = ((first[0] || "K") + (last[0] || "")).toUpperCase();
+    const userObj = {
+      name,
+      firstName: first,
+      lastName: last,
+      email,
+      initials,
+      authType: "google",
+      loggedInAt: Date.now()
+    };
+    localStorage.setItem("kryon_user", JSON.stringify(userObj));
+    window.location.href = "/#assistant";
+  };
+
   return (
     <button
       type="button"
-      onClick={() => {
-        alert("Google SSO Authenticated for student@university.edu!");
-        window.location.href = "/#assistant";
-      }}
+      onClick={handleGoogleClick}
       className="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer"
     >
       <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">

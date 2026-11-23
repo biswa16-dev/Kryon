@@ -401,13 +401,23 @@
       margin-top: auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
+      position: relative;
+    }
+
+    .avatar-mini-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
     }
 
     .avatar-mini {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       background: linear-gradient(135deg, #2f6bff, #5a4cf5);
       color: white;
@@ -416,6 +426,448 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(47, 107, 255, 0.25);
+    }
+
+    .avatar-mini:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 14px rgba(47, 107, 255, 0.4);
+    }
+
+    .avatar-name-mini {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      max-width: 58px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    /* Flyout Profile Card in Left Rail */
+    .user-flyout-card {
+      position: absolute;
+      left: calc(100% + 14px);
+      bottom: -6px;
+      width: 250px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14), 0 2px 6px rgba(15, 23, 42, 0.05);
+      padding: 16px;
+      z-index: 100;
+      animation: flyoutSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes flyoutSlideIn {
+      from { opacity: 0; transform: translateX(-8px) scale(0.96); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+
+    .flyout-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .flyout-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2f6bff, #5a4cf5);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .flyout-meta {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+
+    .flyout-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flyout-email {
+      font-size: 12px;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flyout-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      font-size: 11px;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .flyout-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .flyout-divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 12px 0 10px;
+    }
+
+    .flyout-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .flyout-btn-signout {
+      width: 100%;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid #fee2e2;
+      background: #fff5f5;
+      color: #dc2626;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .flyout-btn-signout:hover {
+      background: #fee2e2;
+      border-color: #fca5a5;
+    }
+
+    /* Top Bar User Pill */
+    .user-pill-top {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 5px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .user-pill-top:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .user-pill-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2f6bff, #5a4cf5);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-pill-name {
+      max-width: 110px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-pill-logout {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.15s ease;
+    }
+
+    .user-pill-logout:hover {
+      color: #ef4444;
+    }
+
+    /* Hero Nav User Badge */
+    .hero-user-badge {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 14px 4px 6px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 30px;
+    }
+
+    .hero-user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2f6bff, #5a4cf5);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-user-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .hero-btn-go {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #2f6bff;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 14px;
+      background: rgba(47, 107, 255, 0.08);
+      transition: background 0.15s ease;
+    }
+
+    .hero-btn-go:hover {
+      background: rgba(47, 107, 255, 0.15);
+    }
+
+    .hero-btn-signout {
+      background: transparent;
+      border: none;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .hero-btn-signout:hover {
+      color: #ef4444;
+    }
+
+    /* Auth Gate Modal */
+    .auth-gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .auth-gate-card {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25);
+      max-width: 480px;
+      width: 100%;
+      padding: 32px 30px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      text-align: center;
+      position: relative;
+    }
+
+    .auth-gate-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .auth-gate-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .auth-gate-close {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #64748b;
+      transition: all 0.15s ease;
+    }
+
+    .auth-gate-close:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .auth-gate-icon-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: rgba(47, 107, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .auth-gate-body h3 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .auth-gate-body p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #64748b;
+      margin-bottom: 24px;
+    }
+
+    .auth-gate-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-gate-primary {
+      height: 48px;
+      background: #27384f;
+      color: #ffffff;
+      border-radius: 14px;
+      font-size: 14.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(39, 56, 79, 0.2);
+    }
+
+    .btn-gate-primary:hover {
+      background: #1b2838;
+      transform: translateY(-1px);
+    }
+
+    .btn-gate-secondary {
+      height: 48px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      border-radius: 14px;
+      font-size: 14.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-gate-secondary:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .gate-divider {
+      position: relative;
+      text-align: center;
+      margin: 8px 0;
+    }
+
+    .gate-divider::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      right: 0;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .gate-divider span {
+      position: relative;
+      background: #ffffff;
+      padding: 0 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.08em;
+    }
+
+    .btn-gate-google {
+      height: 48px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      border-radius: 14px;
+      font-size: 14.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-gate-google:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
     }
 
     /* Main Container */
@@ -1614,11 +2066,15 @@
       </div>
 
       <div class="nav-actions">
-        <div class="nav-cta-wrap">
+        <div class="nav-cta-wrap" id="hero-auth-guest">
           <a href="signup.html?mode=login" class="btn-login">Log In</a>
-        </div>
-        <div class="nav-cta-wrap">
           <a href="signup.html?mode=signup" class="signin-pill">Sign Up</a>
+        </div>
+        <div id="hero-auth-user" class="hero-user-badge">
+          <div class="hero-user-avatar" id="hero-nav-avatar">K</div>
+          <span class="hero-user-name" id="hero-nav-name">Biswajit Roy</span>
+          <a href="#assistant" class="hero-btn-go" onclick="showView('app', 'chat')">Assistant →</a>
+          <button class="hero-btn-signout" onclick="handleSignOut()">Sign Out</button>
         </div>
       </div>
     </nav>
@@ -1632,7 +2088,7 @@
         Verified answers for attendance, exams, and course syllabi,<br>grounded strictly in official university documents.
       </p>
       <div class="cta">
-        <a href="#assistant" class="btn-cta" onclick="showView('app', 'chat')">Get Started for Free</a>
+        <a href="#assistant" class="btn-cta" onclick="handleHeroCtaClick(event)">Get Started for Free</a>
       </div>
     </div>
 
@@ -1698,7 +2154,32 @@
         <button class="rail-btn" title="Settings">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
-        <div class="avatar-mini">K</div>
+        <div class="avatar-mini-wrapper" onclick="toggleUserDropdown(event)">
+          <div class="avatar-mini" id="rail-avatar-mini" title="Click to view profile">K</div>
+          <span class="avatar-name-mini" id="rail-avatar-name" title="User Name">User</span>
+        </div>
+
+        <!-- User Profile Dropdown Flyout -->
+        <div id="user-profile-flyout" class="user-flyout-card" style="display: none;">
+          <div class="flyout-header">
+            <div class="flyout-avatar" id="flyout-avatar">K</div>
+            <div class="flyout-meta">
+              <div class="flyout-name" id="flyout-name">Guest User</div>
+              <div class="flyout-email" id="flyout-email">Not signed in</div>
+            </div>
+          </div>
+          <div class="flyout-badge">
+            <span class="flyout-status-dot"></span>
+            <span id="flyout-status-text">Verified Kryon Account</span>
+          </div>
+          <div class="flyout-divider"></div>
+          <div class="flyout-actions">
+            <button type="button" class="flyout-btn-signout" id="flyout-action-btn" onclick="handleAuthButtonClick()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span id="flyout-action-label">Sign Out</span>
+            </button>
+          </div>
+        </div>
       </div>
     </aside>
 
@@ -1721,6 +2202,15 @@
           <div class="status-pill">
             <div class="pulse-dot"></div>
             <span>RAG Active (FAISS + BM25)</span>
+          </div>
+
+          <!-- User Profile Pill in Top Bar -->
+          <div class="user-pill-top" id="top-user-pill" onclick="toggleUserDropdown(event)" title="Profile settings">
+            <div class="user-pill-avatar" id="top-pill-avatar">K</div>
+            <span class="user-pill-name" id="top-pill-name">Guest</span>
+            <button class="user-pill-logout" id="top-pill-logout-btn" onclick="event.stopPropagation(); handleSignOut()" title="Sign Out">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </button>
           </div>
         </div>
       </header>
@@ -1953,6 +2443,59 @@
       </div>
     </div>
   </section>
+
+  <!-- ============================================================
+       AUTH GATE MODAL (Hook before using agent)
+       ============================================================ -->
+  <div id="auth-gate-modal" class="auth-gate-overlay" style="display: none;" onclick="if(event.target===this) closeAuthGateModal()">
+    <div class="auth-gate-card">
+      <div class="auth-gate-header">
+        <div class="auth-gate-logo">
+          <svg viewBox="0 0 16 18" width="20" height="22" fill="#2f6bff">
+            <path d="M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z"/>
+          </svg>
+          <span>Kryon AI Regulations Assistant</span>
+        </div>
+        <button type="button" class="auth-gate-close" onclick="closeAuthGateModal()" title="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="auth-gate-body">
+        <div class="auth-gate-icon-badge">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2f6bff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h3>Join Kryon to Use the AI Assistant</h3>
+        <p id="auth-gate-msg">Before using the assistant, please sign up first with your university credentials. If you already registered, log in to your account.</p>
+
+        <div class="auth-gate-buttons">
+          <a href="signup.html?mode=signup" class="btn-gate-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+            <span>Sign Up with Credentials</span>
+          </a>
+
+          <a href="signup.html?mode=login" class="btn-gate-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+            <span>Log In to Existing Account</span>
+          </a>
+
+          <div class="gate-divider">
+            <span>OR</span>
+          </div>
+
+          <button type="button" class="btn-gate-google" onclick="handleQuickGoogleAuth()">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <!-- ============================================================
@@ -2420,12 +2963,200 @@
       toggleDropdown("dropdown-refusal");
     }
 
+    /* ============================================================
+       KRYON USER AUTHENTICATION & PROFILE HOOK ENGINE
+       ============================================================ */
+    function getKryonUser() {
+      try {
+        const stored = localStorage.getItem("kryon_user");
+        if (stored) {
+          const user = JSON.parse(stored);
+          if (user && (user.name || user.email)) {
+            return user;
+          }
+        }
+      } catch (e) {
+        console.error("Error reading kryon_user:", e);
+      }
+      return null;
+    }
+
+    function isUserLoggedIn() {
+      return !!getKryonUser();
+    }
+
+    function syncUserInterface() {
+      const user = getKryonUser();
+
+      // Rail Avatar & Name (from user screenshot)
+      const railAvatar = document.getElementById("rail-avatar-mini");
+      const railName = document.getElementById("rail-avatar-name");
+      const flyoutAvatar = document.getElementById("flyout-avatar");
+      const flyoutName = document.getElementById("flyout-name");
+      const flyoutEmail = document.getElementById("flyout-email");
+      const flyoutActionLabel = document.getElementById("flyout-action-label");
+      const flyoutStatusText = document.getElementById("flyout-status-text");
+
+      // Top Bar Pill
+      const topPill = document.getElementById("top-user-pill");
+      const topAvatar = document.getElementById("top-pill-avatar");
+      const topName = document.getElementById("top-pill-name");
+
+      // Hero Nav
+      const heroGuest = document.getElementById("hero-auth-guest");
+      const heroUser = document.getElementById("hero-auth-user");
+      const heroAvatar = document.getElementById("hero-nav-avatar");
+      const heroName = document.getElementById("hero-nav-name");
+
+      if (user) {
+        const initials = user.initials || (user.name ? user.name[0].toUpperCase() : "U");
+        const displayName = user.name || user.firstName || "User";
+        const shortName = user.firstName || displayName.split(" ")[0] || "User";
+
+        if (railAvatar) {
+          railAvatar.innerText = initials;
+          railAvatar.title = `Logged in as ${displayName} (${user.email || ""})`;
+        }
+        if (railName) {
+          railName.innerText = shortName;
+          railName.title = displayName;
+        }
+        if (flyoutAvatar) flyoutAvatar.innerText = initials;
+        if (flyoutName) flyoutName.innerText = displayName;
+        if (flyoutEmail) flyoutEmail.innerText = user.email || "student@university.edu";
+        if (flyoutActionLabel) flyoutActionLabel.innerText = "Sign Out";
+        if (flyoutStatusText) {
+          flyoutStatusText.innerText = user.authType === "google" ? "Verified via Google SSO" : "Verified Academic Profile";
+        }
+
+        if (topPill) topPill.style.display = "flex";
+        if (topAvatar) topAvatar.innerText = initials;
+        if (topName) topName.innerText = shortName;
+
+        if (heroGuest) heroGuest.style.display = "none";
+        if (heroUser) {
+          heroUser.style.display = "flex";
+          if (heroAvatar) heroAvatar.innerText = initials;
+          if (heroName) heroName.innerText = shortName;
+        }
+      } else {
+        if (railAvatar) {
+          railAvatar.innerText = "K";
+          railAvatar.title = "Kryon Guest - Click to Log In or Register";
+        }
+        if (railName) {
+          railName.innerText = "Guest";
+          railName.title = "Click to Sign Up or Log In";
+        }
+        if (flyoutAvatar) flyoutAvatar.innerText = "K";
+        if (flyoutName) flyoutName.innerText = "Guest User";
+        if (flyoutEmail) flyoutEmail.innerText = "Sign in to access AI Assistant";
+        if (flyoutActionLabel) flyoutActionLabel.innerText = "Sign In / Register";
+        if (flyoutStatusText) flyoutStatusText.innerText = "Guest Mode";
+
+        if (topPill) topPill.style.display = "none";
+
+        if (heroGuest) heroGuest.style.display = "flex";
+        if (heroUser) heroUser.style.display = "none";
+      }
+    }
+
+    function toggleUserDropdown(e) {
+      if (e) e.stopPropagation();
+      const flyout = document.getElementById("user-profile-flyout");
+      if (!flyout) return;
+      if (flyout.style.display === "none" || !flyout.style.display) {
+        flyout.style.display = "block";
+      } else {
+        flyout.style.display = "none";
+      }
+    }
+
+    function closeUserDropdown() {
+      const flyout = document.getElementById("user-profile-flyout");
+      if (flyout) flyout.style.display = "none";
+    }
+
+    document.addEventListener("click", (e) => {
+      const flyout = document.getElementById("user-profile-flyout");
+      const railBottom = document.querySelector(".rail-bottom");
+      if (flyout && !flyout.contains(e.target) && (!railBottom || !railBottom.contains(e.target))) {
+        flyout.style.display = "none";
+      }
+    });
+
+    function handleAuthButtonClick() {
+      if (isUserLoggedIn()) {
+        handleSignOut();
+      } else {
+        window.location.href = "signup.html?mode=signup";
+      }
+    }
+
+    function handleSignOut() {
+      localStorage.removeItem("kryon_user");
+      syncUserInterface();
+      closeUserDropdown();
+      alert("You have been signed out from Kryon.");
+      showView("hero");
+    }
+
+    function showAuthGateModal(reason = null) {
+      const modal = document.getElementById("auth-gate-modal");
+      const msg = document.getElementById("auth-gate-msg");
+      if (msg && reason) msg.innerText = reason;
+      if (modal) modal.style.display = "flex";
+    }
+
+    function closeAuthGateModal() {
+      const modal = document.getElementById("auth-gate-modal");
+      if (modal) modal.style.display = "none";
+    }
+
+    function handleHeroCtaClick(e) {
+      if (!isUserLoggedIn()) {
+        e.preventDefault();
+        // Auth hook before using agent: direct new user to sign up first
+        window.location.href = "signup.html?mode=signup";
+        return;
+      }
+      showView('app', 'chat');
+    }
+
+    function handleQuickGoogleAuth() {
+      const name = prompt("Google SSO - Enter your Display Name:", "Biswajit Roy") || "Biswajit Roy";
+      const email = prompt("Google SSO - Enter your Google Email:", "biswajit@university.edu") || "biswajit@university.edu";
+
+      const first = name.split(" ")[0] || "User";
+      const last = name.split(" ").slice(1).join(" ") || "";
+      const initials = ((first[0] || "K") + (last[0] || "")).toUpperCase();
+
+      const userObj = {
+        name: name,
+        firstName: first,
+        lastName: last,
+        email: email,
+        initials: initials,
+        authType: "google",
+        loggedInAt: Date.now()
+      };
+
+      localStorage.setItem("kryon_user", JSON.stringify(userObj));
+      syncUserInterface();
+      closeAuthGateModal();
+      showView("app", "chat");
+    }
+
     /* Single Page View Switcher: Stores Assistant inside Get Started button */
     function showView(view, tab = "chat") {
       const heroEl = document.getElementById("hero");
       const appEl = document.getElementById("assistant");
 
       if (view === "app" || view === "assistant") {
+        if (!isUserLoggedIn()) {
+          showAuthGateModal("Before using the Kryon AI Regulations Assistant, please register or log in with your university credentials.");
+          return;
+        }
         heroEl.classList.add("view-hidden");
         appEl.classList.add("view-active");
         setDashboardTab(tab);
@@ -2453,10 +3184,16 @@
 
     // Hash & History Listener
     window.addEventListener("DOMContentLoaded", () => {
+      syncUserInterface();
       renderChatHistory();
       setTimeout(syncHistoryBarWidth, 60);
       if (window.location.hash === "#assistant") {
-        showView("app", "chat");
+        if (!isUserLoggedIn()) {
+          showView("hero");
+          showAuthGateModal("Please sign up or log in first to use the Kryon AI Assistant.");
+        } else {
+          showView("app", "chat");
+        }
       } else {
         showView("hero");
       }
@@ -2464,7 +3201,12 @@
 
     window.addEventListener("popstate", () => {
       if (window.location.hash === "#assistant") {
-        showView("app", "chat");
+        if (!isUserLoggedIn()) {
+          showView("hero");
+          showAuthGateModal("Please sign up or log in first to use the Kryon AI Assistant.");
+        } else {
+          showView("app", "chat");
+        }
       } else {
         showView("hero");
       }
@@ -2720,11 +3462,19 @@
     }
 
     function submitQuickQuery(q) {
+      if (!isUserLoggedIn()) {
+        showAuthGateModal("Please sign up or log in first to use the AI Regulations Assistant.");
+        return;
+      }
       document.getElementById("user-query").value = q;
       handleSendQuery();
     }
 
     function executeTopSearch() {
+      if (!isUserLoggedIn()) {
+        showAuthGateModal("Please sign up or log in first to search regulations.");
+        return;
+      }
       const q = document.getElementById("top-search").value.trim();
       if (q) {
         document.getElementById("user-query").value = q;
@@ -2734,6 +3484,10 @@
     }
 
     async function handleSendQuery(forcedId = null) {
+      if (!isUserLoggedIn()) {
+        showAuthGateModal("Please sign up or log in first to query the AI assistant.");
+        return;
+      }
       const inputEl = document.getElementById("user-query");
       const queryText = inputEl.value.trim();
       if (!queryText) return;
