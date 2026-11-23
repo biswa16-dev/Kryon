@@ -185,6 +185,20 @@ export default function App() {
            ============================================================ */}
       <section className="flex-1 flex flex-col items-center justify-center py-8 lg:py-6 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-y-auto lg:overflow-hidden bg-[#fbfbfb]">
         <div className="w-full max-w-[500px] lg:max-w-[520px] space-y-7">
+          {/* Top Bar / Brand Header (Same Kryon Logo as Home Page) */}
+          <div className="flex items-center justify-between pb-1">
+            <a
+              href="/"
+              className="inline-flex items-center gap-2.5 font-semibold text-[17px] tracking-tight text-[#111111] hover:opacity-80 transition-opacity"
+              title="Back to Kryon Home"
+            >
+              <svg className="w-4 h-4.5 text-[#111111]" viewBox="0 0 16 18" fill="currentColor">
+                <path d="M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z" />
+              </svg>
+              <span className="text-[17px] font-semibold tracking-tight text-[#111111]">Kryon</span>
+            </a>
+          </div>
+
           <AnimatePresence mode="wait">
             {/* VIEW 1: LOGIN */}
             {mode === "login" && (
@@ -198,7 +212,7 @@ export default function App() {
               >
                 <div className="space-y-2 text-left">
                   <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">
-                    Welcome Back
+                    Log In
                   </h1>
                   <p className="text-gray-500 text-sm sm:text-base pt-1">
                     Enter your credentials to access your account.
@@ -208,7 +222,7 @@ export default function App() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    alert("Welcome back to Kryon, " + email + "!");
+                    alert("Logged in to Kryon: " + email);
                     window.location.href = "/#assistant";
                   }}
                   className="space-y-4.5 sm:space-y-5"
@@ -315,7 +329,7 @@ export default function App() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    alert("Account registered successfully! Welcome to Kryon, " + firstName + ".");
+                    alert("Account registered successfully: " + firstName);
                     window.location.href = "/#assistant";
                   }}
                   className="space-y-4.5 sm:space-y-5"

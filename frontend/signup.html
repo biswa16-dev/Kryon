@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kryon — Account Authentication</title>
+  <title>Kryon</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18'%3E%3Cpath fill='%23111111' d='M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z'/%3E%3C/svg%3E" />
+  <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 18'%3E%3Cpath fill='%23111111' d='M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z'/%3E%3C/svg%3E" />
+  <link rel="alternate icon" type="image/png" href="/static/favicon.ico" />
+  <link rel="alternate icon" type="image/svg+xml" href="/static/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -102,12 +106,22 @@
       <!-- Main Form Wrapper (Matched exact width to StockSense: max-w-[510px]) -->
       <div class="w-full max-w-[500px] lg:max-w-[520px] space-y-7">
 
+        <!-- Top Bar / Brand Header (Same Kryon Logo as Home Page) -->
+        <div class="flex items-center justify-between pb-1">
+          <a href="/" class="inline-flex items-center gap-2.5 font-semibold text-[17px] tracking-tight text-[#111111] hover:opacity-80 transition-opacity" title="Back to Kryon Home">
+            <svg class="w-4 h-4.5 text-[#111111]" viewBox="0 0 16 18" fill="currentColor">
+              <path d="M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z"/>
+            </svg>
+            <span class="text-[17px] font-semibold tracking-tight text-[#111111]">Kryon</span>
+          </a>
+        </div>
+
         <!-- ==========================================
-             VIEW 1: LOG IN ("Welcome Back")
+             VIEW 1: LOG IN
              ========================================== -->
         <div id="view-login" class="view-card space-y-7">
           <div class="space-y-2 text-left">
-            <h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">Welcome Back</h1>
+            <h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">Log In</h1>
             <p class="text-gray-500 text-sm sm:text-base pt-1">Enter your credentials to access your account.</p>
           </div>
 
@@ -331,15 +345,15 @@
 
       if (mode === "signup") {
         document.getElementById("view-signup").classList.remove("hidden");
-        document.title = "Kryon — Create New Profile";
+        document.title = "Kryon";
       } else if (mode === "forgot") {
         document.getElementById("view-forgot").classList.remove("hidden");
         document.getElementById("otp-step-email").classList.remove("hidden");
         document.getElementById("otp-step-verify").classList.add("hidden");
-        document.title = "Kryon — Reset Password";
+        document.title = "Kryon";
       } else {
         document.getElementById("view-login").classList.remove("hidden");
-        document.title = "Kryon — Welcome Back (Log In)";
+        document.title = "Kryon";
       }
 
       if (updateHistory) {
@@ -370,7 +384,7 @@
       btn.disabled = true;
 
       setTimeout(() => {
-        alert("Welcome to Kryon Academic Regulations Assistant, " + email + "!");
+        alert("Logged in to Kryon: " + email);
         window.location.href = "/#assistant";
       }, 700);
     }
@@ -384,7 +398,7 @@
       btn.disabled = true;
 
       setTimeout(() => {
-        alert("Account registered successfully! Welcome to Kryon, " + first + ".");
+        alert("Account registered successfully: " + first);
         window.location.href = "/#assistant";
       }, 700);
     }

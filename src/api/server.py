@@ -303,7 +303,7 @@ if frontend_dir.exists():
     def serve_index():
         index_file = frontend_dir / "index.html"
         if index_file.exists():
-            return FileResponse(index_file)
+            return FileResponse(index_file, headers={"Cache-Control": "no-cache, must-revalidate"})
         return {"message": "Frontend index.html ready."}
 
     @app.get("/signup.html")
@@ -313,13 +313,16 @@ if frontend_dir.exists():
     def serve_signup():
         signup_file = frontend_dir / "signup.html"
         if signup_file.exists():
-            return FileResponse(signup_file)
+            return FileResponse(signup_file, headers={"Cache-Control": "no-cache, must-revalidate"})
         raise HTTPException(status_code=404, detail="Auth page not found")
 
     @app.get("/favicon.ico")
     def serve_favicon():
         fav = frontend_dir / "static" / "favicon.ico"
         if fav.exists():
-            return FileResponse(fav)
+            return FileResponse(fav, media_type="image/x-icon")
+        fav_svg = frontend_dir / "static" / "favicon.svg"
+        if fav_svg.exists():
+            return FileResponse(fav_svg, media_type="image/svg+xml")
         return JSONResponse(status_code=204, content=None)
 
