@@ -42,53 +42,53 @@
   </style>
 </head>
 <body class="bg-[#fbfbfb] text-gray-900 antialiased font-sans">
-  <main class="flex min-h-screen w-full bg-[#fbfbfb] selection:bg-gray-200 p-2.5 sm:p-3.5 lg:p-4 transition-all duration-500 lg:h-screen lg:overflow-hidden">
+  <main class="flex min-h-screen w-full bg-[#fbfbfb] selection:bg-gray-200 p-3 sm:p-4 lg:p-5 transition-all duration-500 lg:h-screen lg:overflow-hidden">
     
     <!-- ============================================================
          LEFT COLUMN (Video & Centered Floating Kryon Card)
          ============================================================ -->
-    <section class="relative hidden lg:flex flex-col items-center justify-center p-8 rounded-3xl overflow-hidden shadow-2xl h-full w-[52%]">
+    <section class="relative hidden lg:flex flex-col items-center justify-center p-8 lg:p-12 rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl h-full w-full lg:w-[48%] xl:w-[49%] bg-[#0c0914]">
       <!-- Background Video (Clean, pure playback without overlay mask) -->
       <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline>
         <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260506_081238_406ed0e3-5d83-436e-a512-0bbff7ec5b95.mp4" type="video/mp4" />
       </video>
 
       <!-- Centered Dark Glassmorphic Card (Enlarged to match StockSense reference) -->
-      <div class="relative z-10 w-full max-w-[400px] bg-black/60 backdrop-blur-md border border-white/10 rounded-[28px] p-8 sm:p-9 text-center space-y-7 shadow-2xl">
+      <div class="relative z-10 w-full max-w-[470px] bg-black/65 backdrop-blur-xl border border-white/15 rounded-[32px] p-9 sm:p-11 lg:p-12 text-center space-y-8 shadow-2xl shadow-black/50">
         <!-- Logo -->
-        <div class="flex items-center gap-2.5 justify-center">
-          <svg class="w-6 h-6 text-white" viewBox="0 0 16 18" fill="currentColor">
+        <div class="flex items-center gap-3 justify-center">
+          <svg class="w-7 h-7 text-white" viewBox="0 0 16 18" fill="currentColor">
             <path d="M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z"/>
           </svg>
-          <span class="text-xl font-semibold tracking-tight text-white">Kryon</span>
+          <span class="text-2xl font-semibold tracking-tight text-white">Kryon</span>
         </div>
 
         <!-- Heading -->
-        <div class="space-y-2">
-          <h2 class="text-3xl sm:text-[34px] font-semibold tracking-tight text-white leading-tight">Join Kryon</h2>
-          <p class="text-white/70 text-xs sm:text-sm leading-relaxed max-w-[270px] mx-auto">
+        <div class="space-y-2.5">
+          <h2 class="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-tight">Join Kryon</h2>
+          <p class="text-white/75 text-sm sm:text-base leading-relaxed max-w-[320px] mx-auto pt-1">
             Follow these 3 quick phases to activate your space.
           </p>
         </div>
 
         <!-- Steps -->
-        <div class="w-full space-y-3 text-left">
+        <div class="w-full space-y-3.5 sm:space-y-4 text-left">
           <!-- Step 1: Active -->
-          <div class="flex items-center gap-3.5 w-full px-4 sm:px-5 py-3.5 rounded-2xl bg-white text-black border border-white shadow-lg">
-            <div class="w-7 h-7 rounded-full bg-[#1e293b] text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0">1</div>
-            <span class="text-sm font-semibold tracking-tight">Register your identity</span>
+          <div class="flex items-center gap-4 w-full px-5 py-4 sm:py-4.5 rounded-2xl bg-white text-gray-900 border border-white shadow-xl">
+            <div class="w-8 h-8 rounded-full bg-[#18202f] text-white text-sm font-bold flex items-center justify-center shrink-0">1</div>
+            <span class="text-[15px] sm:text-base font-semibold tracking-tight text-gray-900">Register your identity</span>
           </div>
 
           <!-- Step 2 -->
-          <div class="flex items-center gap-3.5 w-full px-4 sm:px-5 py-3.5 rounded-2xl bg-white/10 text-white/90 border border-white/5">
-            <div class="w-7 h-7 rounded-full bg-white/10 text-white/50 text-xs sm:text-sm font-medium flex items-center justify-center shrink-0">2</div>
-            <span class="text-sm font-medium tracking-tight">Access academic regulations</span>
+          <div class="flex items-center gap-4 w-full px-5 py-4 sm:py-4.5 rounded-2xl bg-white/[0.08] text-white/90 border border-white/10">
+            <div class="w-8 h-8 rounded-full bg-white/10 text-white/50 text-sm font-medium flex items-center justify-center shrink-0 border border-white/5">2</div>
+            <span class="text-[15px] sm:text-base font-medium tracking-tight text-white/80">Access academic regulations</span>
           </div>
 
           <!-- Step 3 -->
-          <div class="flex items-center gap-3.5 w-full px-4 sm:px-5 py-3.5 rounded-2xl bg-white/10 text-white/90 border border-white/5">
-            <div class="w-7 h-7 rounded-full bg-white/10 text-white/50 text-xs sm:text-sm font-medium flex items-center justify-center shrink-0">3</div>
-            <span class="text-sm font-medium tracking-tight">Explore verified citations</span>
+          <div class="flex items-center gap-4 w-full px-5 py-4 sm:py-4.5 rounded-2xl bg-white/[0.08] text-white/90 border border-white/10">
+            <div class="w-8 h-8 rounded-full bg-white/10 text-white/50 text-sm font-medium flex items-center justify-center shrink-0 border border-white/5">3</div>
+            <span class="text-[15px] sm:text-base font-medium tracking-tight text-white/80">Explore verified citations</span>
           </div>
         </div>
       </div>
@@ -97,55 +97,55 @@
     <!-- ============================================================
          RIGHT COLUMN (Light Theme Form: Login / Sign Up / Forgot OTP)
          ============================================================ -->
-    <section class="flex-1 flex flex-col items-center justify-center py-8 lg:py-6 px-4 sm:px-8 lg:px-12 overflow-y-auto lg:overflow-hidden bg-[#fbfbfb]">
+    <section class="flex-1 flex flex-col items-center justify-center py-8 lg:py-6 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-y-auto lg:overflow-hidden bg-[#fbfbfb]">
       
-      <!-- Main Form Wrapper (Matched exact width to StockSense: max-w-[420px]) -->
-      <div class="w-full max-w-[420px] space-y-6">
+      <!-- Main Form Wrapper (Matched exact width to StockSense: max-w-[510px]) -->
+      <div class="w-full max-w-[500px] lg:max-w-[520px] space-y-7">
 
         <!-- ==========================================
              VIEW 1: LOG IN ("Welcome Back")
              ========================================== -->
-        <div id="view-login" class="view-card space-y-6">
-          <div class="space-y-1.5 text-left">
-            <h1 class="text-3xl sm:text-[32px] font-semibold tracking-tight text-[#111827]">Welcome Back</h1>
-            <p class="text-gray-500 text-sm">Enter your credentials to access your account.</p>
+        <div id="view-login" class="view-card space-y-7">
+          <div class="space-y-2 text-left">
+            <h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">Welcome Back</h1>
+            <p class="text-gray-500 text-sm sm:text-base pt-1">Enter your credentials to access your account.</p>
           </div>
 
-          <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">Email</label>
-              <input id="login-email" type="email" required placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all" />
+          <form onsubmit="handleLoginSubmit(event)" class="space-y-4.5 sm:space-y-5">
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Email</label>
+              <input id="login-email" type="email" required placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
             </div>
 
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">Password</label>
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Password</label>
               <div class="relative flex items-center">
-                <input id="login-password" type="password" required placeholder="••••••••" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all pr-11" />
-                <button type="button" onclick="togglePasswordVisibility('login-password', 'login-eye')" class="absolute right-3.5 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer" aria-label="Toggle password">
-                  <svg id="login-eye" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <input id="login-password" type="password" required placeholder="••••••••" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
+                <button type="button" onclick="togglePasswordVisibility('login-password', 'login-eye')" class="absolute right-4 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer p-1" aria-label="Toggle password">
+                  <svg id="login-eye" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
               </div>
-              <div class="flex items-center justify-between pt-1">
-                <span class="text-xs text-gray-400">Requires at least 8 symbols.</span>
-                <button type="button" onclick="switchView('forgot')" class="text-xs font-medium text-gray-700 hover:text-black hover:underline cursor-pointer">Forgot Password?</button>
+              <div class="flex items-center justify-between pt-1.5 text-xs sm:text-[13px]">
+                <span class="text-gray-400">Requires at least 8 symbols.</span>
+                <button type="button" onclick="switchView('forgot')" class="font-medium text-gray-700 hover:text-black hover:underline cursor-pointer">Forgot Password?</button>
               </div>
             </div>
 
-            <button type="submit" class="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer mt-2 text-sm">
+            <button type="submit" class="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer mt-3 sm:mt-4 text-[16px] sm:text-[17px] tracking-tight">
               Log In
             </button>
           </form>
 
           <!-- Divider -->
-          <div class="relative flex items-center justify-center my-5">
+          <div class="relative flex items-center justify-center my-6 sm:my-7">
             <div class="w-full border-t border-gray-200"></div>
-            <span class="absolute bg-[#fbfbfb] px-3 text-xs font-medium text-gray-400 uppercase tracking-widest">OR</span>
+            <span class="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">OR</span>
           </div>
 
           <!-- Google Button (Centered and sized exactly like StockSense reference) -->
           <div class="flex justify-center">
-            <button type="button" onclick="handleGoogleAuth()" class="w-full max-w-[240px] h-12 bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-xl flex items-center justify-center gap-3 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer">
-              <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <button type="button" onclick="handleGoogleAuth()" class="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer">
+              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -156,8 +156,8 @@
           </div>
 
           <!-- Footer Switcher -->
-          <p class="text-center text-sm text-gray-500 pt-1">
-            New user? <button type="button" onclick="switchView('signup')" class="font-semibold text-gray-900 hover:underline cursor-pointer">Register</button>
+          <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
+            New user? <button type="button" onclick="switchView('signup')" class="font-semibold text-gray-900 hover:underline cursor-pointer ml-1">Register</button>
           </p>
         </div>
 
@@ -165,58 +165,58 @@
         <!-- ==========================================
              VIEW 2: SIGN UP ("Create New Profile")
              ========================================== -->
-        <div id="view-signup" class="view-card space-y-6 hidden">
-          <div class="space-y-1.5 text-left">
-            <h1 class="text-3xl sm:text-[32px] font-semibold tracking-tight text-[#111827]">Create New Profile</h1>
-            <p class="text-gray-500 text-sm">Input your basic details to begin the journey.</p>
+        <div id="view-signup" class="view-card space-y-7 hidden">
+          <div class="space-y-2 text-left">
+            <h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">Create New Profile</h1>
+            <p class="text-gray-500 text-sm sm:text-base pt-1">Input your basic details to begin the journey.</p>
           </div>
 
-          <form onsubmit="handleSignupSubmit(event)" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div class="space-y-1.5 text-left">
-                <label class="block text-sm font-medium text-gray-700">First Name</label>
-                <input id="signup-firstname" type="text" required placeholder="Enter your first name" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all" />
+          <form onsubmit="handleSignupSubmit(event)" class="space-y-4.5 sm:space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-4.5">
+              <div class="space-y-2 text-left">
+                <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">First Name</label>
+                <input id="signup-firstname" type="text" required placeholder="Enter your first name" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
               </div>
-              <div class="space-y-1.5 text-left">
-                <label class="block text-sm font-medium text-gray-700">Last Name</label>
-                <input id="signup-lastname" type="text" required placeholder="Enter your last name" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all" />
+              <div class="space-y-2 text-left">
+                <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Last Name</label>
+                <input id="signup-lastname" type="text" required placeholder="Enter your last name" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
               </div>
             </div>
 
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">Email</label>
-              <input id="signup-email" type="email" required placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all" />
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Email</label>
+              <input id="signup-email" type="email" required placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
             </div>
 
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">Password</label>
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Password</label>
               <div class="relative flex items-center">
-                <input id="signup-password" type="password" required placeholder="••••••••" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all pr-11" />
-                <button type="button" onclick="togglePasswordVisibility('signup-password', 'signup-eye')" class="absolute right-3.5 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer" aria-label="Toggle password">
-                  <svg id="signup-eye" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <input id="signup-password" type="password" required placeholder="••••••••" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
+                <button type="button" onclick="togglePasswordVisibility('signup-password', 'signup-eye')" class="absolute right-4 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer p-1" aria-label="Toggle password">
+                  <svg id="signup-eye" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
               </div>
-              <div class="flex items-center justify-between pt-1">
-                <span class="text-xs text-gray-400">Requires at least 8 symbols.</span>
-                <button type="button" onclick="switchView('forgot')" class="text-xs font-medium text-gray-700 hover:text-black hover:underline cursor-pointer">Forgot Password?</button>
+              <div class="flex items-center justify-between pt-1.5 text-xs sm:text-[13px]">
+                <span class="text-gray-400">Requires at least 8 symbols.</span>
+                <button type="button" onclick="switchView('forgot')" class="font-medium text-gray-700 hover:text-black hover:underline cursor-pointer">Forgot Password?</button>
               </div>
             </div>
 
-            <button type="submit" class="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer mt-2 text-sm">
+            <button type="submit" class="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer mt-3 sm:mt-4 text-[16px] sm:text-[17px] tracking-tight">
               Create Account
             </button>
           </form>
 
           <!-- Divider -->
-          <div class="relative flex items-center justify-center my-5">
+          <div class="relative flex items-center justify-center my-6 sm:my-7">
             <div class="w-full border-t border-gray-200"></div>
-            <span class="absolute bg-[#fbfbfb] px-3 text-xs font-medium text-gray-400 uppercase tracking-widest">OR</span>
+            <span class="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">OR</span>
           </div>
 
           <!-- Google Button (Centered and sized exactly like StockSense reference) -->
           <div class="flex justify-center">
-            <button type="button" onclick="handleGoogleAuth()" class="w-full max-w-[240px] h-12 bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-xl flex items-center justify-center gap-3 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer">
-              <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <button type="button" onclick="handleGoogleAuth()" class="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer">
+              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                 <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -227,8 +227,8 @@
           </div>
 
           <!-- Footer Switcher -->
-          <p class="text-center text-sm text-gray-500 pt-1">
-            Already have an account? <button type="button" onclick="switchView('login')" class="font-semibold text-gray-900 hover:underline cursor-pointer">Log in</button>
+          <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
+            Already have an account? <button type="button" onclick="switchView('login')" class="font-semibold text-gray-900 hover:underline cursor-pointer ml-1">Log in</button>
           </p>
         </div>
 
@@ -236,62 +236,62 @@
         <!-- ==========================================
              VIEW 3: FORGOT PASSWORD (OTP Verification)
              ========================================== -->
-        <div id="view-forgot" class="view-card space-y-6 hidden">
-          <div class="space-y-1.5 text-left">
-            <h1 class="text-3xl sm:text-[32px] font-semibold tracking-tight text-[#111827]">Reset Password</h1>
-            <p class="text-gray-500 text-sm" id="forgot-subline">Enter your email and we'll send a 6-digit OTP verification code.</p>
+        <div id="view-forgot" class="view-card space-y-7 hidden">
+          <div class="space-y-2 text-left">
+            <h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">Reset Password</h1>
+            <p class="text-gray-500 text-sm sm:text-base pt-1" id="forgot-subline">Enter your email and we'll send a 6-digit OTP verification code.</p>
           </div>
 
           <!-- Step A: Enter Email -->
-          <div id="otp-step-email" class="space-y-4">
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">Registered Email Address</label>
-              <input id="forgot-email" type="email" placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all" />
+          <div id="otp-step-email" class="space-y-4.5 sm:space-y-5">
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Registered Email Address</label>
+              <input id="forgot-email" type="email" placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
             </div>
 
-            <button type="button" onclick="handleSendOTP()" id="btn-send-otp" class="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer text-sm flex items-center justify-center gap-2">
+            <button type="button" onclick="handleSendOTP()" id="btn-send-otp" class="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer text-[16px] sm:text-[17px] flex items-center justify-center gap-2 tracking-tight">
               <span>Send OTP Verification Code</span>
             </button>
 
-            <p class="text-center text-sm text-gray-500 pt-2">
-              Remember your password? <button type="button" onclick="switchView('login')" class="font-semibold text-gray-900 hover:underline cursor-pointer">Back to Log In</button>
+            <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
+              Remember your password? <button type="button" onclick="switchView('login')" class="font-semibold text-gray-900 hover:underline cursor-pointer ml-1">Back to Log In</button>
             </p>
           </div>
 
           <!-- Step B: Enter 6-digit OTP & New Password -->
-          <div id="otp-step-verify" class="space-y-4 hidden">
+          <div id="otp-step-verify" class="space-y-5 hidden">
             <!-- Code Sent Banner -->
-            <div class="p-4 bg-green-50 border border-green-200/70 rounded-xl text-left text-sm text-green-800 flex items-start gap-3">
-              <svg class="w-5 h-5 text-green-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <div class="p-4 sm:p-5 bg-green-50 border border-green-200/80 rounded-2xl text-left text-[14px] sm:text-[15px] text-green-800 flex items-start gap-3.5">
+              <svg class="w-6 h-6 text-green-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               <div>
                 <span class="font-semibold">OTP Code Sent!</span> Check your inbox for <span id="target-email-label" class="font-semibold underline"></span>.
-                <div id="dev-otp-badge" class="mt-1 text-xs text-green-900 font-mono bg-green-100 px-2 py-0.5 rounded inline-block"></div>
+                <div id="dev-otp-badge" class="mt-1 text-xs text-green-900 font-mono bg-green-100 px-2.5 py-1 rounded-lg inline-block"></div>
               </div>
             </div>
 
             <!-- 6-Box OTP Inputs -->
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">Enter 6-Digit OTP</label>
-              <div class="flex gap-2 justify-between" id="otp-container">
-                <input type="text" maxlength="1" class="otp-input w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none" oninput="handleOtpKey(this, 0)" onkeydown="handleOtpBackspace(event, 0)" />
-                <input type="text" maxlength="1" class="otp-input w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none" oninput="handleOtpKey(this, 1)" onkeydown="handleOtpBackspace(event, 1)" />
-                <input type="text" maxlength="1" class="otp-input w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none" oninput="handleOtpKey(this, 2)" onkeydown="handleOtpBackspace(event, 2)" />
-                <input type="text" maxlength="1" class="otp-input w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none" oninput="handleOtpKey(this, 3)" onkeydown="handleOtpBackspace(event, 3)" />
-                <input type="text" maxlength="1" class="otp-input w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none" oninput="handleOtpKey(this, 4)" onkeydown="handleOtpBackspace(event, 4)" />
-                <input type="text" maxlength="1" class="otp-input w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none" oninput="handleOtpKey(this, 5)" onkeydown="handleOtpBackspace(event, 5)" />
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Enter 6-Digit OTP</label>
+              <div class="flex gap-2 sm:gap-3 justify-between" id="otp-container">
+                <input type="text" maxlength="1" class="otp-input w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all" oninput="handleOtpKey(this, 0)" onkeydown="handleOtpBackspace(event, 0)" />
+                <input type="text" maxlength="1" class="otp-input w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all" oninput="handleOtpKey(this, 1)" onkeydown="handleOtpBackspace(event, 1)" />
+                <input type="text" maxlength="1" class="otp-input w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all" oninput="handleOtpKey(this, 2)" onkeydown="handleOtpBackspace(event, 2)" />
+                <input type="text" maxlength="1" class="otp-input w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all" oninput="handleOtpKey(this, 3)" onkeydown="handleOtpBackspace(event, 3)" />
+                <input type="text" maxlength="1" class="otp-input w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all" oninput="handleOtpKey(this, 4)" onkeydown="handleOtpBackspace(event, 4)" />
+                <input type="text" maxlength="1" class="otp-input w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all" oninput="handleOtpKey(this, 5)" onkeydown="handleOtpBackspace(event, 5)" />
               </div>
             </div>
 
-            <div class="space-y-1.5 text-left">
-              <label class="block text-sm font-medium text-gray-700">New Password</label>
-              <input id="otp-new-password" type="password" placeholder="At least 8 characters" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all" />
+            <div class="space-y-2 text-left">
+              <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">New Password</label>
+              <input id="otp-new-password" type="password" placeholder="At least 8 characters" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
             </div>
 
-            <button type="button" onclick="handleVerifyOTP()" id="btn-verify-otp" class="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer text-sm flex items-center justify-center gap-2">
+            <button type="button" onclick="handleVerifyOTP()" id="btn-verify-otp" class="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer text-[16px] sm:text-[17px] flex items-center justify-center gap-2 tracking-tight">
               <span>Verify OTP & Update Password</span>
             </button>
 
-            <div class="flex items-center justify-between text-sm text-gray-500 pt-1">
+            <div class="flex items-center justify-between text-sm sm:text-[15px] text-gray-500 pt-1">
               <span id="resend-timer">Resend available in <strong id="timer-count">45s</strong></span>
               <button type="button" onclick="handleSendOTP()" id="btn-resend" class="font-semibold text-gray-700 hover:text-black hover:underline hidden">Resend Code</button>
             </div>

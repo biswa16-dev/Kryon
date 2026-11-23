@@ -132,11 +132,11 @@ export default function App() {
   };
 
   return (
-    <main className="flex min-h-screen w-full bg-[#fbfbfb] text-gray-900 selection:bg-gray-200 p-2.5 sm:p-3.5 lg:p-4 transition-all duration-500 lg:h-screen lg:overflow-hidden">
+    <main className="flex min-h-screen w-full bg-[#fbfbfb] text-gray-900 selection:bg-gray-200 p-3 sm:p-4 lg:p-5 transition-all duration-500 lg:h-screen lg:overflow-hidden">
       {/* ============================================================
            LEFT COLUMN: Video Hero with Centered Enlarged Card
            ============================================================ */}
-      <section className="relative hidden lg:flex flex-col items-center justify-center p-8 rounded-3xl overflow-hidden shadow-2xl h-full w-[52%]">
+      <section className="relative hidden lg:flex flex-col items-center justify-center p-8 lg:p-12 rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl h-full w-full lg:w-[48%] xl:w-[49%] bg-[#0c0914]">
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -152,27 +152,27 @@ export default function App() {
         </video>
 
         {/* Centered Dark Glassmorphic Card (Enlarged to match StockSense Ref) */}
-        <div className="relative z-10 w-full max-w-[400px] bg-black/60 backdrop-blur-md border border-white/10 rounded-[28px] p-8 sm:p-9 text-center space-y-7 shadow-2xl">
+        <div className="relative z-10 w-full max-w-[470px] bg-black/65 backdrop-blur-xl border border-white/15 rounded-[32px] p-9 sm:p-11 lg:p-12 text-center space-y-8 shadow-2xl shadow-black/50">
           {/* Kryon Brand Logo */}
-          <div className="flex items-center gap-2.5 justify-center">
-            <svg className="w-6 h-6 text-white" viewBox="0 0 16 18" fill="currentColor">
+          <div className="flex items-center gap-3 justify-center">
+            <svg className="w-7 h-7 text-white" viewBox="0 0 16 18" fill="currentColor">
               <path d="M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z" />
             </svg>
-            <span className="text-xl font-semibold tracking-tight text-white">Kryon</span>
+            <span className="text-2xl font-semibold tracking-tight text-white">Kryon</span>
           </div>
 
           {/* Heading */}
-          <div className="space-y-2">
-            <h2 className="text-3xl sm:text-[34px] font-semibold tracking-tight text-white leading-tight">
+          <div className="space-y-2.5">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold tracking-tight text-white leading-tight">
               Join Kryon
             </h2>
-            <p className="text-white/70 text-xs sm:text-sm leading-relaxed max-w-[270px] mx-auto">
+            <p className="text-white/75 text-sm sm:text-base leading-relaxed max-w-[320px] mx-auto pt-1">
               Follow these 3 quick phases to activate your space.
             </p>
           </div>
 
           {/* Steps */}
-          <div className="w-full space-y-3 text-left">
+          <div className="w-full space-y-3.5 sm:space-y-4 text-left">
             <StepItem number={1} text="Register your identity" active={true} />
             <StepItem number={2} text="Access academic regulations" />
             <StepItem number={3} text="Explore verified citations" />
@@ -183,8 +183,8 @@ export default function App() {
       {/* ============================================================
            RIGHT COLUMN: Enlarged Light Theme Form
            ============================================================ */}
-      <section className="flex-1 flex flex-col items-center justify-center py-8 lg:py-6 px-4 sm:px-8 lg:px-12 overflow-y-auto lg:overflow-hidden bg-[#fbfbfb]">
-        <div className="w-full max-w-[420px] space-y-6">
+      <section className="flex-1 flex flex-col items-center justify-center py-8 lg:py-6 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-y-auto lg:overflow-hidden bg-[#fbfbfb]">
+        <div className="w-full max-w-[500px] lg:max-w-[520px] space-y-7">
           <AnimatePresence mode="wait">
             {/* VIEW 1: LOGIN */}
             {mode === "login" && (
@@ -194,13 +194,13 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25 }}
-                className="space-y-6"
+                className="space-y-7"
               >
-                <div className="space-y-1.5 text-left">
-                  <h1 className="text-3xl sm:text-[32px] font-semibold tracking-tight text-[#111827]">
+                <div className="space-y-2 text-left">
+                  <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">
                     Welcome Back
                   </h1>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm sm:text-base pt-1">
                     Enter your credentials to access your account.
                   </p>
                 </div>
@@ -211,22 +211,22 @@ export default function App() {
                     alert("Welcome back to Kryon, " + email + "!");
                     window.location.href = "/#assistant";
                   }}
-                  className="space-y-4"
+                  className="space-y-4.5 sm:space-y-5"
                 >
-                  <div className="space-y-1.5 text-left">
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <div className="space-y-2 text-left">
+                    <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Email</label>
                     <input
                       type="email"
                       required
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all"
+                      className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                     />
                   </div>
 
-                  <div className="space-y-1.5 text-left">
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                  <div className="space-y-2 text-left">
+                    <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Password</label>
                     <div className="relative flex items-center">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -234,24 +234,24 @@ export default function App() {
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all pr-11"
+                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3.5 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+                        className="absolute right-4 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer p-1"
                       >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
                     </div>
-                    <div className="flex items-center justify-between pt-1">
-                      <span className="text-xs text-gray-400">
+                    <div className="flex items-center justify-between pt-1.5 text-xs sm:text-[13px]">
+                      <span className="text-gray-400">
                         Requires at least 8 symbols.
                       </span>
                       <button
                         type="button"
                         onClick={() => setMode("forgot")}
-                        className="text-xs font-medium text-gray-700 hover:text-black hover:underline cursor-pointer"
+                        className="font-medium text-gray-700 hover:text-black hover:underline cursor-pointer"
                       >
                         Forgot Password?
                       </button>
@@ -260,16 +260,16 @@ export default function App() {
 
                   <button
                     type="submit"
-                    className="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer mt-2 text-sm"
+                    className="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer mt-3 sm:mt-4 text-[16px] sm:text-[17px] tracking-tight"
                   >
                     Log In
                   </button>
                 </form>
 
                 {/* Divider */}
-                <div className="relative flex items-center justify-center my-5">
+                <div className="relative flex items-center justify-center my-6 sm:my-7">
                   <div className="w-full border-t border-gray-200" />
-                  <span className="absolute bg-[#fbfbfb] px-3 text-xs font-medium text-gray-400 uppercase tracking-widest">
+                  <span className="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">
                     OR
                   </span>
                 </div>
@@ -280,12 +280,12 @@ export default function App() {
                 </div>
 
                 {/* Footer Switcher */}
-                <p className="text-center text-sm text-gray-500 pt-1">
+                <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
                   New user?{" "}
                   <button
                     type="button"
                     onClick={() => setMode("signup")}
-                    className="font-semibold text-gray-900 hover:underline cursor-pointer"
+                    className="font-semibold text-gray-900 hover:underline cursor-pointer ml-1"
                   >
                     Register
                   </button>
@@ -301,13 +301,13 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25 }}
-                className="space-y-6"
+                className="space-y-7"
               >
-                <div className="space-y-1.5 text-left">
-                  <h1 className="text-3xl sm:text-[32px] font-semibold tracking-tight text-[#111827]">
+                <div className="space-y-2 text-left">
+                  <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">
                     Create New Profile
                   </h1>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm sm:text-base pt-1">
                     Input your basic details to begin the journey.
                   </p>
                 </div>
@@ -318,47 +318,47 @@ export default function App() {
                     alert("Account registered successfully! Welcome to Kryon, " + firstName + ".");
                     window.location.href = "/#assistant";
                   }}
-                  className="space-y-4"
+                  className="space-y-4.5 sm:space-y-5"
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <div className="space-y-1.5 text-left">
-                      <label className="block text-sm font-medium text-gray-700">First Name</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-4.5">
+                    <div className="space-y-2 text-left">
+                      <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">First Name</label>
                       <input
                         type="text"
                         required
                         placeholder="Enter your first name"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all"
+                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                     </div>
-                    <div className="space-y-1.5 text-left">
-                      <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                    <div className="space-y-2 text-left">
+                      <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Last Name</label>
                       <input
                         type="text"
                         required
                         placeholder="Enter your last name"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
-                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all"
+                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-1.5 text-left">
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <div className="space-y-2 text-left">
+                    <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Email</label>
                     <input
                       type="email"
                       required
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all"
+                      className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                     />
                   </div>
 
-                  <div className="space-y-1.5 text-left">
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                  <div className="space-y-2 text-left">
+                    <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Password</label>
                     <div className="relative flex items-center">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -366,24 +366,24 @@ export default function App() {
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all pr-11"
+                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3.5 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+                        className="absolute right-4 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer p-1"
                       >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
                     </div>
-                    <div className="flex items-center justify-between pt-1">
-                      <span className="text-xs text-gray-400">
+                    <div className="flex items-center justify-between pt-1.5 text-xs sm:text-[13px]">
+                      <span className="text-gray-400">
                         Requires at least 8 symbols.
                       </span>
                       <button
                         type="button"
                         onClick={() => setMode("forgot")}
-                        className="text-xs font-medium text-gray-700 hover:text-black hover:underline cursor-pointer"
+                        className="font-medium text-gray-700 hover:text-black hover:underline cursor-pointer"
                       >
                         Forgot Password?
                       </button>
@@ -392,16 +392,16 @@ export default function App() {
 
                   <button
                     type="submit"
-                    className="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer mt-2 text-sm"
+                    className="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer mt-3 sm:mt-4 text-[16px] sm:text-[17px] tracking-tight"
                   >
                     Create Account
                   </button>
                 </form>
 
                 {/* Divider */}
-                <div className="relative flex items-center justify-center my-5">
+                <div className="relative flex items-center justify-center my-6 sm:my-7">
                   <div className="w-full border-t border-gray-200" />
-                  <span className="absolute bg-[#fbfbfb] px-3 text-xs font-medium text-gray-400 uppercase tracking-widest">
+                  <span className="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">
                     OR
                   </span>
                 </div>
@@ -412,12 +412,12 @@ export default function App() {
                 </div>
 
                 {/* Footer Switcher */}
-                <p className="text-center text-sm text-gray-500 pt-1">
+                <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
                   Already have an account?{" "}
                   <button
                     type="button"
                     onClick={() => setMode("login")}
-                    className="font-semibold text-gray-900 hover:underline cursor-pointer"
+                    className="font-semibold text-gray-900 hover:underline cursor-pointer ml-1"
                   >
                     Log in
                   </button>
@@ -433,21 +433,21 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.25 }}
-                className="space-y-6"
+                className="space-y-7"
               >
-                <div className="space-y-1.5 text-left">
-                  <h1 className="text-3xl sm:text-[32px] font-semibold tracking-tight text-[#111827]">
+                <div className="space-y-2 text-left">
+                  <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">
                     Reset Password
                   </h1>
-                  <p className="text-gray-500 text-sm">
+                  <p className="text-gray-500 text-sm sm:text-base pt-1">
                     Enter your email to receive a 6-digit OTP verification code.
                   </p>
                 </div>
 
                 {otpStep === "email" ? (
-                  <div className="space-y-4">
-                    <div className="space-y-1.5 text-left">
-                      <label className="block text-sm font-medium text-gray-700">
+                  <div className="space-y-4.5 sm:space-y-5">
+                    <div className="space-y-2 text-left">
+                      <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">
                         Registered Email Address
                       </label>
                       <input
@@ -456,39 +456,39 @@ export default function App() {
                         placeholder="Enter your email"
                         value={forgotEmail}
                         onChange={(e) => setForgotEmail(e.target.value)}
-                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all"
+                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                     </div>
 
                     <button
                       type="button"
                       onClick={handleSendOTP}
-                      className="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer text-sm"
+                      className="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer text-[16px] sm:text-[17px] tracking-tight"
                     >
                       Send OTP Verification Code
                     </button>
 
-                    <p className="text-center text-sm text-gray-500 pt-2">
+                    <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
                       Remember your password?{" "}
                       <button
                         type="button"
                         onClick={() => setMode("login")}
-                        className="font-semibold text-gray-900 hover:underline cursor-pointer"
+                        className="font-semibold text-gray-900 hover:underline cursor-pointer ml-1"
                       >
                         Back to Log In
                       </button>
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     {/* Banner */}
-                    <div className="p-4 bg-green-50 border border-green-200/70 rounded-xl text-left text-sm text-green-800 flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5 shrink-0" />
+                    <div className="p-4 sm:p-5 bg-green-50 border border-green-200/80 rounded-2xl text-left text-[14px] sm:text-[15px] text-green-800 flex items-start gap-3.5">
+                      <CheckCircle2 className="w-6 h-6 text-green-600 mt-0.5 shrink-0" />
                       <div>
                         <span className="font-semibold">OTP Code Sent!</span> Check your inbox for{" "}
                         <span className="font-semibold underline">{forgotEmail}</span>.
                         {activeOtpDev && (
-                          <div className="mt-1 text-xs text-green-900 font-mono bg-green-100 px-2 py-0.5 rounded inline-block">
+                          <div className="mt-1 text-xs text-green-900 font-mono bg-green-100 px-2.5 py-1 rounded-lg inline-block">
                             Active Code: {activeOtpDev}
                           </div>
                         )}
@@ -496,11 +496,11 @@ export default function App() {
                     </div>
 
                     {/* 6 OTP Boxes */}
-                    <div className="space-y-1.5 text-left">
-                      <label className="block text-sm font-medium text-gray-700">
+                    <div className="space-y-2 text-left">
+                      <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">
                         Enter 6-Digit OTP
                       </label>
-                      <div className="flex gap-2 justify-between">
+                      <div className="flex gap-2 sm:gap-3 justify-between">
                         {otpCode.map((digit, idx) => (
                           <input
                             key={idx}
@@ -510,14 +510,14 @@ export default function App() {
                             value={digit}
                             onChange={(e) => handleOtpChange(e.target.value, idx)}
                             onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-                            className="w-12 h-13 text-center text-xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-xl outline-none focus:border-[#2b3a55] focus:ring-2 focus:ring-[#2b3a55]/15"
+                            className="w-12 h-14 sm:w-14 sm:h-16 text-center text-2xl font-bold bg-[#f8f9fa] border border-gray-200 rounded-2xl outline-none focus:bg-white focus:border-brand-navy focus:ring-4 focus:ring-gray-100 transition-all"
                           />
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-1.5 text-left">
-                      <label className="block text-sm font-medium text-gray-700">
+                    <div className="space-y-2 text-left">
+                      <label className="block text-[14px] sm:text-[15px] font-semibold text-gray-800">
                         New Password
                       </label>
                       <input
@@ -525,19 +525,19 @@ export default function App() {
                         placeholder="At least 8 characters"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all"
+                        className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                     </div>
 
                     <button
                       type="button"
                       onClick={handleVerifyOTP}
-                      className="w-full h-12 bg-[#2b3a55] hover:bg-[#1f2b3f] active:scale-[0.99] text-white font-semibold rounded-xl transition-all duration-200 shadow-sm cursor-pointer text-sm"
+                      className="w-full h-[52px] sm:h-[56px] bg-[#27384f] hover:bg-[#1d2b3f] active:scale-[0.99] text-white font-semibold rounded-2xl transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer text-[16px] sm:text-[17px] tracking-tight"
                     >
                       Verify OTP & Update Password
                     </button>
 
-                    <div className="flex items-center justify-between text-sm text-gray-500 pt-1">
+                    <div className="flex items-center justify-between text-sm sm:text-[15px] text-gray-500 pt-1">
                       {isTimerActive ? (
                         <span>
                           Resend available in{" "}
@@ -587,20 +587,26 @@ interface StepItemProps {
 export function StepItem({ number, text, active = false }: StepItemProps) {
   return (
     <div
-      className={`flex items-center gap-3.5 w-full px-4 sm:px-5 py-3.5 rounded-2xl transition-all duration-200 ${
+      className={`flex items-center gap-4 w-full px-5 py-4 sm:py-4.5 rounded-2xl transition-all duration-200 ${
         active
-          ? "bg-white text-black border border-white shadow-lg"
-          : "bg-white/10 text-white/90 border border-white/5"
+          ? "bg-white text-gray-900 border border-white shadow-xl"
+          : "bg-white/[0.08] text-white/90 border border-white/10"
       }`}
     >
       <div
-        className={`w-7 h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-semibold shrink-0 ${
-          active ? "bg-[#1e293b] text-white font-bold" : "bg-white/10 text-white/50 font-medium"
+        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold shrink-0 ${
+          active
+            ? "bg-[#18202f] text-white font-bold"
+            : "bg-white/10 text-white/50 font-medium border border-white/5"
         }`}
       >
         {number}
       </div>
-      <span className={`text-sm tracking-tight ${active ? "font-semibold" : "font-medium"}`}>
+      <span
+        className={`text-[15px] sm:text-base tracking-tight ${
+          active ? "font-semibold text-gray-900" : "font-medium text-white/80"
+        }`}
+      >
         {text}
       </span>
     </div>
@@ -615,9 +621,9 @@ function GoogleButton() {
         alert("Google SSO Authenticated for student@university.edu!");
         window.location.href = "/#assistant";
       }}
-      className="w-full max-w-[240px] h-12 bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-xl flex items-center justify-center gap-3 text-sm font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer"
+      className="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer"
     >
-      <svg className="w-4 h-4" viewBox="0 0 24 24">
+      <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
         <path
           fill="#4285F4"
           d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
