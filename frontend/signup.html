@@ -125,16 +125,18 @@
             <p class="text-gray-500 text-sm sm:text-base pt-1">Enter your credentials to access your account.</p>
           </div>
 
+          <div id="login-feedback" class="hidden p-3.5 rounded-2xl text-[14px] font-medium text-left"></div>
+
           <form onsubmit="handleLoginSubmit(event)" class="space-y-4.5 sm:space-y-5">
             <div class="space-y-2 text-left">
               <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Email</label>
-              <input id="login-email" type="email" required placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
+              <input id="login-email" type="email" required placeholder="Enter your email" oninput="this.classList.remove('border-red-400'); setFeedback('login-feedback', '');" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
             </div>
 
             <div class="space-y-2 text-left">
               <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Password</label>
               <div class="relative flex items-center">
-                <input id="login-password" type="password" required placeholder="••••••••" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
+                <input id="login-password" type="password" required placeholder="••••••••" oninput="this.classList.remove('border-red-400'); setFeedback('login-feedback', '');" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
                 <button type="button" onclick="togglePasswordVisibility('login-password', 'login-eye')" class="absolute right-4 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer p-1" aria-label="Toggle password">
                   <svg id="login-eye" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
@@ -149,25 +151,6 @@
               Log In
             </button>
           </form>
-
-          <!-- Divider -->
-          <div class="relative flex items-center justify-center my-6 sm:my-7">
-            <div class="w-full border-t border-gray-200"></div>
-            <span class="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">OR</span>
-          </div>
-
-          <!-- Google Button (Centered and sized exactly like StockSense reference) -->
-          <div class="flex justify-center">
-            <button type="button" onclick="handleGoogleAuth()" class="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer">
-              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-              </svg>
-              <span>Continue with Google</span>
-            </button>
-          </div>
 
           <!-- Footer Switcher -->
           <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
@@ -184,6 +167,8 @@
             <h1 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#111827] leading-tight">Create New Profile</h1>
             <p class="text-gray-500 text-sm sm:text-base pt-1">Input your basic details to begin the journey.</p>
           </div>
+
+          <div id="signup-feedback" class="hidden p-3.5 rounded-2xl text-[14px] font-medium text-left"></div>
 
           <form onsubmit="handleSignupSubmit(event)" class="space-y-4.5 sm:space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-4.5">
@@ -221,25 +206,6 @@
             </button>
           </form>
 
-          <!-- Divider -->
-          <div class="relative flex items-center justify-center my-6 sm:my-7">
-            <div class="w-full border-t border-gray-200"></div>
-            <span class="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">OR</span>
-          </div>
-
-          <!-- Google Button (Centered and sized exactly like StockSense reference) -->
-          <div class="flex justify-center">
-            <button type="button" onclick="handleGoogleAuth()" class="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer">
-              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-              </svg>
-              <span>Continue with Google</span>
-            </button>
-          </div>
-
           <!-- Footer Switcher -->
           <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
             Already have an account? <button type="button" onclick="switchView('login')" class="font-semibold text-gray-900 hover:underline cursor-pointer ml-1">Log in</button>
@@ -258,6 +224,7 @@
 
           <!-- Step A: Enter Email -->
           <div id="otp-step-email" class="space-y-4.5 sm:space-y-5">
+            <div id="forgot-feedback" class="hidden p-3.5 rounded-2xl text-[14px] font-medium text-left"></div>
             <div class="space-y-2 text-left">
               <label class="block text-[14px] sm:text-[15px] font-semibold text-gray-800">Registered Email Address</label>
               <input id="forgot-email" type="email" placeholder="Enter your email" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all" />
@@ -279,9 +246,11 @@
               <svg class="w-6 h-6 text-green-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               <div>
                 <span class="font-semibold">OTP Code Sent!</span> Check your inbox for <span id="target-email-label" class="font-semibold underline"></span>.
-                <div id="dev-otp-badge" class="mt-1 text-xs text-green-900 font-mono bg-green-100 px-2.5 py-1 rounded-lg inline-block"></div>
+                <div class="text-xs text-green-700 mt-0.5">Code is valid for <strong>5 minutes</strong>. If you don't see it, check your spam or junk folder.</div>
               </div>
             </div>
+
+            <div id="otp-feedback" class="hidden p-3.5 rounded-2xl text-[14px] font-medium text-left"></div>
 
             <!-- 6-Box OTP Inputs -->
             <div class="space-y-2 text-left">
@@ -305,9 +274,14 @@
               <span>Verify OTP & Update Password</span>
             </button>
 
-            <div class="flex items-center justify-between text-sm sm:text-[15px] text-gray-500 pt-1">
-              <span id="resend-timer">Resend available in <strong id="timer-count">45s</strong></span>
-              <button type="button" onclick="handleSendOTP()" id="btn-resend" class="font-semibold text-gray-700 hover:text-black hover:underline hidden">Resend Code</button>
+            <div class="flex items-center justify-between text-sm sm:text-[15px] pt-3 border-t border-gray-100">
+              <div id="resend-timer-box" class="flex items-center gap-2 text-gray-500 font-medium">
+                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Resend available in <strong id="timer-count" class="font-mono text-gray-900 font-bold">5:00</strong></span>
+              </div>
+              <button type="button" onclick="handleSendOTP()" id="btn-resend" disabled class="px-3.5 py-1.5 text-sm font-semibold rounded-xl text-gray-400 bg-gray-100 cursor-not-allowed transition-all duration-200">
+                Resend Code
+              </button>
             </div>
           </div>
         </div>
@@ -317,53 +291,51 @@
   </main>
 
   <!-- ============================================================
-       GOOGLE SSO MODAL
-       ============================================================ -->
-  <div id="google-sso-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hidden" onclick="if(event.target===this) closeGoogleAuthModal()">
-    <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 max-w-[460px] w-full p-6 sm:p-8 space-y-6">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <svg class="w-6 h-6" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-          </svg>
-          <span class="font-bold text-gray-900 text-lg">Sign in with Google</span>
-        </div>
-        <button type="button" onclick="closeGoogleAuthModal()" class="text-gray-400 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <p class="text-sm text-gray-600">Choose or enter your Google profile details to instantly connect to Kryon AI.</p>
-
-      <form onsubmit="handleGoogleSSOSubmit(event)" class="space-y-4">
-        <div class="space-y-1.5 text-left">
-          <label class="block text-sm font-semibold text-gray-700">Display Name</label>
-          <input id="google-user-name" type="text" required value="Biswajit Roy" placeholder="Your Full Name" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-base text-gray-900 focus:bg-white focus:border-brand-navy outline-none" />
-        </div>
-        <div class="space-y-1.5 text-left">
-          <label class="block text-sm font-semibold text-gray-700">Google Email</label>
-          <input id="google-user-email" type="email" required value="biswajit@university.edu" placeholder="student@university.edu" class="w-full bg-[#f8f9fa] border border-gray-200 rounded-xl h-12 px-4 text-base text-gray-900 focus:bg-white focus:border-brand-navy outline-none" />
-        </div>
-        <button type="submit" class="w-full h-12 bg-[#1a73e8] hover:bg-[#1557b0] text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
-          <span>Continue to Kryon Assistant</span>
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ============================================================
        INTERACTIVE SCRIPT (Mode Switcher, OTP & Validation)
        ============================================================ -->
   <script>
     let currentMode = "login";
     let activeOtpCode = "";
+    let otpExpiresAt = 0;
+    let activeOtpExpired = false;
     let resendInterval = null;
+
+    // Initialize registered users (no demo accounts pre-seeded)
+    function initRegisteredUsers() {
+      try {
+        let accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
+        // Remove any old demo emails from localStorage
+        accounts = accounts.filter(a => a && a.email && a.email !== "shubhi@university.edu" && a.email !== "biswajit@university.edu" && a.email !== "student@university.edu");
+        localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+
+        const curr = JSON.parse(localStorage.getItem("kryon_user") || "null");
+        if (curr && (curr.email === "shubhi@university.edu" || curr.email === "biswajit@university.edu" || curr.email === "student@university.edu")) {
+          localStorage.removeItem("kryon_user");
+        }
+      } catch(e) {}
+    }
+
+    function setFeedback(elementId, message, type = "error") {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      if (!message) {
+        el.classList.add("hidden");
+        el.innerHTML = "";
+        return;
+      }
+      el.classList.remove("hidden");
+      if (type === "error") {
+        el.className = "p-3.5 rounded-2xl text-[14px] font-medium text-left bg-red-50 border border-red-200 text-red-700 flex items-start gap-2.5";
+        el.innerHTML = `<svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>${message}</span>`;
+      } else {
+        el.className = "p-3.5 rounded-2xl text-[14px] font-medium text-left bg-green-50 border border-green-200 text-green-800 flex items-start gap-2.5";
+        el.innerHTML = `<svg class="w-5 h-5 text-green-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>${message}</span>`;
+      }
+    }
 
     // Read initial mode from URL (e.g. ?mode=signup or ?mode=login or ?mode=forgot)
     function initModeFromUrl() {
+      initRegisteredUsers();
       const params = new URLSearchParams(window.location.search);
       const urlMode = params.get("mode");
       if (urlMode === "signup") {
@@ -380,6 +352,13 @@
       document.getElementById("view-login").classList.add("hidden");
       document.getElementById("view-signup").classList.add("hidden");
       document.getElementById("view-forgot").classList.add("hidden");
+
+      // Reset feedbacks
+      setFeedback("login-feedback", "");
+      setFeedback("signup-feedback", "");
+      setFeedback("forgot-feedback", "");
+      setFeedback("otp-feedback", "");
+      setFeedback("google-feedback", "");
 
       if (mode === "signup") {
         document.getElementById("view-signup").classList.remove("hidden");
@@ -440,10 +419,22 @@
 
     function handleLoginSubmit(e) {
       e.preventDefault();
+      setFeedback("login-feedback", "");
       const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value;
       const btn = e.target.querySelector('button[type="submit"]');
-      btn.innerText = "Logging in...";
-      btn.disabled = true;
+
+      if (!email || !email.includes("@")) {
+        setFeedback("login-feedback", "Please enter a valid email address.");
+        document.getElementById("login-email").focus();
+        return;
+      }
+
+      if (!password || password.length < 8) {
+        setFeedback("login-feedback", "Password requires at least 8 symbols.");
+        document.getElementById("login-password").focus();
+        return;
+      }
 
       let accounts = [];
       try {
@@ -454,39 +445,88 @@
 
       const found = accounts.find(a => a.email && a.email.toLowerCase() === email.toLowerCase());
 
-      let userObj;
-      if (found) {
-        userObj = {
-          ...found,
-          loggedInAt: Date.now(),
-          authType: "credentials"
-        };
-      } else {
-        const derivedName = formatNameFromEmail(email);
-        userObj = {
-          name: derivedName,
-          firstName: derivedName.split(" ")[0] || "User",
-          lastName: derivedName.split(" ").slice(1).join(" ") || "",
-          email: email,
-          initials: computeInitials(derivedName),
-          authType: "credentials",
-          loggedInAt: Date.now()
-        };
+      // 1. Check if email is registered - Don't allow login if not registered
+      if (!found) {
+        setFeedback(
+          "login-feedback",
+          `This email (<strong>${email}</strong>) is not registered. Please <a href="javascript:void(0)" onclick="switchView('signup')" class="underline font-bold text-red-900 hover:text-black ml-1">register / sign up</a> first before logging in.`
+        );
+        const emailInput = document.getElementById("login-email");
+        emailInput.classList.add("border-red-400");
+        emailInput.focus();
+        btn.innerText = "Log In";
+        btn.disabled = false;
+        return;
       }
+
+      // 2. Password Verification: must match the registration password
+      if (found.password && found.password !== password) {
+        setFeedback("login-feedback", "Incorrect password. The password must match the one entered during registration.");
+        const passInput = document.getElementById("login-password");
+        passInput.classList.add("border-red-400");
+        passInput.focus();
+        btn.innerText = "Log In";
+        btn.disabled = false;
+        return;
+      }
+
+      btn.innerText = "Logging in...";
+      btn.disabled = true;
+
+      const userObj = {
+        ...found,
+        loggedInAt: Date.now(),
+        authType: "credentials"
+      };
 
       localStorage.setItem("kryon_user", JSON.stringify(userObj));
 
       setTimeout(() => {
         window.location.href = "/#assistant";
-      }, 500);
+      }, 400);
     }
 
     function handleSignupSubmit(e) {
       e.preventDefault();
+      setFeedback("signup-feedback", "");
       const first = document.getElementById("signup-firstname").value.trim();
       const last = (document.getElementById("signup-lastname").value || "").trim();
       const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value;
       const btn = e.target.querySelector('button[type="submit"]');
+
+      if (!first) {
+        setFeedback("signup-feedback", "Please enter your first name.");
+        document.getElementById("signup-firstname").focus();
+        return;
+      }
+
+      if (!email || !email.includes("@")) {
+        setFeedback("signup-feedback", "Please enter a valid email address.");
+        document.getElementById("signup-email").focus();
+        return;
+      }
+
+      // Password Requirement: at least 8 symbols
+      if (!password || password.length < 8) {
+        setFeedback("signup-feedback", "Password requires at least 8 symbols.");
+        document.getElementById("signup-password").focus();
+        return;
+      }
+
+      let accounts = [];
+      try {
+        accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
+      } catch(err) {
+        accounts = [];
+      }
+
+      const existingIdx = accounts.findIndex(a => a.email && a.email.toLowerCase() === email.toLowerCase());
+      if (existingIdx >= 0) {
+        setFeedback("signup-feedback", "An account with this email already exists. Please log in or use Forgot Password.");
+        return;
+      }
+
       btn.innerText = "Creating Profile...";
       btn.disabled = true;
 
@@ -498,86 +538,40 @@
         firstName: first,
         lastName: last,
         email: email,
+        password: password,
         initials: initials,
         authType: "credentials",
+        registeredAt: Date.now(),
         loggedInAt: Date.now()
       };
 
-      localStorage.setItem("kryon_user", JSON.stringify(userObj));
-
-      let accounts = [];
-      try {
-        accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
-      } catch(err) {
-        accounts = [];
-      }
-      const existingIdx = accounts.findIndex(a => a.email && a.email.toLowerCase() === email.toLowerCase());
-      if (existingIdx >= 0) {
-        accounts[existingIdx] = userObj;
-      } else {
-        accounts.push(userObj);
-      }
+      accounts.push(userObj);
       localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+      localStorage.setItem("kryon_user", JSON.stringify(userObj));
 
       setTimeout(() => {
         window.location.href = "/#assistant";
-      }, 500);
-    }
-
-    function openGoogleAuthModal() {
-      const modal = document.getElementById("google-sso-modal");
-      if (modal) modal.classList.remove("hidden");
-    }
-
-    function closeGoogleAuthModal() {
-      const modal = document.getElementById("google-sso-modal");
-      if (modal) modal.classList.add("hidden");
-    }
-
-    function handleGoogleSSOSubmit(e) {
-      e.preventDefault();
-      const name = document.getElementById("google-user-name").value.trim() || "Google User";
-      const email = document.getElementById("google-user-email").value.trim() || "student@university.edu";
-
-      const first = name.split(" ")[0] || "User";
-      const last = name.split(" ").slice(1).join(" ") || "";
-      const initials = computeInitials(name, first);
-
-      const userObj = {
-        name: name,
-        firstName: first,
-        lastName: last,
-        email: email,
-        initials: initials,
-        authType: "google",
-        loggedInAt: Date.now()
-      };
-
-      localStorage.setItem("kryon_user", JSON.stringify(userObj));
-
-      let accounts = [];
-      try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(err){}
-      const existingIdx = accounts.findIndex(a => a.email && a.email.toLowerCase() === email.toLowerCase());
-      if (existingIdx >= 0) accounts[existingIdx] = userObj;
-      else accounts.push(userObj);
-      localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
-
-      window.location.href = "/#assistant";
-    }
-
-    function handleGoogleAuth() {
-      openGoogleAuthModal();
+      }, 400);
     }
 
     /* ============================================================
-       FORGOT PASSWORD & OTP ENGINE
+       FORGOT PASSWORD & OTP ENGINE (5-Minute Expiry)
        ============================================================ */
     async function handleSendOTP() {
+      setFeedback("forgot-feedback", "");
       const emailInput = document.getElementById("forgot-email");
       const email = emailInput.value.trim();
       if (!email || !email.includes("@")) {
+        setFeedback("forgot-feedback", "Please enter a valid email address.");
         emailInput.focus();
-        emailInput.classList.add("border-red-400");
+        return;
+      }
+
+      let accounts = [];
+      try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(e){}
+      const found = accounts.find(a => a.email && a.email.toLowerCase() === email.toLowerCase());
+      if (!found) {
+        setFeedback("forgot-feedback", "No registered account found with " + email + ". Please check your email or register.");
         return;
       }
 
@@ -593,19 +587,28 @@
         });
         const data = await res.json();
         
-        activeOtpCode = data.dev_code || `${Math.floor(100000 + Math.random() * 900000)}`;
-        document.getElementById("target-email-label").innerText = email;
-        const devBadge = document.getElementById("dev-otp-badge");
-        if (devBadge) {
-          devBadge.innerText = "Active Code: " + activeOtpCode;
+        if (!res.ok) {
+          setFeedback("forgot-feedback", data.detail || "Unable to send verification code. Please try again.");
+          btn.innerText = "Send OTP Verification Code";
+          btn.disabled = false;
+          return;
         }
+
+        otpExpiresAt = Date.now() + 300 * 1000; // 5-minute validity
+        activeOtpExpired = false;
+
+        document.getElementById("target-email-label").innerText = email;
+
+        // Clear previous OTP boxes
+        document.querySelectorAll(".otp-input").forEach(i => i.value = "");
+        setFeedback("otp-feedback", "");
 
         // Switch to OTP verify view
         document.getElementById("otp-step-email").classList.add("hidden");
         document.getElementById("otp-step-verify").classList.remove("hidden");
 
-        // Start countdown timer
-        startResendTimer(45);
+        // Start 5-minute countdown (300s)
+        startResendTimer(300);
 
         // Auto focus first OTP input
         setTimeout(() => {
@@ -615,37 +618,52 @@
 
       } catch (err) {
         console.error(err);
-        activeOtpCode = `${Math.floor(100000 + Math.random() * 900000)}`;
-        document.getElementById("target-email-label").innerText = email;
-        document.getElementById("dev-otp-badge").innerText = "Active Code: " + activeOtpCode;
-        document.getElementById("otp-step-email").classList.add("hidden");
-        document.getElementById("otp-step-verify").classList.remove("hidden");
-        startResendTimer(45);
+        setFeedback("forgot-feedback", "Network error. Please make sure the server is running and try again.");
       } finally {
         btn.innerText = "Send OTP Verification Code";
         btn.disabled = false;
       }
     }
 
+    function formatCountdown(totalSecs) {
+      const mins = Math.floor(totalSecs / 60);
+      const secs = totalSecs % 60;
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
     function startResendTimer(seconds) {
       clearInterval(resendInterval);
       let count = seconds;
-      const timerSpan = document.getElementById("timer-count");
-      const resendWrapper = document.getElementById("resend-timer");
+      const timerBox = document.getElementById("resend-timer-box");
       const resendBtn = document.getElementById("btn-resend");
 
-      resendWrapper.classList.remove("hidden");
-      resendBtn.classList.add("hidden");
-      timerSpan.innerText = count + "s";
+      activeOtpExpired = false;
+      if (resendBtn) {
+        resendBtn.disabled = true;
+        resendBtn.className = "px-3.5 py-1.5 text-sm font-semibold rounded-xl text-gray-400 bg-gray-100 cursor-not-allowed transition-all duration-200";
+      }
+      if (timerBox) {
+        timerBox.innerHTML = `<svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>Resend available in <strong id="timer-count" class="font-mono text-gray-900 font-bold">${formatCountdown(count)}</strong></span>`;
+      }
 
       resendInterval = setInterval(() => {
         count--;
+        const currentTimerSpan = document.getElementById("timer-count");
         if (count <= 0) {
           clearInterval(resendInterval);
-          resendWrapper.classList.add("hidden");
-          resendBtn.classList.remove("hidden");
+          activeOtpExpired = true;
+          if (timerBox) {
+            timerBox.innerHTML = `<span class="text-red-600 text-xs font-semibold flex items-center gap-1.5"><svg class="w-4 h-4 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>Code expired (0:00)</span>`;
+          }
+          if (resendBtn) {
+            resendBtn.disabled = false;
+            resendBtn.className = "px-3.5 py-1.5 text-sm font-semibold rounded-xl text-white bg-[#27384f] hover:bg-[#1d2b3f] shadow-sm cursor-pointer active:scale-95 transition-all duration-200";
+          }
+          setFeedback("otp-feedback", "The OTP code has expired after 5 minutes. Please click 'Resend Code' to receive a new verification code.");
         } else {
-          timerSpan.innerText = count + "s";
+          if (currentTimerSpan) {
+            currentTimerSpan.innerText = formatCountdown(count);
+          }
         }
       }, 1000);
     }
@@ -667,18 +685,26 @@
     }
 
     async function handleVerifyOTP() {
+      setFeedback("otp-feedback", "");
       const email = document.getElementById("forgot-email").value.trim();
       const inputs = document.querySelectorAll(".otp-input");
       let enteredOtp = "";
       inputs.forEach(i => enteredOtp += i.value);
 
       if (enteredOtp.length !== 6) {
+        setFeedback("otp-feedback", "Please enter all 6 digits of the OTP code.");
         inputs[0].focus();
+        return;
+      }
+
+      if (activeOtpExpired || Date.now() > otpExpiresAt) {
+        setFeedback("otp-feedback", "OTP has expired after 5 minutes. Please click 'Resend Code' to receive a new OTP.");
         return;
       }
 
       const newPassword = document.getElementById("otp-new-password").value;
       if (!newPassword || newPassword.length < 8) {
+        setFeedback("otp-feedback", "New password requires at least 8 symbols.");
         document.getElementById("otp-new-password").focus();
         return;
       }
@@ -695,21 +721,46 @@
         });
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.detail || "Invalid OTP");
-        }
-        switchView("login");
-      } catch (err) {
-        // Fallback local check
-        if (enteredOtp === activeOtpCode) {
-          switchView("login");
-        } else {
+          setFeedback("otp-feedback", data.detail || "Invalid or expired OTP code. Please check your email and try again.");
           const firstBox = document.querySelectorAll(".otp-input")[0];
           if (firstBox) firstBox.focus();
+          return;
         }
+
+        updateAccountPassword(email, newPassword);
+
+        switchView("login");
+        document.getElementById("login-email").value = email;
+        document.getElementById("login-password").value = "";
+        setFeedback("login-feedback", "Password reset successfully! Please log in with your new password.", "success");
+      } catch (err) {
+        setFeedback("otp-feedback", "Network error or server unreachable. Please verify your connection.");
       } finally {
         btn.innerText = "Verify OTP & Update Password";
         btn.disabled = false;
       }
+    }
+
+    function updateAccountPassword(email, newPass) {
+      let accounts = [];
+      try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(e){}
+      const idx = accounts.findIndex(a => a.email && a.email.toLowerCase() === email.toLowerCase());
+      if (idx >= 0) {
+        accounts[idx].password = newPass;
+      } else {
+        const derived = formatNameFromEmail(email);
+        accounts.push({
+          name: derived,
+          firstName: derived.split(" ")[0] || "User",
+          lastName: derived.split(" ").slice(1).join(" ") || "",
+          email: email,
+          password: newPass,
+          initials: computeInitials(derived),
+          authType: "credentials",
+          registeredAt: Date.now()
+        });
+      }
+      localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
     }
 
     // Initialize on DOM load

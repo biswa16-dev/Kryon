@@ -1,5 +1,8 @@
 import os
 import time
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from fastapi import FastAPI, HTTPException, UploadFile, File
@@ -257,6 +260,88 @@ class VerifyOTPRequest(BaseModel):
 
 otp_store: Dict[str, Dict[str, Any]] = {}
 
+def dispatch_otp_email(to_email: str, otp_code: str) -> tuple[bool, str]:
+    """
+    Sends the 6-digit OTP verification code to the user's email via SMTP.
+    Configurable via environment variables (.env):
+    - SMTP_HOST (e.g. smtp.gmail.com)
+    - SMTP_PORT (e.g. 587)
+    - SMTP_USER (e.g. your_email@gmail.com)
+    - SMTP_PASSWORD (e.g. 16-character Google App Password)
+    - SMTP_FROM (e.g. "Kryon AI <noreply@kryon.ai>")
+    """
+    load_dotenv(override=True)
+    smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com").strip()
+    smtp_port = int(os.getenv("SMTP_PORT", "587"))
+    smtp_user = os.getenv("SMTP_USER", "").strip().strip("'\"")
+    smtp_password = os.getenv("SMTP_PASSWORD", "").strip().strip("'\"").replace(" ", "")
+    smtp_from = os.getenv("SMTP_FROM", "").strip() or (f"Kryon AI <{smtp_user}>" if smtp_user else "Kryon AI <noreply@kryon.ai>")
+
+    if not smtp_user or not smtp_password:
+        print(f"\n{'='*65}\n[KRYON AUTH NOTICE] SMTP credentials not configured in .env.\nTo deliver emails to {to_email}, set SMTP_USER and SMTP_PASSWORD in .env.\nGenerated OTP for {to_email}: {otp_code} (Valid for 5 mins)\n{'='*65}\n")
+        return False, "SMTP credentials (SMTP_USER, SMTP_PASSWORD) not configured in .env"
+
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"Kryon AI - Your Verification Code is {otp_code}"
+        msg["From"] = smtp_from
+        msg["To"] = to_email
+
+        plain_text = (
+            f"Hello,\n\n"
+            f"Your Kryon AI password reset verification code is:\n\n"
+            f"    {otp_code}\n\n"
+            f"This code will expire in 5 minutes.\n"
+            f"If you did not request this verification code, please ignore this email.\n\n"
+            f"Best regards,\n"
+            f"Kryon AI Security Team"
+        )
+
+        html_text = f"""<!DOCTYPE html>
+<html>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9fafb; margin: 0; padding: 32px 16px;">
+  <div style="max-width: 520px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 36px 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+    <div style="margin-bottom: 24px;">
+      <span style="font-size: 22px; font-weight: 700; color: #111827; letter-spacing: -0.5px;">Kryon AI</span>
+    </div>
+    <h2 style="font-size: 20px; font-weight: 600; color: #111827; margin: 0 0 12px;">Password Reset Verification</h2>
+    <p style="font-size: 15px; color: #4b5563; line-height: 1.5; margin: 0 0 24px;">
+      We received a request to reset your password for your Kryon AI account. Please enter the verification code below to proceed:
+    </p>
+    <div style="background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 24px;">
+      <span style="font-size: 34px; font-weight: 700; letter-spacing: 8px; color: #111827; font-family: monospace;">{otp_code}</span>
+    </div>
+    <p style="font-size: 13px; color: #6b7280; line-height: 1.5; margin: 0 0 16px;">
+      &bull; This code is strictly valid for <strong>5 minutes</strong>.<br>
+      &bull; If you did not request a password reset, please ignore this email or contact support.
+    </p>
+    <hr style="border: none; border-top: 1px solid #f3f4f6; margin: 24px 0;" />
+    <p style="font-size: 12px; color: #9ca3af; margin: 0;">
+      This is an automated security email from Kryon AI Academic QA System. Please do not reply directly to this email.
+    </p>
+  </div>
+</body>
+</html>"""
+
+        msg.attach(MIMEText(plain_text, "plain", "utf-8"))
+        msg.attach(MIMEText(html_text, "html", "utf-8"))
+
+        with smtplib.SMTP(smtp_host, smtp_port, timeout=12) as server:
+            server.ehlo()
+            if smtp_port == 587:
+                server.starttls()
+                server.ehlo()
+            server.login(smtp_user, smtp_password)
+            server.sendmail(smtp_from, [to_email], msg.as_string())
+
+        print(f"[KRYON AUTH] Verification email successfully delivered to {to_email} via SMTP ({smtp_host})")
+        return True, "Email delivered successfully"
+    except Exception as e:
+        err_msg = f"[KRYON AUTH ERROR] Failed to send email to {to_email}: {str(e)}"
+        print(err_msg)
+        return False, str(e)
+
+
 @app.post("/api/v1/auth/send-otp")
 def send_otp(req: SendOTPRequest):
     email = req.email.strip().lower()
@@ -264,12 +349,16 @@ def send_otp(req: SendOTPRequest):
         raise HTTPException(status_code=400, detail="Please enter a valid email address.")
     import random
     code = f"{random.randint(100000, 999999)}"
-    otp_store[email] = {"code": code, "expires_at": time.time() + 600}
-    print(f"\n[KRYON AUTH] Generated OTP for {email}: {code} (valid for 10 mins)\n")
+    otp_store[email] = {"code": code, "expires_at": time.time() + 300}
+    
+    # Send actual email to recipient
+    sent, reason = dispatch_otp_email(email, code)
+
+    # Note: Code is NEVER returned to client for security
     return {
         "status": "success",
-        "message": f"Verification OTP sent to {email}",
-        "dev_code": code
+        "message": f"Verification OTP code sent to {email}. Please check your inbox and spam folder.",
+        "email_sent": sent
     }
 
 @app.post("/api/v1/auth/verify-otp")

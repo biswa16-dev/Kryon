@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
+import { Eye, EyeOff, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function App() {
   const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
   const [otpStep, setOtpStep] = useState<"email" | "verify">("email");
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
   // Form State
   const [firstName, setFirstName] = useState("");
@@ -16,7 +17,6 @@ export default function App() {
   // OTP State
   const [forgotEmail, setForgotEmail] = useState("");
   const [otpCode, setOtpCode] = useState(["", "", "", "", "", ""]);
-  const [activeOtpDev, setActiveOtpDev] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [timerCount, setTimerCount] = useState(45);
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -59,17 +59,16 @@ export default function App() {
         body: JSON.stringify({ email: forgotEmail }),
       });
       const data = await res.json();
-      const code = data.dev_code || `${Math.floor(100000 + Math.random() * 900000)}`;
-      setActiveOtpDev(code);
+      if (!res.ok) {
+        return;
+      }
       setOtpStep("verify");
-      setTimerCount(45);
+      setTimerCount(300);
       setIsTimerActive(true);
       setTimeout(() => otpInputRefs.current[0]?.focus(), 100);
     } catch {
-      const fallbackCode = `${Math.floor(100000 + Math.random() * 900000)}`;
-      setActiveOtpDev(fallbackCode);
       setOtpStep("verify");
-      setTimerCount(45);
+      setTimerCount(300);
       setIsTimerActive(true);
     }
   };
@@ -212,21 +211,42 @@ export default function App() {
                   </p>
                 </div>
 
+                {loginError && (
+                  <div className="p-3.5 rounded-2xl text-[14px] font-medium text-left bg-red-50 border border-red-200 text-red-700 flex items-start gap-2.5">
+                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>{loginError}</span>
+                  </div>
+                )}
+
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    let accounts = [];
+                    setLoginError("");
+                    if (!email || !email.includes("@")) {
+                      setLoginError("Please enter a valid email address.");
+                      return;
+                    }
+                    if (!password || password.length < 8) {
+                      setLoginError("Password requires at least 8 symbols.");
+                      return;
+                    }
+                    let accounts: any[] = [];
                     try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(err){}
                     const found = accounts.find((a: any) => a.email && a.email.toLowerCase() === email.toLowerCase());
-                    let userObj: any;
-                    if (found) {
-                      userObj = { ...found, loggedInAt: Date.now(), authType: "credentials" };
-                    } else {
-                      const prefix = (email.split("@")[0] || "User").replace(/[._\-+]/g, " ");
-                      const name = prefix.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
-                      const initials = (name.split(" ")[0]?.[0] || "K") + (name.split(" ")[1]?.[0] || "");
-                      userObj = { name, firstName: name.split(" ")[0], lastName: name.split(" ")[1] || "", email, initials: initials.toUpperCase(), authType: "credentials", loggedInAt: Date.now() };
+                    
+                    // 1. Check if email is registered - Don't allow login if not registered
+                    if (!found) {
+                      setLoginError(`This email (${email}) is not registered. Please register first before logging in.`);
+                      return;
                     }
+
+                    // 2. Password verification
+                    if (found.password && found.password !== password) {
+                      setLoginError("Incorrect password. The password must match the one entered during registration.");
+                      return;
+                    }
+
+                    const userObj = { ...found, loggedInAt: Date.now(), authType: "credentials" };
                     localStorage.setItem("kryon_user", JSON.stringify(userObj));
                     window.location.href = "/#assistant";
                   }}
@@ -239,7 +259,7 @@ export default function App() {
                       required
                       placeholder="Enter your email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => { setEmail(e.target.value); setLoginError(""); }}
                       className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                     />
                   </div>
@@ -252,7 +272,7 @@ export default function App() {
                         required
                         placeholder="••••••••"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => { setPassword(e.target.value); setLoginError(""); }}
                         className="w-full bg-[#f8f9fa] border border-gray-200 rounded-2xl h-[52px] sm:h-[56px] px-5 pr-13 text-[15px] sm:text-base text-gray-900 placeholder:text-gray-400 placeholder:text-[15px] focus:bg-white focus:border-gray-400 focus:ring-4 focus:ring-gray-100 outline-none transition-all"
                       />
                       <button
@@ -284,19 +304,6 @@ export default function App() {
                     Log In
                   </button>
                 </form>
-
-                {/* Divider */}
-                <div className="relative flex items-center justify-center my-6 sm:my-7">
-                  <div className="w-full border-t border-gray-200" />
-                  <span className="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">
-                    OR
-                  </span>
-                </div>
-
-                {/* Google Button */}
-                <div className="flex justify-center">
-                  <GoogleButton />
-                </div>
 
                 {/* Footer Switcher */}
                 <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
@@ -334,6 +341,7 @@ export default function App() {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
+                    if (!password || password.length < 8) return;
                     const fullName = (firstName + " " + lastName).trim();
                     const initials = ((firstName[0] || "K") + (lastName[0] || "")).toUpperCase();
                     const userObj = {
@@ -341,17 +349,19 @@ export default function App() {
                       firstName,
                       lastName,
                       email,
+                      password,
                       initials,
                       authType: "credentials",
+                      registeredAt: Date.now(),
                       loggedInAt: Date.now()
                     };
-                    localStorage.setItem("kryon_user", JSON.stringify(userObj));
                     let accounts = [];
                     try { accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]"); } catch(err){}
                     const existingIdx = accounts.findIndex((a: any) => a.email && a.email.toLowerCase() === email.toLowerCase());
                     if (existingIdx >= 0) accounts[existingIdx] = userObj;
                     else accounts.push(userObj);
                     localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+                    localStorage.setItem("kryon_user", JSON.stringify(userObj));
                     window.location.href = "/#assistant";
                   }}
                   className="space-y-4.5 sm:space-y-5"
@@ -434,19 +444,6 @@ export default function App() {
                   </button>
                 </form>
 
-                {/* Divider */}
-                <div className="relative flex items-center justify-center my-6 sm:my-7">
-                  <div className="w-full border-t border-gray-200" />
-                  <span className="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">
-                    OR
-                  </span>
-                </div>
-
-                {/* Google Button */}
-                <div className="flex justify-center">
-                  <GoogleButton />
-                </div>
-
                 {/* Footer Switcher */}
                 <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
                   Already have an account?{" "}
@@ -523,11 +520,7 @@ export default function App() {
                       <div>
                         <span className="font-semibold">OTP Code Sent!</span> Check your inbox for{" "}
                         <span className="font-semibold underline">{forgotEmail}</span>.
-                        {activeOtpDev && (
-                          <div className="mt-1 text-xs text-green-900 font-mono bg-green-100 px-2.5 py-1 rounded-lg inline-block">
-                            Active Code: {activeOtpDev}
-                          </div>
-                        )}
+                        <div className="text-xs text-green-700 mt-0.5">Code is valid for <strong>5 minutes</strong>. If you don't see it, check your spam or junk folder.</div>
                       </div>
                     </div>
 
@@ -573,30 +566,32 @@ export default function App() {
                       Verify OTP & Update Password
                     </button>
 
-                    <div className="flex items-center justify-between text-sm sm:text-[15px] text-gray-500 pt-1">
-                      {isTimerActive ? (
-                        <span>
-                          Resend available in{" "}
-                          <strong className="text-gray-800">{timerCount}s</strong>
-                        </span>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={handleSendOTP}
-                          className="font-semibold text-gray-800 hover:underline cursor-pointer"
-                        >
-                          Resend Code
-                        </button>
-                      )}
+                    <div className="flex items-center justify-between text-sm sm:text-[15px] pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-gray-500 font-medium">
+                        {isTimerActive && timerCount > 0 ? (
+                          <span>
+                            Resend available in{" "}
+                            <strong className="font-mono text-gray-900 font-bold">
+                              {Math.floor(timerCount / 60)}:{(timerCount % 60) < 10 ? "0" : ""}{timerCount % 60}
+                            </strong>
+                          </span>
+                        ) : (
+                          <span className="text-red-600 text-xs font-semibold">
+                            Code expired (0:00)
+                          </span>
+                        )}
+                      </div>
                       <button
                         type="button"
-                        onClick={() => {
-                          setMode("login");
-                          setOtpStep("email");
-                        }}
-                        className="font-medium text-gray-500 hover:text-gray-900"
+                        onClick={handleSendOTP}
+                        disabled={isTimerActive && timerCount > 0}
+                        className={`px-3.5 py-1.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
+                          isTimerActive && timerCount > 0
+                            ? "text-gray-400 bg-gray-100 cursor-not-allowed"
+                            : "text-white bg-[#27384f] hover:bg-[#1d2b3f] shadow-sm cursor-pointer active:scale-95"
+                        }`}
                       >
-                        Cancel
+                        Resend Code
                       </button>
                     </div>
                   </div>
@@ -646,54 +641,5 @@ export function StepItem({ number, text, active = false }: StepItemProps) {
         {text}
       </span>
     </div>
-  );
-}
-
-function GoogleButton() {
-  const handleGoogleClick = () => {
-    const name = "Google Student";
-    const email = "student@university.edu";
-    const first = "Student";
-    const last = "User";
-    const initials = "S.";
-    const userObj = {
-      name,
-      firstName: first,
-      lastName: last,
-      email,
-      initials,
-      authType: "google",
-      loggedInAt: Date.now()
-    };
-    localStorage.setItem("kryon_user", JSON.stringify(userObj));
-    window.location.href = "/#assistant";
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={handleGoogleClick}
-      className="w-full max-w-[340px] sm:max-w-[360px] h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[15px] sm:text-base font-medium text-gray-700 shadow-sm transition-all duration-200 cursor-pointer"
-    >
-      <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
-        <path
-          fill="#4285F4"
-          d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-        />
-        <path
-          fill="#34A853"
-          d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-        />
-        <path
-          fill="#FBBC05"
-          d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-        />
-        <path
-          fill="#EA4335"
-          d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-        />
-      </svg>
-      <span>Continue with Google</span>
-    </button>
   );
 }
