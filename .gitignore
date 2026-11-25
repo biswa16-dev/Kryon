@@ -2,7 +2,7 @@
 # Kryon - Git Ignore
 # ==============================================================================
 
-# Environment variables & secrets (CRITICAL)
+# Environment variables & secrets (CRITICAL: protects SMTP_USER, SMTP_PASSWORD, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET)
 .env
 .env*
 *.env
@@ -12,6 +12,10 @@
 .env.development.local
 .env.test.local
 .env.production.local
+client_secret*.json
+credentials*.json
+*.pem
+*.key
 
 # Python bytecode & cache
 __pycache__/

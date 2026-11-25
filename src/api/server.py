@@ -1,14 +1,17 @@
 import os
 import time
+import secrets
 import smtplib
+from urllib.parse import urlencode
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, HTTPException, UploadFile, File
+import httpx
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
@@ -378,6 +381,177 @@ def verify_otp(req: VerifyOTPRequest):
     return {
         "status": "success",
         "message": "Password reset successful! You can now log in with your new password."
+    }
+
+
+# Google OAuth 2.0 Store & Endpoints
+oauth_states: Dict[str, Dict[str, Any]] = {}
+oauth_results: Dict[str, Dict[str, Any]] = {}
+
+
+def _get_google_oauth_config() -> Dict[str, str]:
+    load_dotenv(override=True)
+    port = os.getenv("PORT", "8000").strip()
+    return {
+        "client_id": os.getenv("GOOGLE_CLIENT_ID", "").strip().strip("'\""),
+        "client_secret": os.getenv("GOOGLE_CLIENT_SECRET", "").strip().strip("'\""),
+        "redirect_uri": os.getenv("GOOGLE_REDIRECT_URI", f"http://localhost:{port}/api/v1/auth/google/callback").strip(),
+        "port": port,
+    }
+
+
+def _sanitize_origin(origin: str, port: str) -> str:
+    allowed = {f"http://localhost:{port}", f"http://127.0.0.1:{port}"}
+    cleaned = origin.strip().rstrip("/")
+    return cleaned if cleaned in allowed else f"http://localhost:{port}"
+
+
+def _cleanup_oauth_stores() -> None:
+    now = time.time()
+    expired_states = [k for k, v in oauth_states.items() if now - v.get("created_at", 0) > 600]
+    for k in expired_states:
+        oauth_states.pop(k, None)
+    expired_results = [k for k, v in oauth_results.items() if now - v.get("created_at", 0) > 120]
+    for k in expired_results:
+        oauth_results.pop(k, None)
+
+
+@app.get("/api/v1/auth/google/status")
+def google_oauth_status():
+    cfg = _get_google_oauth_config()
+    return {
+        "configured": bool(cfg["client_id"] and cfg["client_secret"]),
+        "redirect_uri": cfg["redirect_uri"],
+    }
+
+
+@app.get("/api/v1/auth/google/login")
+def google_oauth_login(request: Request, mode: str = "login", origin: str = ""):
+    _cleanup_oauth_stores()
+    cfg = _get_google_oauth_config()
+    safe_mode = "signup" if mode == "signup" else "login"
+    fallback_origin = f"{request.url.scheme}://{request.url.netloc}" if request.url.netloc else f"http://localhost:{cfg['port']}"
+    safe_origin = _sanitize_origin(origin or fallback_origin, cfg["port"])
+
+    if not cfg["client_id"] or not cfg["client_secret"]:
+        return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=not_configured")
+
+    state = secrets.token_urlsafe(24)
+    oauth_states[state] = {
+        "mode": safe_mode,
+        "origin": safe_origin,
+        "created_at": time.time(),
+    }
+
+    params = urlencode({
+        "client_id": cfg["client_id"],
+        "redirect_uri": cfg["redirect_uri"],
+        "response_type": "code",
+        "scope": "openid email profile",
+        "state": state,
+        "access_type": "online",
+        "prompt": "select_account",
+    })
+    return RedirectResponse(url=f"https://accounts.google.com/o/oauth2/v2/auth?{params}")
+
+
+@app.get("/api/v1/auth/google/callback")
+async def google_oauth_callback(
+    code: Optional[str] = None,
+    state: Optional[str] = None,
+    error: Optional[str] = None,
+):
+    _cleanup_oauth_stores()
+    cfg = _get_google_oauth_config()
+    state_data = oauth_states.pop(state, None) if state else None
+
+    if not state_data:
+        return RedirectResponse(url=f"http://localhost:{cfg['port']}/signup.html?mode=login&auth_error=invalid_state")
+
+    safe_origin = state_data["origin"]
+    safe_mode = state_data["mode"]
+
+    if error or not code:
+        return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=oauth_denied")
+
+    if not cfg["client_id"] or not cfg["client_secret"]:
+        return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=not_configured")
+
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            token_resp = await client.post(
+                "https://oauth2.googleapis.com/token",
+                data={
+                    "code": code,
+                    "client_id": cfg["client_id"],
+                    "client_secret": cfg["client_secret"],
+                    "redirect_uri": cfg["redirect_uri"],
+                    "grant_type": "authorization_code",
+                },
+            )
+            if token_resp.status_code != 200:
+                return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=token_exchange_failed")
+
+            access_token = token_resp.json().get("access_token")
+            if not access_token:
+                return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=token_exchange_failed")
+
+            userinfo_resp = await client.get(
+                "https://www.googleapis.com/oauth2/v3/userinfo",
+                headers={"Authorization": f"Bearer {access_token}"},
+            )
+            if userinfo_resp.status_code != 200:
+                return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=userinfo_failed")
+
+            profile = userinfo_resp.json()
+    except Exception as exc:
+        print(f"[KRYON GOOGLE OAUTH ERROR] {exc}")
+        return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=oauth_network_error")
+
+    email = (profile.get("email") or "").strip().lower()
+    if not email:
+        return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&auth_error=missing_email")
+
+    full_name = (profile.get("name") or email.split("@")[0]).strip()
+    first_name = (profile.get("given_name") or full_name.split(" ")[0] or "User").strip()
+    last_name = (profile.get("family_name") or " ".join(full_name.split(" ")[1:])).strip()
+
+    parts = [p for p in full_name.split() if p]
+    if len(parts) >= 2:
+        initials = (parts[0][0] + parts[-1][0]).upper()
+    elif parts:
+        initials = parts[0][:2].upper()
+    else:
+        initials = "K"
+
+    one_time_token = secrets.token_urlsafe(32)
+    oauth_results[one_time_token] = {
+        "mode": safe_mode,
+        "created_at": time.time(),
+        "user": {
+            "name": full_name,
+            "firstName": first_name,
+            "lastName": last_name,
+            "email": email,
+            "initials": initials,
+            "picture": profile.get("picture", ""),
+            "authType": "google",
+        },
+    }
+
+    return RedirectResponse(url=f"{safe_origin}/signup.html?mode={safe_mode}&google_token={one_time_token}")
+
+
+@app.get("/api/v1/auth/google/result")
+def google_oauth_result(token: str):
+    _cleanup_oauth_stores()
+    record = oauth_results.pop(token, None)
+    if not record:
+        raise HTTPException(status_code=400, detail="Google authentication session expired. Please try again.")
+    return {
+        "status": "success",
+        "mode": record["mode"],
+        "user": record["user"],
     }
 
 

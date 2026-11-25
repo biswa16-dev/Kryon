@@ -152,6 +152,25 @@
             </button>
           </form>
 
+          <!-- Divider -->
+          <div class="relative flex items-center justify-center my-6 sm:my-7">
+            <div class="w-full border-t border-gray-200"></div>
+            <span class="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">OR</span>
+          </div>
+
+          <!-- Real Google OAuth Button -->
+          <div class="flex justify-center">
+            <button type="button" onclick="handleGoogleOAuth('login')" class="w-full h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[16px] sm:text-[17px] font-semibold tracking-tight text-gray-800 shadow-sm transition-all duration-200 cursor-pointer">
+              <svg class="w-[22px] h-[22px] shrink-0" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          </div>
+
           <!-- Footer Switcher -->
           <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
             New user? <button type="button" onclick="switchView('signup')" class="font-semibold text-gray-900 hover:underline cursor-pointer ml-1">Register</button>
@@ -205,6 +224,25 @@
               Create Account
             </button>
           </form>
+
+          <!-- Divider -->
+          <div class="relative flex items-center justify-center my-6 sm:my-7">
+            <div class="w-full border-t border-gray-200"></div>
+            <span class="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">OR</span>
+          </div>
+
+          <!-- Real Google OAuth Button -->
+          <div class="flex justify-center">
+            <button type="button" onclick="handleGoogleOAuth('signup')" class="w-full h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[16px] sm:text-[17px] font-semibold tracking-tight text-gray-800 shadow-sm transition-all duration-200 cursor-pointer">
+              <svg class="w-[22px] h-[22px] shrink-0" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          </div>
 
           <!-- Footer Switcher -->
           <p class="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
@@ -333,7 +371,7 @@
       }
     }
 
-    // Read initial mode from URL (e.g. ?mode=signup or ?mode=login or ?mode=forgot)
+    // Read initial mode & handle Google OAuth callback from URL
     function initModeFromUrl() {
       initRegisteredUsers();
       const params = new URLSearchParams(window.location.search);
@@ -345,6 +383,7 @@
       } else {
         switchView("login", false);
       }
+      handleGoogleCallback(params, urlMode === "signup" ? "signup" : "login");
     }
 
     function switchView(mode, updateHistory = true) {
@@ -358,7 +397,6 @@
       setFeedback("signup-feedback", "");
       setFeedback("forgot-feedback", "");
       setFeedback("otp-feedback", "");
-      setFeedback("google-feedback", "");
 
       if (mode === "signup") {
         document.getElementById("view-signup").classList.remove("hidden");
@@ -552,6 +590,117 @@
       setTimeout(() => {
         window.location.href = "/#assistant";
       }, 400);
+    }
+
+    /* ============================================================
+       REAL GOOGLE OAUTH 2.0 ENGINE
+       ============================================================ */
+    async function handleGoogleOAuth(mode = currentMode) {
+      const feedbackId = mode === "signup" ? "signup-feedback" : "login-feedback";
+      setFeedback(feedbackId, "");
+      try {
+        const res = await fetch("/api/v1/auth/google/status");
+        const status = await res.json();
+        if (!status.configured) {
+          setFeedback(
+            feedbackId,
+            "Google OAuth is not configured yet. Please add <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> to your <code>.env</code> file."
+          );
+          return;
+        }
+        const origin = encodeURIComponent(window.location.origin);
+        window.location.href = `/api/v1/auth/google/login?mode=${encodeURIComponent(mode)}&origin=${origin}`;
+      } catch (err) {
+        setFeedback(feedbackId, "Unable to reach authentication server. Please verify the backend is running.");
+      }
+    }
+
+    async function handleGoogleCallback(params, mode) {
+      const authError = params.get("auth_error");
+      const googleToken = params.get("google_token");
+      const feedbackId = mode === "signup" ? "signup-feedback" : "login-feedback";
+
+      if (!authError && !googleToken) return;
+
+      // Clean sensitive / transient query params from URL bar
+      try {
+        history.replaceState({ mode }, "", `${window.location.pathname}?mode=${mode}`);
+      } catch (e) {}
+
+      if (authError) {
+        const errorMap = {
+          not_configured: "Google OAuth is not configured yet. Add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to .env.",
+          oauth_denied: "Google sign-in was cancelled or denied.",
+          invalid_state: "Google sign-in session expired. Please try again.",
+          token_exchange_failed: "Failed to verify Google authorization code. Check your Client ID, Client Secret, and Redirect URI.",
+          userinfo_failed: "Could not retrieve your Google profile details. Please try again.",
+          oauth_network_error: "Network error while contacting Google OAuth servers.",
+          missing_email: "Your Google account did not return a verified email address."
+        };
+        setFeedback(feedbackId, errorMap[authError] || "Google authentication failed. Please try again.");
+        return;
+      }
+
+      if (googleToken) {
+        try {
+          const res = await fetch(`/api/v1/auth/google/result?token=${encodeURIComponent(googleToken)}`);
+          const data = await res.json();
+          if (!res.ok || !data.user || !data.user.email) {
+            setFeedback(feedbackId, data.detail || "Google authentication session expired. Please try again.");
+            return;
+          }
+
+          const gUser = data.user;
+          let accounts = [];
+          try {
+            accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
+          } catch (e) {
+            accounts = [];
+          }
+
+          const existingIdx = accounts.findIndex(
+            a => a.email && a.email.toLowerCase() === gUser.email.toLowerCase()
+          );
+
+          // Enforce registered-email guard on Log In
+          if (data.mode === "login" && existingIdx < 0) {
+            setFeedback(
+              "login-feedback",
+              `This Google email (<strong>${gUser.email}</strong>) is not registered. Please <a href="javascript:void(0)" onclick="switchView('signup')" class="underline font-bold text-red-900 hover:text-black ml-1">register / sign up</a> first before logging in.`
+            );
+            return;
+          }
+
+          const now = Date.now();
+          let finalUser;
+          if (existingIdx >= 0) {
+            finalUser = {
+              ...accounts[existingIdx],
+              name: gUser.name || accounts[existingIdx].name,
+              firstName: gUser.firstName || accounts[existingIdx].firstName,
+              lastName: gUser.lastName || accounts[existingIdx].lastName,
+              initials: gUser.initials || accounts[existingIdx].initials,
+              picture: gUser.picture || accounts[existingIdx].picture || "",
+              authType: "google",
+              loggedInAt: now
+            };
+            accounts[existingIdx] = finalUser;
+          } else {
+            finalUser = {
+              ...gUser,
+              registeredAt: now,
+              loggedInAt: now
+            };
+            accounts.push(finalUser);
+          }
+
+          localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+          localStorage.setItem("kryon_user", JSON.stringify(finalUser));
+          window.location.href = "/#assistant";
+        } catch (err) {
+          setFeedback(feedbackId, "Failed to finalize Google login. Please try again.");
+        }
+      }
     }
 
     /* ============================================================

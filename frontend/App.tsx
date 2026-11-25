@@ -7,6 +7,7 @@ export default function App() {
   const [otpStep, setOtpStep] = useState<"email" | "verify">("email");
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [signupError, setSignupError] = useState("");
 
   // Form State
   const [firstName, setFirstName] = useState("");
@@ -22,16 +23,87 @@ export default function App() {
   const [isTimerActive, setIsTimerActive] = useState(false);
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Check initial mode from URL if present
+  // Check initial mode and Google OAuth callback from URL
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const urlMode = params.get("mode");
-      if (urlMode === "signup") setMode("signup");
-      else if (urlMode === "forgot") setMode("forgot");
-      else if (urlMode === "login") setMode("login");
+      const activeMode = urlMode === "signup" ? "signup" : urlMode === "forgot" ? "forgot" : "login";
+      setMode(activeMode);
+
+      const authError = params.get("auth_error");
+      const googleToken = params.get("google_token");
+      if (authError || googleToken) {
+        try {
+          window.history.replaceState({}, "", `${window.location.pathname}?mode=${activeMode}`);
+        } catch {}
+
+        if (authError) {
+          const msg =
+            authError === "not_configured"
+              ? "Google OAuth is not configured yet. Please add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to .env."
+              : "Google authentication failed or was cancelled. Please try again.";
+          if (activeMode === "signup") setSignupError(msg);
+          else setLoginError(msg);
+        } else if (googleToken) {
+          fetch(`/api/v1/auth/google/result?token=${encodeURIComponent(googleToken)}`)
+            .then((r) => r.json().then((d) => ({ ok: r.ok, data: d })))
+            .then(({ ok, data }) => {
+              if (!ok || !data.user || !data.user.email) {
+                const err = data.detail || "Google authentication session expired. Please try again.";
+                if (activeMode === "signup") setSignupError(err);
+                else setLoginError(err);
+                return;
+              }
+              const gUser = data.user;
+              let accounts: any[] = [];
+              try {
+                accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
+              } catch {}
+              const existingIdx = accounts.findIndex(
+                (a: any) => a.email && a.email.toLowerCase() === gUser.email.toLowerCase()
+              );
+              if (data.mode === "login" && existingIdx < 0) {
+                setLoginError(`This Google email (${gUser.email}) is not registered. Please register first before logging in.`);
+                return;
+              }
+              const now = Date.now();
+              const finalUser =
+                existingIdx >= 0
+                  ? { ...accounts[existingIdx], ...gUser, authType: "google", loggedInAt: now }
+                  : { ...gUser, registeredAt: now, loggedInAt: now };
+              if (existingIdx >= 0) accounts[existingIdx] = finalUser;
+              else accounts.push(finalUser);
+              localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+              localStorage.setItem("kryon_user", JSON.stringify(finalUser));
+              window.location.href = "/#assistant";
+            })
+            .catch(() => {
+              const err = "Failed to finalize Google login. Please try again.";
+              if (activeMode === "signup") setSignupError(err);
+              else setLoginError(err);
+            });
+        }
+      }
     }
   }, []);
+
+  const handleGoogleOAuth = async (targetMode: "login" | "signup") => {
+    const setErr = targetMode === "signup" ? setSignupError : setLoginError;
+    setErr("");
+    try {
+      const res = await fetch("/api/v1/auth/google/status");
+      const status = await res.json();
+      if (!status.configured) {
+        setErr("Google OAuth is not configured yet. Please add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to .env.");
+        return;
+      }
+      const origin = encodeURIComponent(window.location.origin);
+      window.location.href = `/api/v1/auth/google/login?mode=${encodeURIComponent(targetMode)}&origin=${origin}`;
+    } catch {
+      setErr("Unable to reach authentication server.");
+    }
+  };
 
   // Countdown timer for OTP resend
   useEffect(() => {
@@ -305,6 +377,31 @@ export default function App() {
                   </button>
                 </form>
 
+                {/* Divider */}
+                <div className="relative flex items-center justify-center my-6 sm:my-7">
+                  <div className="w-full border-t border-gray-200" />
+                  <span className="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">
+                    OR
+                  </span>
+                </div>
+
+                {/* Real Google OAuth Button */}
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => handleGoogleOAuth("login")}
+                    className="w-full h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[16px] sm:text-[17px] font-semibold tracking-tight text-gray-800 shadow-sm transition-all duration-200 cursor-pointer"
+                  >
+                    <svg className="w-[22px] h-[22px] shrink-0" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Continue with Google</span>
+                  </button>
+                </div>
+
                 {/* Footer Switcher */}
                 <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
                   New user?{" "}
@@ -337,6 +434,13 @@ export default function App() {
                     Input your basic details to begin the journey.
                   </p>
                 </div>
+
+                {signupError && (
+                  <div className="p-3.5 rounded-2xl text-[14px] font-medium text-left bg-red-50 border border-red-200 text-red-700 flex items-start gap-2.5">
+                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                    <span>{signupError}</span>
+                  </div>
+                )}
 
                 <form
                   onSubmit={(e) => {
@@ -443,6 +547,31 @@ export default function App() {
                     Create Account
                   </button>
                 </form>
+
+                {/* Divider */}
+                <div className="relative flex items-center justify-center my-6 sm:my-7">
+                  <div className="w-full border-t border-gray-200" />
+                  <span className="absolute bg-[#fbfbfb] px-4 text-xs sm:text-[13px] font-semibold text-gray-400 uppercase tracking-widest">
+                    OR
+                  </span>
+                </div>
+
+                {/* Real Google OAuth Button */}
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => handleGoogleOAuth("signup")}
+                    className="w-full h-[52px] sm:h-[56px] bg-white border border-gray-200 hover:bg-gray-50 active:scale-[0.99] rounded-2xl flex items-center justify-center gap-3.5 text-[16px] sm:text-[17px] font-semibold tracking-tight text-gray-800 shadow-sm transition-all duration-200 cursor-pointer"
+                  >
+                    <svg className="w-[22px] h-[22px] shrink-0" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Continue with Google</span>
+                  </button>
+                </div>
 
                 {/* Footer Switcher */}
                 <p className="text-center text-sm sm:text-[15px] text-gray-500 pt-3 sm:pt-4">
