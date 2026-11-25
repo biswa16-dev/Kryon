@@ -2178,10 +2178,6 @@
               <div class="flyout-email" id="flyout-email">Not signed in</div>
             </div>
           </div>
-          <div class="flyout-badge">
-            <span class="flyout-status-dot"></span>
-            <span id="flyout-status-text">Verified Kryon Account</span>
-          </div>
           <div class="flyout-divider"></div>
           <div class="flyout-actions">
             <button type="button" class="flyout-btn-signout" id="flyout-action-btn" onclick="handleAuthButtonClick()">
@@ -3019,7 +3015,6 @@
       const flyoutName = document.getElementById("flyout-name");
       const flyoutEmail = document.getElementById("flyout-email");
       const flyoutActionLabel = document.getElementById("flyout-action-label");
-      const flyoutStatusText = document.getElementById("flyout-status-text");
 
       // Top Bar Pill
       const topPill = document.getElementById("top-user-pill");
@@ -3047,11 +3042,8 @@
         }
         if (flyoutAvatar) flyoutAvatar.innerText = initials;
         if (flyoutName) flyoutName.innerText = displayName;
-        if (flyoutEmail) flyoutEmail.innerText = user.email || "student@university.edu";
+        if (flyoutEmail) flyoutEmail.innerText = user.email || "";
         if (flyoutActionLabel) flyoutActionLabel.innerText = "Sign Out";
-        if (flyoutStatusText) {
-          flyoutStatusText.innerText = user.authType === "google" ? "Verified via Google SSO" : "Verified Academic Profile";
-        }
 
         if (topPill) topPill.style.display = "flex";
         if (topAvatar) topAvatar.innerText = initials;
@@ -3077,7 +3069,6 @@
         if (flyoutName) flyoutName.innerText = "Guest User";
         if (flyoutEmail) flyoutEmail.innerText = "Sign in to access AI Assistant";
         if (flyoutActionLabel) flyoutActionLabel.innerText = "Sign In / Register";
-        if (flyoutStatusText) flyoutStatusText.innerText = "Guest Mode";
 
         if (topPill) topPill.style.display = "none";
 
