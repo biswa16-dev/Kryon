@@ -289,11 +289,11 @@
     .logo-item {
       display: flex;
       align-items: center;
-      gap: 7px;
-      color: #8d8d8d;
-      font-size: clamp(14px, 1.18vw, 17px);
-      font-weight: 500;
-      letter-spacing: -0.01em;
+      gap: 10px;
+      color: #626262;
+      font-size: clamp(16px, 1.45vw, 20px);
+      font-weight: 600;
+      letter-spacing: -0.015em;
       transition: color 0.2s ease;
     }
 
@@ -302,9 +302,16 @@
     }
 
     .logo-item svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      opacity: 0.94;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .logo-item:hover svg {
+      opacity: 1;
+      transform: scale(1.06);
     }
 
     /* ============================================================
@@ -327,7 +334,8 @@
       display: flex !important;
     }
 
-    section.hero.view-hidden {
+    section.hero.view-hidden,
+    #landing-showcase.view-hidden {
       display: none !important;
     }
 
@@ -2012,7 +2020,9 @@
         font-size: 12px;
       }
       div.copy { top: 20%; }
-      div.logos { gap: 14px 24px; font-size: 13px; }
+      div.logos { gap: 16px 26px; }
+      .logo-item { font-size: 14.5px; }
+      .logo-item svg { width: 22px; height: 22px; }
       .left-rail { display: none; }
       .top-bar { padding: 12px 16px; }
     }
@@ -2374,6 +2384,205 @@
       }
       .settings-nav-btn { white-space: nowrap; }
     }
+
+    /* ============================================================
+       LANDING SHOWCASE (FEATURES GRID + FOOTER BELOW HERO)
+       ============================================================ */
+    #landing-showcase {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .features-band {
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 76px 40px 96px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 32px 28px;
+      min-height: 176px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      background: #ffffff;
+      border-color: rgba(47, 107, 255, 0.35);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: #eef4ff;
+      color: #2f6bff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .feature-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 9px;
+      letter-spacing: -0.012em;
+    }
+
+    .feature-card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #6b7280;
+    }
+
+    .landing-footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border-subtle);
+      padding: 68px 40px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.75fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    .footer-brand-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: #eef4ff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-brand-name {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-brand-desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #6b7280;
+      max-width: 340px;
+      margin-bottom: 18px;
+    }
+
+    .footer-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ecfdf5;
+      border: 1px solid #d1fae5;
+      color: #047857;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .footer-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .footer-col-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #374151;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .footer-links a {
+      font-size: 13.5px;
+      color: #6b7280;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-links a:hover {
+      color: #111827;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #eceef2;
+      margin-top: 48px;
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12.5px;
+      color: #9ca3af;
+    }
+
+    .footer-stack {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .footer-stack strong {
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    @media (max-width: 960px) {
+      .features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 640px) {
+      .features-band { padding: 52px 18px 64px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    }
   </style>
 </head>
 <body>
@@ -2436,40 +2645,194 @@
       </div>
     </div>
 
-    <!-- Partner Logos with exact SVGs -->
-    <div class="logos">
-      <!-- 1. Lumenix -->
-      <div class="logo-item">
-        <svg viewBox="0 0 20 20"><path d="M3 15c0-7 5-12 14-12-1 9-6 14-13 13l-1 2-2-1z"/></svg>
-        <span>Lumenix</span>
+    <!-- Official Project Technology Logos -->
+    <div class="logos" aria-label="Core Technologies Powering Kryon">
+      <!-- 1. Hugging Face -->
+      <div class="logo-item" title="Hugging Face Transformers &amp; PEFT">
+        <svg viewBox="0 0 95 88" fill="none" style="width: 31px; height: 29px;">
+          <path fill="#FFD21E" d="M47.21 76.5a34.75 34.75 0 1 0 0-69.5 34.75 34.75 0 0 0 0 69.5Z"/>
+          <path fill="#FF9D0B" d="M81.96 41.75a34.75 34.75 0 1 0-69.5 0 34.75 34.75 0 0 0 69.5 0Zm-73.5 0a38.75 38.75 0 1 1 77.5 0 38.75 38.75 0 0 1-77.5 0Z"/>
+          <path fill="#3A3B45" d="M58.5 32.3c1.28.44 1.78 3.06 3.07 2.38a5 5 0 1 0-6.76-2.07c.61 1.15 2.55-.72 3.7-.32ZM34.95 32.3c-1.28.44-1.79 3.06-3.07 2.38a5 5 0 1 1 6.76-2.07c-.61 1.15-2.56-.72-3.7-.32Z"/>
+          <path fill="#FF323D" d="M46.96 56.29c9.83 0 13-8.76 13-13.26 0-2.34-1.57-1.6-4.09-.36-2.33 1.15-5.46 2.74-8.9 2.74-7.19 0-13-6.88-13-2.38s3.16 13.26 13 13.26Z"/>
+          <path fill="#3A3B45" fill-rule="evenodd" d="M39.43 54a8.7 8.7 0 0 1 5.3-4.49c.4-.12.81.57 1.24 1.28.4.68.82 1.37 1.24 1.37.45 0 .9-.68 1.33-1.35.45-.7.89-1.38 1.32-1.25a8.61 8.61 0 0 1 5 4.17c3.73-2.94 5.1-7.74 5.1-10.7 0-2.34-1.57-1.6-4.09-.36l-.14.07c-2.31 1.15-5.39 2.67-8.77 2.67s-6.45-1.52-8.77-2.67c-2.6-1.29-4.23-2.1-4.23.29 0 3.05 1.46 8.06 5.47 10.97Z" clip-rule="evenodd"/>
+          <path fill="#FF9D0B" d="M70.71 37a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5ZM24.21 37a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5ZM17.52 48c-1.62 0-3.06.66-4.07 1.87a5.97 5.97 0 0 0-1.33 3.76 7.1 7.1 0 0 0-1.94-.3c-1.55 0-2.95.59-3.94 1.66a5.8 5.8 0 0 0-.8 7 5.3 5.3 0 0 0-1.79 2.82c-.24.9-.48 2.8.8 4.74a5.22 5.22 0 0 0-.37 5.02c1.02 2.32 3.57 4.14 8.52 6.1 3.07 1.22 5.89 2 5.91 2.01a44.33 44.33 0 0 0 10.93 1.6c5.86 0 10.05-1.8 12.46-5.34 3.88-5.69 3.33-10.9-1.7-15.92-2.77-2.78-4.62-6.87-5-7.77-.78-2.66-2.84-5.62-6.25-5.62a5.7 5.7 0 0 0-4.6 2.46c-1-1.26-1.98-2.25-2.86-2.82A7.4 7.4 0 0 0 17.52 48Zm0 4c.51 0 1.14.22 1.82.65 2.14 1.36 6.25 8.43 7.76 11.18.5.92 1.37 1.31 2.14 1.31 1.55 0 2.75-1.53.15-3.48-3.92-2.93-2.55-7.72-.68-8.01.08-.02.17-.02.24-.02 1.7 0 2.45 2.93 2.45 2.93s2.2 5.52 5.98 9.3c3.77 3.77 3.97 6.8 1.22 10.83-1.88 2.75-5.47 3.58-9.16 3.58-3.81 0-7.73-.9-9.92-1.46-.11-.03-13.45-3.8-11.76-7 .28-.54.75-.76 1.34-.76 2.38 0 6.7 3.54 8.57 3.54.41 0 .7-.17.83-.6.79-2.85-12.06-4.05-10.98-8.17.2-.73.71-1.02 1.44-1.02 3.14 0 10.2 5.53 11.68 5.53.11 0 .2-.03.24-.1.74-1.2.33-2.04-4.9-5.2-5.21-3.16-8.88-5.06-6.8-7.33.24-.26.58-.38 1-.38 3.17 0 10.66 6.82 10.66 6.82s2.02 2.1 3.25 2.1c.28 0 .52-.1.68-.38.86-1.46-8.06-8.22-8.56-11.01-.34-1.9.24-2.85 1.31-2.85Z"/>
+          <path fill="#FFD21E" d="M38.6 76.69c2.75-4.04 2.55-7.07-1.22-10.84-3.78-3.77-5.98-9.3-5.98-9.3s-.82-3.2-2.69-2.9c-1.87.3-3.24 5.08.68 8.01 3.91 2.93-.78 4.92-2.29 2.17-1.5-2.75-5.62-9.82-7.76-11.18-2.13-1.35-3.63-.6-3.13 2.2.5 2.79 9.43 9.55 8.56 11-.87 1.47-3.93-1.71-3.93-1.71s-9.57-8.71-11.66-6.44c-2.08 2.27 1.59 4.17 6.8 7.33 5.23 3.16 5.64 4 4.9 5.2-.75 1.2-12.28-8.53-13.36-4.4-1.08 4.11 11.77 5.3 10.98 8.15-.8 2.85-9.06-5.38-10.74-2.18-1.7 3.21 11.65 6.98 11.76 7.01 4.3 1.12 15.25 3.49 19.08-2.12Z"/>
+          <path fill="#FF9D0B" d="M77.4 48c1.62 0 3.07.66 4.07 1.87a5.97 5.97 0 0 1 1.33 3.76 7.1 7.1 0 0 1 1.95-.3c1.55 0 2.95.59 3.94 1.66a5.8 5.8 0 0 1 .8 7 5.3 5.3 0 0 1 1.78 2.82c.24.9.48 2.8-.8 4.74a5.22 5.22 0 0 1 .37 5.02c-1.02 2.32-3.57 4.14-8.51 6.1-3.08 1.22-5.9 2-5.92 2.01a44.33 44.33 0 0 1-10.93 1.6c-5.86 0-10.05-1.8-12.46-5.34-3.88-5.69-3.33-10.9 1.7-15.92 2.78-2.78 4.63-6.87 5.01-7.77.78-2.66 2.83-5.62 6.24-5.62a5.7 5.7 0 0 1 4.6 2.46c1-1.26 1.98-2.25 2.87-2.82A7.4 7.4 0 0 1 77.4 48Zm0 4c-.51 0-1.13.22-1.82.65-2.13 1.36-6.25 8.43-7.76 11.18a2.43 2.43 0 0 1-2.14 1.31c-1.54 0-2.75-1.53-.14-3.48 3.91-2.93 2.54-7.72.67-8.01a1.54 1.54 0 0 0-.24-.02c-1.7 0-2.45 2.93-2.45 2.93s-2.2 5.52-5.97 9.3c-3.78 3.77-3.98 6.8-1.22 10.83 1.87 2.75 5.47 3.58 9.15 3.58 3.82 0 7.73-.9 9.93-1.46.1-.03 13.45-3.8 11.76-7-.29-.54-.75-.76-1.34-.76-2.38 0-6.71 3.54-8.57 3.54-.42 0-.71-.17-.83-.6-.8-2.85 12.05-4.05 10.97-8.17-.19-.73-.7-1.02-1.44-1.02-3.14 0-10.2 5.53-11.68 5.53-.1 0-.19-.03-.23-.1-.74-1.2-.34-2.04 4.88-5.2 5.23-3.16 8.9-5.06 6.8-7.33-.23-.26-.57-.38-.98-.38-3.18 0-10.67 6.82-10.67 6.82s-2.02 2.1-3.24 2.1a.74.74 0 0 1-.68-.38c-.87-1.46 8.05-8.22 8.55-11.01.34-1.9-.24-2.85-1.31-2.85Z"/>
+          <path fill="#FFD21E" d="M56.33 76.69c-2.75-4.04-2.56-7.07 1.22-10.84 3.77-3.77 5.97-9.3 5.97-9.3s.82-3.2 2.7-2.9c1.86.3 3.23 5.08-.68 8.01-3.92 2.93.78 4.92 2.28 2.17 1.51-2.75 5.63-9.82 7.76-11.18 2.13-1.35 3.64-.6 3.13 2.2-.5 2.79-9.42 9.55-8.55 11 .86 1.47 3.92-1.71 3.92-1.71s9.58-8.71 11.66-6.44c2.08 2.27-1.58 4.17-6.8 7.33-5.23 3.16-5.63 4-4.9 5.2.75 1.2 12.28-8.53 13.36-4.4 1.08 4.11-11.76 5.3-10.97 8.15.8 2.85 9.05-5.38 10.74-2.18 1.69 3.21-11.65 6.98-11.76 7.01-4.31 1.12-15.26 3.49-19.08-2.12Z"/>
+        </svg>
+        <span>Hugging Face</span>
       </div>
-      <!-- 2. Velora -->
-      <div class="logo-item">
-        <svg viewBox="0 0 20 20"><path d="M10 1l8 4.5v9L10 19l-8-4.5v-9zM10 6l-4 2.3v4.4L10 15l4-2.3V8.3z"/></svg>
-        <span>Velora</span>
+
+      <!-- 2. PyTorch (Official SVG) -->
+      <div class="logo-item" title="PyTorch Deep Learning Framework">
+        <svg viewBox="0 0 128 128" fill="none">
+          <path fill="#EE4C2C" d="M100.1 38.3l-9.2 9.2c15.1 15.1 15.1 39.4 0 54.3-15.1 15.1-39.4 15.1-54.3 0-15.1-15.1-15.1-39.4 0-54.3l24-24 3.4-3.4V2L27.8 38.2C7.7 58.3 7.7 90.8 27.8 111s52.6 20.1 72.4 0c20.1-20.2 20.1-52.5-.1-72.7z"/>
+          <circle fill="#EE4C2C" transform="rotate(-88.939 82.069 29.398) scale(.99997)" cx="82.1" cy="29.4" r="6.7"/>
+        </svg>
+        <span>PyTorch</span>
       </div>
-      <!-- 3. Nimbus -->
-      <div class="logo-item">
-        <svg viewBox="0 0 20 20"><path d="M1 5q4.5-3 9 0t9 0v3q-4.5 3-9 0t-9 0zm0 7q4.5-3 9 0t9 0v3q-4.5 3-9 0t-9 0z"/></svg>
-        <span>Nimbus</span>
+
+      <!-- 3. FastAPI (Official SVG) -->
+      <div class="logo-item" title="FastAPI High-Performance API">
+        <svg viewBox="0 0 128 128" fill="none">
+          <circle cx="64" cy="64" r="56" fill="#FFFFFF"/>
+          <path d="M56.813 127.586c-1.903-.227-3.899-.52-4.434-.652a48.078 48.078 0 00-2.375-.5 36.042 36.042 0 01-2.703-.633c-4.145-1.188-4.442-1.285-7.567-2.563-2.875-1.172-8.172-3.91-9.984-5.156-.496-.344-.96-.621-1.031-.621-.07 0-1.23-.816-2.578-1.813-8.57-6.343-15.004-14.043-19.653-23.527-.8-1.629-1.453-3.074-1.453-3.21 0-.134-.144-.505-.32-.817-.363-.649-.88-2.047-1.297-3.492a20.047 20.047 0 00-.625-1.813c-.195-.46-.352-1.02-.352-1.246 0-.227-.195-.965-.433-1.645-.238-.675-.43-1.472-.43-1.77 0-.296-.187-1.32-.418-2.276C.598 73.492 0 67.379 0 63.953c0-3.422.598-9.535 1.16-11.894.23-.957.418-2 .418-2.32 0-.321.145-.95.32-1.4.18-.448.41-1.253.516-1.788.11-.535.36-1.457.563-2.055l.59-1.726c.433-1.293.835-2.387 1.027-2.813.11-.238.539-1.21.957-2.16.676-1.535 2.125-4.43 2.972-5.945.309-.555.426-.739 2.098-3.352 2.649-4.148 7.176-9.309 11.39-12.988 1.485-1.297 6.446-5.063 6.669-5.063.062 0 .53-.281 1.043-.625 1.347-.902 2.668-1.668 4.39-2.531a53.06 53.06 0 001.836-.953c.285-.164.82-.41 3.567-1.64.605-.27 1.257-.516 3.136-1.173.414-.144 1.246-.449 1.84-.672.598-.222 1.301-.406 1.563-.406.258 0 .937-.18 1.508-.402.57-.223 1.605-.477 2.304-.563.696-.082 1.621-.277 2.055-.43.43-.148 1.61-.34 2.621-.425a72.572 72.572 0 003.941-.465c2.688-.394 8.532-.394 11.192 0a75.02 75.02 0 003.781.445c.953.079 2.168.278 2.703.442.535.16 1.461.36 2.055.433.594.079 1.594.325 2.222.551.63.23 1.344.414 1.59.414s.754.137 1.125.309c.375.168 1.168.449 1.766.625.594.18 1.613.535 2.27.797.652.261 1.527.605 1.945.761.77.29 6.46 3.137 7.234 3.622 6.281 3.917 9.512 6.476 13.856 10.964 5.238 5.414 8.715 10.57 12.254 18.16.25.536.632 1.329.851 1.758.215.434.395.942.395 1.13 0 .19.18.76.402 1.269.602 1.383 1.117 2.957 1.36 4.16.12.59.343 1.32.495 1.621.153.3.332 1.063.403 1.688.07.624.277 1.648.453 2.269 1.02 3.531 1.527 13.934.91 18.535-.183 1.367-.39 3.02-.46 3.672-.118 1.117-.708 4.004-1.212 5.945l-.52 2.055c-.98 3.957-3.402 9.594-6.359 14.809-1.172 2.07-5.101 7.668-5.843 8.324-.067.058-.399.45-.735.863-.336.418-1.414 1.586-2.39 2.594-4.301 4.441-7.77 7.187-13.86 10.969-.722.449-6.847 3.441-7.992 3.906-.594.238-1.586.64-2.203.89-.613.247-1.297.454-1.512.458-.215.003-.781.195-1.258.425-.476.23-1.082.422-1.351.426-.266.004-1.043.192-1.727.418-.683.23-1.633.477-2.11.55-.476.075-1.495.278-2.269.45-.773.172-3.11.508-5.187.746a59.06 59.06 0 01-13.945-.031zm4.703-12.5c.3-.234.609-.7.691-1.027.18-.723 29.234-58.97 29.781-59.7.461-.617.504-1.605.082-1.953-.222-.187-3.004-.246-10.43-.234-5.57.012-10.253.016-10.406.012-.226-.008-.273-3.73-.25-19.672.016-10.817-.035-19.766-.113-19.89-.078-.126-.383-.227-.68-.227-.418 0-.613.18-.87.808-.485 1.168-1.825 3.82-8.348 16.485a3554.569 3554.569 0 00-4.055 7.89c-1.156 2.262-2.98 5.813-4.047 7.89a8751.248 8751.248 0 00-8.598 16.759c-4.933 9.636-5.53 10.785-5.742 11.039-.41.496-.633 1.64-.402 2.07.21.394.629.41 11.043.394 5.953-.007 10.863.024 10.914.07.137.141.086 37.31-.055 38.196-.093.582-.031.89.235 1.156.46.461.586.457 1.25-.066zm0 0" fill="#049688"/>
+        </svg>
+        <span>FastAPI</span>
       </div>
-      <!-- 4. Quanta -->
-      <div class="logo-item">
-        <svg viewBox="0 0 20 20"><path d="M10 1a9 9 0 110 18 9 9 0 010-18zm0 3a6 6 0 100 12 6 6 0 000-12zm0 3a3 3 0 110 6 3 3 0 010-6z"/></svg>
-        <span>Quanta</span>
+
+      <!-- 4. FAISS (Official Meta AI SVG) -->
+      <div class="logo-item" title="FAISS Vector Similarity Index (Meta AI)">
+        <svg viewBox="0 0 24 24" fill="#0081FB">
+          <path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/>
+        </svg>
+        <span>FAISS</span>
       </div>
-      <!-- 5. Solstice -->
-      <div class="logo-item">
-        <svg viewBox="0 0 20 20"><path d="M1 17L7 6l3 5 3-7 6 13z"/></svg>
-        <span>Solstice</span>
+
+      <!-- 5. Python (Official SVG) -->
+      <div class="logo-item" title="Python Runtime">
+        <svg viewBox="0 0 128 128" fill="none">
+          <linearGradient id="python-original-a" gradientUnits="userSpaceOnUse" x1="70.252" y1="1237.476" x2="170.659" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient>
+          <linearGradient id="python-original-b" gradientUnits="userSpaceOnUse" x1="209.474" y1="1098.811" x2="173.62" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient>
+          <path fill="url(#python-original-a)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z" transform="translate(0 10.26)"/>
+          <path fill="url(#python-original-b)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z" transform="translate(0 10.26)"/>
+          <radialGradient id="python-original-c" cx="1825.678" cy="444.45" r="26.743" gradientTransform="matrix(0 -.24 -1.055 0 532.979 557.576)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#B8B8B8" stop-opacity=".498"/><stop offset="1" stop-color="#7F7F7F" stop-opacity="0"/></radialGradient>
+          <path opacity=".444" fill="url(#python-original-c)" d="M97.309 119.597c0 3.543-14.816 6.416-33.091 6.416-18.276 0-33.092-2.873-33.092-6.416 0-3.544 14.815-6.417 33.092-6.417 18.275 0 33.091 2.872 33.091 6.417z"/>
+        </svg>
+        <span>Python</span>
       </div>
-      <!-- 6. Parallax -->
-      <div class="logo-item">
-        <svg viewBox="0 0 20 20"><path d="M10 1l9 4-9 4-9-4zm-9 8l9 4 9-4v3l-9 4-9-4zm0 5l9 4 9-4v2l-9 4-9-4z"/></svg>
-        <span>Parallax</span>
+
+      <!-- 6. NumPy (Official SVG) -->
+      <div class="logo-item" title="NumPy Scientific Vector Computing">
+        <svg viewBox="0 0 128 128" fill="none">
+          <path fill="#4DABCF" d="m55.012 26.006-21.38-10.789L10.154 26.93l21.969 11.027Zm9.808 4.951L87.241 42.28 63.982 53.955l-22-11.043Zm29.948-15.581 23.037 11.552L97.2 37.272 74.735 25.938ZM84.853 10.4 64.113 0 43.598 10.24 64.97 21.014ZM68.64 99.702V128l25.122-12.537-.023-28.31ZM93.727 77.27l-.028-28.012-25.06 12.458V89.74Zm30.158-5.246v28.41l-21.43 10.69-.017-28.279zm0-9.935V34.25l-21.47 10.673.016 28.068z"/>
+          <path fill="#4c75cf" d="m59.77 61.716-16.918-8.512V89.97s-20.7-44.033-22.612-47.99c-.246-.513-1.263-1.07-1.522-1.209-3.731-1.947-14.603-7.45-14.603-7.45v64.977l15.04 8.063V72.382s20.478 39.346 20.689 39.78c.214.429 2.257 4.57 4.459 6.028 2.92 1.939 15.458 9.477 15.458 9.477z"/>
+        </svg>
+        <span>NumPy</span>
       </div>
     </div>
   </section>
+
+  <!-- ============================================================
+       SECTION 1B: PROJECT FEATURES GRID & FOOTER (BELOW HERO)
+       ============================================================ -->
+  <div id="landing-showcase">
+    <section class="features-band" id="landing-features" aria-label="Kryon Platform Capabilities">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          </div>
+          <div class="feature-card-title">Multi-Format Ingestion</div>
+          <p class="feature-card-desc">PDF, DOCX, Excel/CSV, Markdown, and OCR images with structure-aware academic chunking</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <div class="feature-card-title">Hybrid FAISS + BM25 Search</div>
+          <p class="feature-card-desc">Two-stage retrieval combining dense vector semantics with exact rule and code matching</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div class="feature-card-title">Grounded Answers &amp; Citations</div>
+          <p class="feature-card-desc">Cross-encoder re-ranking delivers verified regulation answers with mandatory source citations</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <div class="feature-card-title">Zero-Hallucination Guardrails</div>
+          <p class="feature-card-desc">Confidence-threshold refusal logic prevents guessing when official evidence is insufficient</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="feature-card-title">Verified Access &amp; OTP Security</div>
+          <p class="feature-card-desc">Google OAuth 2.0 sign-in, registered-account guard, and 5-minute OTP password recovery</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          </div>
+          <div class="feature-card-title">Fine-Tuned Academic T5</div>
+          <p class="feature-card-desc">LoRA-adapted Flan-T5 model built with PyTorch and HuggingFace for syllabus &amp; policy QA</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div>
+            <div class="footer-brand-head">
+              <div class="footer-brand-icon">
+                <svg viewBox="0 0 16 18" width="16" height="18" fill="#2f6bff">
+                  <path d="M2 0h4v18H2zM7 9c3-1 5-4 6-9h3c-1 5-3 8-6 9 3 1 5 4 6 9h-3c-1-5-3-8-6-9z"/>
+                </svg>
+              </div>
+              <span class="footer-brand-name">Kryon Academic AI</span>
+            </div>
+            <p class="footer-brand-desc">
+              Production Retrieval-Augmented Generation (RAG) assistant for university academic regulations, examination codes, and course syllabi with zero-hallucination guardrails.
+            </p>
+            <div class="footer-status-pill">
+              <span class="footer-status-dot"></span>
+              <span>All Systems Operational</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Product</div>
+            <ul class="footer-links">
+              <li><a href="#assistant" onclick="handleHeroCtaClick(event)">Get Started</a></li>
+              <li><a href="signup.html?mode=login">Sign In</a></li>
+              <li><a href="signup.html?mode=signup">Create Account</a></li>
+              <li><a href="#assistant" onclick="handleHeroCtaClick(event)">Regulations Assistant</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Resources</div>
+            <ul class="footer-links">
+              <li><a href="#assistant" onclick="if(isUserLoggedIn()){event.preventDefault(); showView('app','docs');} else {handleHeroCtaClick(event);}">Documents Vault</a></li>
+              <li><a href="#assistant" onclick="if(isUserLoggedIn()){event.preventDefault(); showView('app','experiments');} else {handleHeroCtaClick(event);}">Benchmark Experiments</a></li>
+              <li><a href="https://github.com/biswa16-dev/Kryon" target="_blank" rel="noopener noreferrer">GitHub Repository &#8599;</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="footer-col-title">Trust &amp; Security</div>
+            <ul class="footer-links">
+              <li><a href="#landing-features">Zero-Hallucination Policy</a></li>
+              <li><a href="#landing-features">Mandatory Citations</a></li>
+              <li><a href="signup.html?mode=forgot">OTP Password Recovery</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>&copy; 2026 Kryon Academic AI. Grounded RAG System.</div>
+          <div class="footer-stack">
+            <span>Powered by</span>
+            <strong>FastAPI</strong><span>&middot;</span>
+            <strong>FAISS</strong><span>&middot;</span>
+            <strong>BM25</strong><span>&middot;</span>
+            <strong>HuggingFace</strong><span>&middot;</span>
+            <strong>PyTorch</strong>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
 
   <!-- ============================================================
@@ -3752,6 +4115,7 @@
     /* Single Page View Switcher: Stores Assistant inside Get Started button */
     function showView(view, tab = "chat") {
       const heroEl = document.getElementById("hero");
+      const showcaseEl = document.getElementById("landing-showcase");
       const appEl = document.getElementById("assistant");
 
       if (view === "app" || view === "assistant") {
@@ -3760,6 +4124,7 @@
           return;
         }
         heroEl.classList.add("view-hidden");
+        if (showcaseEl) showcaseEl.classList.add("view-hidden");
         appEl.classList.add("view-active");
         setDashboardTab(tab);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -3774,6 +4139,7 @@
       } else {
         appEl.classList.remove("view-active");
         heroEl.classList.remove("view-hidden");
+        if (showcaseEl) showcaseEl.classList.remove("view-hidden");
         window.scrollTo({ top: 0, behavior: "smooth" });
         if (window.location.hash === "#assistant") {
           try { history.pushState(null, null, " "); } catch(e) {}
