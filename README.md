@@ -102,22 +102,28 @@ git clone https://github.com/biswa16-dev/Kryon.git
 cd Kryon
 ```
 
-### 2. Install Dependencies
+### 2. Optional Environment Configuration (SMTP OTP & Google OAuth)
+```bash
+cp .env.example .env
+# Edit .env to add SMTP_USER / SMTP_PASSWORD (for email OTP) and GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET
+```
+
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Start the Server
+### 4. Start the Server
 ```bash
 python run_server.py
 ```
 
 Open your browser and navigate to:
 ```
-http://127.0.0.1:8000
+http://localhost:8000
 ```
 
-### 4. API Endpoints
+### 5. API Endpoints
 - `POST /api/v1/query`: Execute a grounded RAG query
 - `GET /api/v1/documents`: List all ingested documents and chunk stats
 - `POST /api/v1/documents/upload`: Upload and index new documents
@@ -144,13 +150,20 @@ The fine-tuned model checkpoint is saved to `models/kryon-academic-t5/` with com
 
 ## 🐳 Docker Deployment
 
-To build and run the entire containerized application:
+To build and run the entire containerized application locally right after cloning:
 
+### Option A: Docker Compose (Recommended)
 ```bash
-# Build the Docker image
+# Build and start the container (mounts ./data/raw and ./models, loads optional .env)
+docker compose up -d --build
+```
+
+### Option B: Standalone Docker
+```bash
+# Build the Docker image (uses CPU-only PyTorch and all updated frontend/backend assets)
 docker build -t kryon-rag .
 
-# Run container on port 8000
+# Run container on port 8000 (pass --env-file .env if using SMTP OTP or Google OAuth)
 docker run -d -p 8000:8000 --name kryon-app kryon-rag
 ```
 
