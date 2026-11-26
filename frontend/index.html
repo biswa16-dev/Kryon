@@ -2016,6 +2016,364 @@
       .left-rail { display: none; }
       .top-bar { padding: 12px 16px; }
     }
+
+    /* ============================================================
+       SETTINGS MODAL (GLASS DASHBOARD THEME)
+       ============================================================ */
+    .settings-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2600;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .settings-dialog {
+      width: 100%;
+      max-width: 760px;
+      max-height: 88vh;
+      background: #ffffff;
+      border-radius: 22px;
+      border: 1px solid rgba(17, 24, 39, 0.08);
+      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: #fafafa;
+    }
+
+    .settings-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .settings-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--sub);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .settings-close-btn:hover {
+      background: #f1f5f9;
+      color: var(--ink);
+    }
+
+    .settings-layout {
+      display: flex;
+      flex: 1;
+      min-height: 430px;
+      overflow: hidden;
+    }
+
+    .settings-sidebar {
+      width: 210px;
+      background: #f8fafc;
+      border-right: 1px solid var(--border-subtle);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .settings-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+    }
+
+    .settings-nav-btn:hover {
+      background: #eef2ff;
+      color: #1e293b;
+    }
+
+    .settings-nav-btn.active {
+      background: #ffffff;
+      color: #2f6bff;
+      font-weight: 600;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    }
+
+    .settings-body {
+      flex: 1;
+      padding: 22px 26px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .settings-pane {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .settings-pane.active {
+      display: flex;
+    }
+
+    .settings-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .settings-section-desc {
+      font-size: 12.5px;
+      color: var(--sub);
+      line-height: 1.45;
+    }
+
+    .settings-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .settings-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .settings-hint {
+      font-size: 12px;
+      color: var(--sub);
+      margin-top: 2px;
+    }
+
+    .settings-input {
+      width: 100%;
+      padding: 10px 13px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      font-size: 13.5px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .settings-input:focus {
+      border-color: #2f6bff;
+    }
+
+    .settings-input[readonly] {
+      background: #f1f5f9;
+      color: #475569;
+      cursor: default;
+    }
+
+    .settings-select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .settings-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #1e293b;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .settings-btn-primary:hover {
+      background: #0f172a;
+    }
+
+    .settings-btn-primary:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .settings-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .settings-btn-secondary:hover {
+      background: #f1f5f9;
+    }
+
+    .settings-btn-secondary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .settings-btn-danger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .settings-btn-danger:hover {
+      background: #fee2e2;
+    }
+
+    .settings-feedback {
+      display: none;
+      padding: 10px 13px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .settings-feedback.error {
+      display: block;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+    }
+
+    .settings-feedback.success {
+      display: block;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+    }
+
+    .settings-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .settings-stat-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .settings-stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .settings-stat-lbl {
+      font-size: 11.5px;
+      color: var(--sub);
+    }
+
+    .settings-lock-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .settings-lock-pill.locked {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #fed7aa;
+    }
+
+    .settings-lock-pill.unlocked {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    @media (max-width: 680px) {
+      .settings-layout { flex-direction: column; }
+      .settings-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .settings-nav-btn { white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -2137,7 +2495,7 @@
       </button>
 
       <div class="rail-bottom">
-        <button class="rail-btn" title="Settings">
+        <button class="rail-btn" id="rail-settings" onclick="openSettingsModal()" title="Settings">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
         <div class="avatar-mini-wrapper" onclick="toggleUserDropdown(event)">
@@ -2469,6 +2827,255 @@
             </svg>
             <span>Continue with Google</span>
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SETTINGS MODAL (Profile, RAG Pipeline, OTP Password Reset, Data)
+       ============================================================ -->
+  <div id="settings-modal" class="settings-overlay" onclick="if(event.target===this) closeSettingsModal()">
+    <div class="settings-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="settings-header">
+        <div class="settings-header-title" id="settings-modal-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f6bff" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Kryon Settings</span>
+        </div>
+        <button type="button" class="settings-close-btn" onclick="closeSettingsModal()" title="Close Settings">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="settings-layout">
+        <!-- Sidebar Tabs -->
+        <nav class="settings-sidebar">
+          <button type="button" class="settings-nav-btn active" id="snav-profile" onclick="switchSettingsTab('profile')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Profile</span>
+          </button>
+          <button type="button" class="settings-nav-btn" id="snav-rag" onclick="switchSettingsTab('rag')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span>RAG Engine</span>
+          </button>
+          <button type="button" class="settings-nav-btn" id="snav-security" onclick="switchSettingsTab('security')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Password Reset</span>
+          </button>
+          <button type="button" class="settings-nav-btn" id="snav-data" onclick="switchSettingsTab('data')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+            <span>Data &amp; History</span>
+          </button>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="settings-body">
+
+          <!-- TAB 1: PROFILE -->
+          <div class="settings-pane active" id="spane-profile">
+            <div>
+              <div class="settings-section-title">Account Profile</div>
+              <div class="settings-section-desc">Manage how your name appears across the Kryon assistant workspace.</div>
+            </div>
+
+            <div id="settings-profile-feedback" class="settings-feedback"></div>
+
+            <div class="settings-card">
+              <div>
+                <div class="settings-label" style="margin-bottom: 6px;">Display Name</div>
+                <input type="text" id="settings-display-name" class="settings-input" placeholder="Enter your full name">
+              </div>
+              <div>
+                <div class="settings-label" style="margin-bottom: 6px;">Registered Email</div>
+                <input type="email" id="settings-profile-email" class="settings-input" readonly>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Sign-In Method</div>
+                  <div class="settings-hint" id="settings-auth-type">Email &amp; Password</div>
+                </div>
+                <button type="button" class="settings-btn-primary" onclick="saveProfileSettings()">Save Profile</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: RAG PIPELINE & GROUNDING -->
+          <div class="settings-pane" id="spane-rag">
+            <div>
+              <div class="settings-section-title">RAG Retrieval &amp; Zero-Hallucination Controls</div>
+              <div class="settings-section-desc">Tune how Kryon searches official regulations, re-ranks clauses, and enforces citation strictness.</div>
+            </div>
+
+            <div id="settings-rag-feedback" class="settings-feedback"></div>
+
+            <div class="settings-card">
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Retrieval Mode</div>
+                  <div class="settings-hint">Combine dense FAISS semantics with exact BM25 keyword matching</div>
+                </div>
+                <select id="settings-search-mode" class="settings-select" onchange="applyRagSettingsFromUI()">
+                  <option value="hybrid">Smart Match (Hybrid)</option>
+                  <option value="semantic">By Meaning (Semantic)</option>
+                  <option value="bm25">Exact Words (BM25)</option>
+                </select>
+              </div>
+
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Evidence Chunks (Top-K): <span id="settings-topk-val" style="color: #2f6bff;">5</span></div>
+                  <div class="settings-hint">Number of official regulation clauses retrieved per query</div>
+                </div>
+                <input type="range" id="settings-topk" min="3" max="10" step="1" value="5" oninput="document.getElementById('settings-topk-val').innerText=this.value; applyRagSettingsFromUI();" style="width: 150px; accent-color: #2f6bff;">
+              </div>
+
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Cross-Encoder Accuracy Boost</div>
+                  <div class="settings-hint">Double-check retrieved passages with the neural re-ranker</div>
+                </div>
+                <select id="settings-reranker" class="settings-select" onchange="applyRagSettingsFromUI()">
+                  <option value="true">Enabled (Recommended)</option>
+                  <option value="false">Disabled (Faster)</option>
+                </select>
+              </div>
+
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Zero-Hallucination Strictness</div>
+                  <div class="settings-hint">Minimum confidence required before answering instead of refusing</div>
+                </div>
+                <select id="settings-threshold" class="settings-select" onchange="applyRagSettingsFromUI()">
+                  <option value="0.4">Relaxed (40%)</option>
+                  <option value="0.5">Balanced (50%)</option>
+                  <option value="0.65">Strict (65%)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Knowledge Base Index Status</div>
+                  <div class="settings-hint">Live diagnostics from FAISS &amp; BM25 stores</div>
+                </div>
+                <button type="button" class="settings-btn-secondary" id="btn-settings-reindex" onclick="reindexFromSettings()">Refresh Index</button>
+              </div>
+              <div class="settings-stat-grid">
+                <div class="settings-stat-item">
+                  <div class="settings-stat-val" id="stat-docs-count">—</div>
+                  <div class="settings-stat-lbl">Indexed Documents</div>
+                </div>
+                <div class="settings-stat-item">
+                  <div class="settings-stat-val" id="stat-chunks-count">—</div>
+                  <div class="settings-stat-lbl">Regulation Chunks</div>
+                </div>
+                <div class="settings-stat-item">
+                  <div class="settings-stat-val" id="stat-faiss-count">—</div>
+                  <div class="settings-stat-lbl">FAISS Vectors</div>
+                </div>
+                <div class="settings-stat-item">
+                  <div class="settings-stat-val" id="stat-bm25-count">—</div>
+                  <div class="settings-stat-lbl">BM25 Terms Corpus</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: PASSWORD RESET (OTP GATED) -->
+          <div class="settings-pane" id="spane-security">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+              <div>
+                <div class="settings-section-title">Password Reset</div>
+                <div class="settings-section-desc">Complete email OTP verification first to unlock permission to update your password.</div>
+              </div>
+              <span id="settings-reset-lock-pill" class="settings-lock-pill locked">🔒 OTP Verification Required</span>
+            </div>
+
+            <div id="settings-sec-feedback" class="settings-feedback"></div>
+
+            <!-- STEP 1: OTP VERIFICATION GATE (Before Permission Granted) -->
+            <div class="settings-card" id="settings-otp-gate">
+              <div>
+                <div class="settings-label" style="margin-bottom: 6px;">Account Verification Email</div>
+                <input type="email" id="settings-otp-email" class="settings-input" readonly>
+                <div class="settings-hint">A 6-digit verification code (valid for 5 minutes) will be sent to this email.</div>
+              </div>
+
+              <div class="settings-row">
+                <button type="button" class="settings-btn-primary" id="btn-settings-send-otp" onclick="sendSettingsOTP()">
+                  Send Verification OTP
+                </button>
+                <span id="settings-otp-timer-wrap" style="font-size: 12.5px; color: var(--sub); display: none;">
+                  Expires in <strong id="settings-otp-timer" style="font-family: monospace; color: var(--ink);">5:00</strong>
+                </span>
+              </div>
+
+              <div id="settings-otp-verify-block" style="display: none; border-top: 1px solid #e2e8f0; padding-top: 12px; flex-direction: column; gap: 10px;">
+                <div>
+                  <div class="settings-label" style="margin-bottom: 6px;">Enter 6-Digit OTP from Email</div>
+                  <input type="text" id="settings-otp-code" maxlength="6" inputmode="numeric" class="settings-input" placeholder="Enter 6-digit code" style="letter-spacing: 4px; font-weight: 700; font-family: monospace;" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                </div>
+                <div class="settings-row">
+                  <button type="button" class="settings-btn-primary" id="btn-settings-verify-otp" onclick="verifySettingsOTP()">
+                    Verify OTP &amp; Grant Permission
+                  </button>
+                  <button type="button" class="settings-btn-secondary" id="btn-settings-resend-otp" onclick="sendSettingsOTP()" disabled>
+                    Resend Code
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 2: PASSWORD RESET FORM (Locked until OTP Verified) -->
+            <div class="settings-card" id="settings-password-unlocked" style="display: none;">
+              <div>
+                <div class="settings-label" style="margin-bottom: 6px;">New Password</div>
+                <input type="password" id="settings-new-pass" class="settings-input" placeholder="Requires at least 8 symbols">
+              </div>
+              <div>
+                <div class="settings-label" style="margin-bottom: 6px;">Confirm New Password</div>
+                <input type="password" id="settings-confirm-pass" class="settings-input" placeholder="Re-enter new password">
+              </div>
+              <div class="settings-row">
+                <button type="button" class="settings-btn-secondary" onclick="resetSettingsOtpFlow()">Cancel</button>
+                <button type="button" class="settings-btn-primary" id="btn-settings-save-pass" onclick="submitSettingsPasswordReset()">Update Password</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: DATA & HISTORY -->
+          <div class="settings-pane" id="spane-data">
+            <div>
+              <div class="settings-section-title">Chat History &amp; Privacy</div>
+              <div class="settings-section-desc">Export your saved academic regulation conversations or clear local history.</div>
+            </div>
+
+            <div id="settings-data-feedback" class="settings-feedback"></div>
+
+            <div class="settings-card">
+              <div class="settings-row">
+                <div>
+                  <div class="settings-label">Export Conversations (JSON)</div>
+                  <div class="settings-hint">Download a local backup of your <strong id="settings-history-count">0</strong> saved queries</div>
+                </div>
+                <button type="button" class="settings-btn-secondary" onclick="exportChatHistoryJson()">Export JSON</button>
+              </div>
+
+              <div class="settings-row" style="border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                <div>
+                  <div class="settings-label">Clear Local Chat History</div>
+                  <div class="settings-hint">Removes all saved conversations from this browser</div>
+                </div>
+                <div id="settings-clear-actions" style="display: flex; gap: 8px;">
+                  <button type="button" class="settings-btn-danger" id="btn-settings-clear-init" onclick="showClearConfirmInSettings(true)">Clear History</button>
+                  <button type="button" class="settings-btn-danger" id="btn-settings-clear-confirm" onclick="confirmClearHistoryInSettings()" style="display: none; background: #dc2626; color: #fff;">Confirm Clear</button>
+                  <button type="button" class="settings-btn-secondary" id="btn-settings-clear-cancel" onclick="showClearConfirmInSettings(false)" style="display: none;">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -2867,6 +3474,30 @@
     let currentSearchMode = "hybrid";
     let isRerankerActive = true;
     let confidenceThreshold = 0.50;
+    let currentTopK = 5;
+
+    function persistRagSettings() {
+      try {
+        localStorage.setItem("kryon_rag_settings", JSON.stringify({
+          search_mode: currentSearchMode,
+          use_reranker: isRerankerActive,
+          confidence_threshold: confidenceThreshold,
+          top_k: currentTopK
+        }));
+      } catch (e) {}
+    }
+
+    function loadRagSettings() {
+      try {
+        const raw = localStorage.getItem("kryon_rag_settings");
+        if (!raw) return;
+        const cfg = JSON.parse(raw);
+        if (cfg.search_mode) selectSearchMode(cfg.search_mode, false);
+        if (typeof cfg.use_reranker === "boolean") selectReranker(cfg.use_reranker, false);
+        if (cfg.confidence_threshold) selectConfidenceThreshold(cfg.confidence_threshold, false);
+        if (cfg.top_k) currentTopK = Math.max(3, Math.min(10, parseInt(cfg.top_k, 10) || 5));
+      } catch (e) {}
+    }
 
     /* Dropdown Toggle & Selection Logic */
     function toggleDropdown(id) {
@@ -2888,10 +3519,11 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         document.querySelectorAll(".chip-dropdown-menu").forEach(m => m.classList.remove("show"));
+        closeSettingsModal();
       }
     });
 
-    function selectSearchMode(mode) {
+    function selectSearchMode(mode, shouldSave = true) {
       currentSearchMode = mode;
       const labels = {
         hybrid: "Smart Match",
@@ -2903,18 +3535,20 @@
         el.classList.toggle("active", el.getAttribute("data-val") === mode);
       });
       document.getElementById("dropdown-mode").classList.remove("show");
+      if (shouldSave) persistRagSettings();
     }
 
-    function selectReranker(val) {
+    function selectReranker(val, shouldSave = true) {
       isRerankerActive = (val === true || val === "true");
       document.getElementById("lbl-rerank").innerText = isRerankerActive ? "On" : "Off";
       document.querySelectorAll("#dropdown-rerank .dropdown-opt").forEach(el => {
         el.classList.toggle("active", el.getAttribute("data-val") === String(isRerankerActive));
       });
       document.getElementById("dropdown-rerank").classList.remove("show");
+      if (shouldSave) persistRagSettings();
     }
 
-    function selectConfidenceThreshold(num) {
+    function selectConfidenceThreshold(num, shouldSave = true) {
       confidenceThreshold = parseFloat(num);
       const labels = {
         0.50: "Balanced (50%)",
@@ -2926,6 +3560,7 @@
         el.classList.toggle("active", Math.abs(parseFloat(el.getAttribute("data-val")) - confidenceThreshold) < 0.01);
       });
       document.getElementById("dropdown-refusal").classList.remove("show");
+      if (shouldSave) persistRagSettings();
     }
 
     function toggleSearchMode() {
@@ -3481,7 +4116,7 @@
           body: JSON.stringify({
             query: queryText,
             search_mode: currentSearchMode,
-            top_k: 5,
+            top_k: currentTopK,
             use_reranker: isRerankerActive,
             confidence_threshold: confidenceThreshold
           })
@@ -3860,9 +4495,403 @@
       }, 6000);
     }
 
-    // Initialize dropzone on load
-    document.addEventListener("DOMContentLoaded", initDropzone);
+    // Initialize dropzone & saved RAG settings on load
+    document.addEventListener("DOMContentLoaded", () => {
+      initDropzone();
+      loadRagSettings();
+    });
     initDropzone();
+    loadRagSettings();
+
+    /* ============================================================
+       SETTINGS MODAL ENGINE (Profile, RAG Config, OTP Password Reset, Data)
+       ============================================================ */
+    let settingsResetToken = "";
+    let settingsOtpInterval = null;
+    let settingsOtpExpired = false;
+
+    function setSettingsFeedback(elId, message, type = "error") {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      if (!message) {
+        el.className = "settings-feedback";
+        el.innerHTML = "";
+        return;
+      }
+      el.className = `settings-feedback ${type}`;
+      el.innerHTML = message;
+    }
+
+    function openSettingsModal(initialTab = "profile") {
+      if (!isUserLoggedIn()) {
+        showAuthGateModal("Please sign up or log in first to access Kryon Settings.");
+        return;
+      }
+      const modal = document.getElementById("settings-modal");
+      if (!modal) return;
+
+      const user = getKryonUser();
+      document.getElementById("settings-display-name").value = user.name || "";
+      document.getElementById("settings-profile-email").value = user.email || "";
+      document.getElementById("settings-auth-type").innerText =
+        user.authType === "google" ? "Google OAuth 2.0" : "Email & Password Credentials";
+      document.getElementById("settings-otp-email").value = user.email || "";
+
+      // Sync RAG controls
+      document.getElementById("settings-search-mode").value = currentSearchMode;
+      document.getElementById("settings-topk").value = String(currentTopK);
+      document.getElementById("settings-topk-val").innerText = String(currentTopK);
+      document.getElementById("settings-reranker").value = String(isRerankerActive);
+      const thrStr = Math.abs(confidenceThreshold - 0.65) < 0.01 ? "0.65" : Math.abs(confidenceThreshold - 0.40) < 0.01 ? "0.4" : "0.5";
+      document.getElementById("settings-threshold").value = thrStr;
+
+      // Sync Data tab count
+      const hist = getChatHistory();
+      document.getElementById("settings-history-count").innerText = String(hist.length);
+      showClearConfirmInSettings(false);
+
+      // Reset all feedbacks and OTP lock state
+      setSettingsFeedback("settings-profile-feedback", "");
+      setSettingsFeedback("settings-rag-feedback", "");
+      setSettingsFeedback("settings-sec-feedback", "");
+      setSettingsFeedback("settings-data-feedback", "");
+      resetSettingsOtpFlow();
+
+      switchSettingsTab(initialTab);
+      modal.style.display = "flex";
+    }
+
+    function closeSettingsModal() {
+      const modal = document.getElementById("settings-modal");
+      if (modal) modal.style.display = "none";
+      clearInterval(settingsOtpInterval);
+    }
+
+    function switchSettingsTab(tab) {
+      document.querySelectorAll(".settings-nav-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".settings-pane").forEach(p => p.classList.remove("active"));
+
+      const navBtn = document.getElementById(`snav-${tab}`);
+      const pane = document.getElementById(`spane-${tab}`);
+      if (navBtn) navBtn.classList.add("active");
+      if (pane) pane.classList.add("active");
+
+      if (tab === "rag") {
+        refreshSettingsHealth();
+      } else if (tab === "data") {
+        const hist = getChatHistory();
+        document.getElementById("settings-history-count").innerText = String(hist.length);
+      }
+    }
+
+    function saveProfileSettings() {
+      setSettingsFeedback("settings-profile-feedback", "");
+      const newName = document.getElementById("settings-display-name").value.trim();
+      if (!newName) {
+        setSettingsFeedback("settings-profile-feedback", "Display name cannot be empty.", "error");
+        return;
+      }
+
+      const user = getKryonUser();
+      if (!user) return;
+      const parts = newName.split(/\s+/).filter(Boolean);
+      const firstName = parts[0] || "User";
+      const lastName = parts.slice(1).join(" ");
+      const initials = parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].substring(0, 2).toUpperCase();
+
+      const updatedUser = { ...user, name: newName, firstName, lastName, initials };
+      localStorage.setItem("kryon_user", JSON.stringify(updatedUser));
+
+      try {
+        let accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
+        const idx = accounts.findIndex(a => a.email && user.email && a.email.toLowerCase() === user.email.toLowerCase());
+        if (idx >= 0) {
+          accounts[idx] = { ...accounts[idx], name: newName, firstName, lastName, initials };
+          localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+        }
+      } catch (e) {}
+
+      syncUserInterface();
+      setSettingsFeedback("settings-profile-feedback", "Profile display name updated successfully.", "success");
+    }
+
+    function applyRagSettingsFromUI() {
+      const mode = document.getElementById("settings-search-mode").value;
+      const topK = parseInt(document.getElementById("settings-topk").value, 10) || 5;
+      const reranker = document.getElementById("settings-reranker").value === "true";
+      const threshold = parseFloat(document.getElementById("settings-threshold").value) || 0.50;
+
+      currentTopK = topK;
+      selectSearchMode(mode, false);
+      selectReranker(reranker, false);
+      selectConfidenceThreshold(threshold, false);
+      persistRagSettings();
+
+      setSettingsFeedback("settings-rag-feedback", "RAG retrieval and confidence settings saved & applied.", "success");
+    }
+
+    async function refreshSettingsHealth() {
+      try {
+        const res = await fetch("/api/v1/health");
+        if (!res.ok) return;
+        const data = await res.json();
+        document.getElementById("stat-docs-count").innerText = data.documents_indexed ?? "0";
+        document.getElementById("stat-chunks-count").innerText = data.chunks_indexed ?? "0";
+        document.getElementById("stat-faiss-count").innerText = data.vector_index_size ?? "0";
+        document.getElementById("stat-bm25-count").innerText = data.bm25_corpus_size ?? "0";
+      } catch (e) {}
+    }
+
+    async function reindexFromSettings() {
+      const btn = document.getElementById("btn-settings-reindex");
+      btn.innerText = "Refreshing...";
+      btn.disabled = true;
+      setSettingsFeedback("settings-rag-feedback", "");
+      try {
+        const res = await fetch("/api/v1/documents/refresh", { method: "POST" });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Re-index failed");
+        await refreshSettingsHealth();
+        setSettingsFeedback("settings-rag-feedback", data.message || "Knowledge base re-indexed successfully.", "success");
+      } catch (err) {
+        setSettingsFeedback("settings-rag-feedback", err.message || "Unable to refresh index.", "error");
+      } finally {
+        btn.innerText = "Refresh Index";
+        btn.disabled = false;
+      }
+    }
+
+    function exportChatHistoryJson() {
+      const history = getChatHistory();
+      const blob = new Blob([JSON.stringify(history, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `kryon_chat_history_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setSettingsFeedback("settings-data-feedback", `Exported ${history.length} conversation(s) to JSON.`, "success");
+    }
+
+    function showClearConfirmInSettings(showConfirm) {
+      document.getElementById("btn-settings-clear-init").style.display = showConfirm ? "none" : "inline-flex";
+      document.getElementById("btn-settings-clear-confirm").style.display = showConfirm ? "inline-flex" : "none";
+      document.getElementById("btn-settings-clear-cancel").style.display = showConfirm ? "inline-flex" : "none";
+    }
+
+    function confirmClearHistoryInSettings() {
+      localStorage.removeItem("kryon_chat_history");
+      saveChatHistory([]);
+      document.getElementById("settings-history-count").innerText = "0";
+      showClearConfirmInSettings(false);
+      setSettingsFeedback("settings-data-feedback", "Local chat history cleared.", "success");
+    }
+
+    /* --- 2-Step OTP-Gated Password Reset inside Settings --- */
+    function resetSettingsOtpFlow() {
+      clearInterval(settingsOtpInterval);
+      settingsResetToken = "";
+      settingsOtpExpired = false;
+
+      const lockPill = document.getElementById("settings-reset-lock-pill");
+      if (lockPill) {
+        lockPill.className = "settings-lock-pill locked";
+        lockPill.innerText = "🔒 OTP Verification Required";
+      }
+
+      document.getElementById("settings-otp-gate").style.display = "flex";
+      document.getElementById("settings-otp-verify-block").style.display = "none";
+      document.getElementById("settings-otp-timer-wrap").style.display = "none";
+      document.getElementById("settings-password-unlocked").style.display = "none";
+      document.getElementById("settings-otp-code").value = "";
+      document.getElementById("settings-new-pass").value = "";
+      document.getElementById("settings-confirm-pass").value = "";
+
+      const sendBtn = document.getElementById("btn-settings-send-otp");
+      sendBtn.innerText = "Send Verification OTP";
+      sendBtn.disabled = false;
+    }
+
+    function startSettingsOtpTimer(seconds) {
+      clearInterval(settingsOtpInterval);
+      let count = seconds;
+      settingsOtpExpired = false;
+      const timerWrap = document.getElementById("settings-otp-timer-wrap");
+      const timerSpan = document.getElementById("settings-otp-timer");
+      const resendBtn = document.getElementById("btn-settings-resend-otp");
+
+      timerWrap.style.display = "inline";
+      resendBtn.disabled = true;
+
+      const fmt = (s) => `${Math.floor(s / 60)}:${(s % 60) < 10 ? "0" : ""}${s % 60}`;
+      timerSpan.innerText = fmt(count);
+
+      settingsOtpInterval = setInterval(() => {
+        count--;
+        if (count <= 0) {
+          clearInterval(settingsOtpInterval);
+          settingsOtpExpired = true;
+          timerSpan.innerText = "0:00 (Expired)";
+          resendBtn.disabled = false;
+          setSettingsFeedback("settings-sec-feedback", "The 5-minute OTP has expired. Click 'Resend Code' to receive a new OTP.", "error");
+        } else {
+          timerSpan.innerText = fmt(count);
+        }
+      }, 1000);
+    }
+
+    async function sendSettingsOTP() {
+      const email = document.getElementById("settings-otp-email").value.trim();
+      if (!email) {
+        setSettingsFeedback("settings-sec-feedback", "No registered email found for your account.", "error");
+        return;
+      }
+
+      const sendBtn = document.getElementById("btn-settings-send-otp");
+      const resendBtn = document.getElementById("btn-settings-resend-otp");
+      sendBtn.innerText = "Sending OTP...";
+      sendBtn.disabled = true;
+      resendBtn.disabled = true;
+      setSettingsFeedback("settings-sec-feedback", "");
+
+      try {
+        const res = await fetch("/api/v1/auth/send-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Failed to send OTP.");
+
+        document.getElementById("settings-otp-verify-block").style.display = "flex";
+        document.getElementById("settings-otp-code").value = "";
+        startSettingsOtpTimer(300);
+        setSettingsFeedback(
+          "settings-sec-feedback",
+          `6-digit OTP code sent to <strong>${email}</strong>. Enter the code below within 5 minutes to unlock password reset.`,
+          "success"
+        );
+        document.getElementById("settings-otp-code").focus();
+      } catch (err) {
+        setSettingsFeedback("settings-sec-feedback", err.message || "Unable to send OTP email.", "error");
+      } finally {
+        sendBtn.innerText = "Send Verification OTP";
+        sendBtn.disabled = false;
+      }
+    }
+
+    async function verifySettingsOTP() {
+      const email = document.getElementById("settings-otp-email").value.trim();
+      const otp = document.getElementById("settings-otp-code").value.trim();
+
+      if (otp.length !== 6) {
+        setSettingsFeedback("settings-sec-feedback", "Please enter all 6 digits of the OTP sent to your email.", "error");
+        return;
+      }
+      if (settingsOtpExpired) {
+        setSettingsFeedback("settings-sec-feedback", "This OTP has expired. Click 'Resend Code' first.", "error");
+        return;
+      }
+
+      const btn = document.getElementById("btn-settings-verify-otp");
+      btn.innerText = "Verifying OTP...";
+      btn.disabled = true;
+      setSettingsFeedback("settings-sec-feedback", "");
+
+      try {
+        const res = await fetch("/api/v1/auth/check-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.reset_token) {
+          throw new Error(data.detail || "Invalid OTP code.");
+        }
+
+        clearInterval(settingsOtpInterval);
+        settingsResetToken = data.reset_token;
+
+        // Grant permission: switch from locked OTP gate to unlocked Password Reset form
+        const lockPill = document.getElementById("settings-reset-lock-pill");
+        lockPill.className = "settings-lock-pill unlocked";
+        lockPill.innerText = "✓ OTP Verified — Permission Granted";
+
+        document.getElementById("settings-otp-gate").style.display = "none";
+        document.getElementById("settings-password-unlocked").style.display = "flex";
+        setSettingsFeedback("settings-sec-feedback", "Email verified! You may now set your new password below.", "success");
+        document.getElementById("settings-new-pass").focus();
+      } catch (err) {
+        setSettingsFeedback("settings-sec-feedback", err.message || "OTP verification failed.", "error");
+      } finally {
+        btn.innerText = "Verify OTP & Grant Permission";
+        btn.disabled = false;
+      }
+    }
+
+    async function submitSettingsPasswordReset() {
+      const email = document.getElementById("settings-otp-email").value.trim();
+      const newPassword = document.getElementById("settings-new-pass").value;
+      const confirmPassword = document.getElementById("settings-confirm-pass").value;
+
+      if (!settingsResetToken) {
+        setSettingsFeedback("settings-sec-feedback", "OTP verification permission is required before changing password.", "error");
+        resetSettingsOtpFlow();
+        return;
+      }
+      if (!newPassword || newPassword.length < 8) {
+        setSettingsFeedback("settings-sec-feedback", "New password requires at least 8 symbols.", "error");
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        setSettingsFeedback("settings-sec-feedback", "Passwords do not match. Please re-enter carefully.", "error");
+        return;
+      }
+
+      const btn = document.getElementById("btn-settings-save-pass");
+      btn.innerText = "Updating Password...";
+      btn.disabled = true;
+      setSettingsFeedback("settings-sec-feedback", "");
+
+      try {
+        const res = await fetch("/api/v1/auth/reset-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            reset_token: settingsResetToken,
+            new_password: newPassword
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Password update failed.");
+
+        // Update localStorage registered user password
+        try {
+          let accounts = JSON.parse(localStorage.getItem("kryon_registered_users") || "[]");
+          const idx = accounts.findIndex(a => a.email && a.email.toLowerCase() === email.toLowerCase());
+          if (idx >= 0) {
+            accounts[idx].password = newPassword;
+            localStorage.setItem("kryon_registered_users", JSON.stringify(accounts));
+          }
+          const curr = getKryonUser();
+          if (curr && curr.email && curr.email.toLowerCase() === email.toLowerCase()) {
+            curr.password = newPassword;
+            localStorage.setItem("kryon_user", JSON.stringify(curr));
+          }
+        } catch (e) {}
+
+        resetSettingsOtpFlow();
+        setSettingsFeedback("settings-sec-feedback", "Password reset successfully! Your new password is active for future logins.", "success");
+      } catch (err) {
+        setSettingsFeedback("settings-sec-feedback", err.message || "Unable to update password.", "error");
+      } finally {
+        btn.innerText = "Update Password";
+        btn.disabled = false;
+      }
+    }
   </script>
 </body>
 </html>

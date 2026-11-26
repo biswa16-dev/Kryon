@@ -261,7 +261,17 @@ class VerifyOTPRequest(BaseModel):
     otp: str
     new_password: str
 
+class CheckOTPRequest(BaseModel):
+    email: str
+    otp: str
+
+class ResetPasswordRequest(BaseModel):
+    email: str
+    reset_token: str
+    new_password: str
+
 otp_store: Dict[str, Dict[str, Any]] = {}
+reset_grant_store: Dict[str, Dict[str, Any]] = {}
 
 def dispatch_otp_email(to_email: str, otp_code: str) -> tuple[bool, str]:
     """
@@ -381,6 +391,56 @@ def verify_otp(req: VerifyOTPRequest):
     return {
         "status": "success",
         "message": "Password reset successful! You can now log in with your new password."
+    }
+
+
+@app.post("/api/v1/auth/check-otp")
+def check_otp(req: CheckOTPRequest):
+    """Step 1 of Settings Password Reset: verify OTP before granting reset permission."""
+    email = req.email.strip().lower()
+    record = otp_store.get(email)
+    if not record:
+        raise HTTPException(status_code=400, detail="No OTP requested for this email. Please click 'Send OTP' first.")
+    if time.time() > record["expires_at"]:
+        del otp_store[email]
+        raise HTTPException(status_code=400, detail="OTP has expired after 5 minutes. Please request a new code.")
+    if req.otp.strip() != record["code"]:
+        raise HTTPException(status_code=400, detail="Invalid OTP code. Please check your email and try again.")
+
+    del otp_store[email]
+
+    # Clean expired reset tokens and issue a single-use 5-minute permission token
+    now = time.time()
+    for k in [k for k, v in reset_grant_store.items() if now > v.get("expires_at", 0)]:
+        reset_grant_store.pop(k, None)
+
+    reset_token = secrets.token_urlsafe(32)
+    reset_grant_store[reset_token] = {"email": email, "expires_at": now + 300}
+    return {
+        "status": "success",
+        "verified": True,
+        "reset_token": reset_token,
+        "message": "OTP verified. Permission granted to update your password."
+    }
+
+
+@app.post("/api/v1/auth/reset-password")
+def reset_password_with_token(req: ResetPasswordRequest):
+    """Step 2 of Settings Password Reset: requires valid OTP-verified reset_token."""
+    email = req.email.strip().lower()
+    grant = reset_grant_store.get(req.reset_token)
+    if not grant or grant.get("email") != email:
+        raise HTTPException(status_code=403, detail="Password reset permission not granted. Please complete OTP verification first.")
+    if time.time() > grant["expires_at"]:
+        reset_grant_store.pop(req.reset_token, None)
+        raise HTTPException(status_code=403, detail="Reset permission expired. Please verify a new OTP.")
+    if len(req.new_password) < 8:
+        raise HTTPException(status_code=400, detail="New password must be at least 8 symbols long.")
+
+    reset_grant_store.pop(req.reset_token, None)
+    return {
+        "status": "success",
+        "message": "Your password has been updated successfully."
     }
 
 
