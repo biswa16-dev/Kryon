@@ -4540,8 +4540,8 @@
         citationsHtml = `
           <div class="citation-block">
             <strong>Mandatory Source Citation:</strong><br>
-            📄 <em>${cit.document}</em> — §<strong>${cit.section}</strong> (Page ${cit.page})<br>
-            <span style="color: var(--sub); font-size: 11.5px;">"${cit.quote_snippet}"</span>
+            📄 <em>${cit.document}</em> — <strong>${(cit.section || "").replace(/§\s*/g, "")}</strong> (Page ${cit.page})<br>
+            <span style="color: var(--sub); font-size: 11.5px;">"${(cit.quote_snippet || "").replace(/§\s*/g, "")}"</span>
           </div>
         `;
       }
@@ -4556,10 +4556,10 @@
             ${data.retrieved_chunks.map((c, i) => `
               <div class="chunk-item">
                 <div class="chunk-header">
-                  <span><strong>#${i+1}</strong> ${c.filename || c.title} &bull; ${c.section}</span>
+                  <span><strong>#${i+1}</strong> ${c.filename || c.title} &bull; ${(c.section || "").replace(/§\s*/g, "")}</span>
                   <span>Confidence: ${Math.round(c.score * 100)}%</span>
                 </div>
-                <div style="color: #444; font-size: 11.5px; line-height: 1.4;">${c.text_preview || 'Section clause retrieved.'}</div>
+                <div style="color: #444; font-size: 11.5px; line-height: 1.4;">${(c.text_preview || 'Section clause retrieved.').replace(/§\s*/g, "")}</div>
               </div>
             `).join('')}
           </div>
@@ -4593,7 +4593,8 @@
     }
 
     function escapeHtml(str) {
-      return str
+      return (str || "")
+        .replace(/§\s*/g, "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")

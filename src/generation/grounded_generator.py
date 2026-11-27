@@ -164,9 +164,9 @@ class GroundedRAGGenerator:
         points_text = "\n".join([f"- {p}" for p in clean_points[:5]]) if clean_points else f"- {top.text[:400]}"
 
         return (
-            f"Based on **{doc_name}** under **§{section}**:\n\n"
+            f"Based on **{doc_name}** under **{section}**:\n\n"
             f"{points_text}\n\n"
-            f"> 📄 **Source**: `{top.filename}` (§{section}, Page {top.page_number})"
+            f"> 📄 **Source**: `{top.filename}` ({section}, Page {top.page_number})"
         )
 
     def compute_confidence(self, query: str, scored_chunks: List[ScoredChunk]) -> float:
@@ -232,7 +232,7 @@ class GroundedRAGGenerator:
             return answer
 
         top = scored_chunks[0].chunk
-        footer = f"\n\n> 📄 **Source**: `{top.filename}` (§{top.section_heading}, Page {top.page_number})"
+        footer = f"\n\n> 📄 **Source**: `{top.filename}` ({top.section_heading}, Page {top.page_number})"
 
         # Don't duplicate if answer already contains a source footer
         if "📄" in answer or "Source" in answer[-100:]:
@@ -282,6 +282,9 @@ class GroundedRAGGenerator:
             # Append source citation footer
             answer = self._append_source_footer(answer, scored_chunks)
             model_label = "kryon-academic-t5 (flan-t5-base + LoRA)"
+
+        # Strip section symbol (§) cleanly from generated responses
+        answer = re.sub(r"§\s*", "", answer)
 
         # 5. Build citations
         citations = self._build_citations(scored_chunks)
