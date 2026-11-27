@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="/config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -29,12 +30,24 @@
     };
   </script>
   <style>
+    html {
+      zoom: 0.8;
+      background-color: #fbfbfb;
+    }
     body {
       font-family: "Inter", sans-serif;
       background-color: #fbfbfb;
       color: #111827;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+    }
+    .auth-main {
+      min-height: calc(100vh / 0.8);
+    }
+    @media (min-width: 1024px) {
+      .auth-main {
+        height: calc(100vh / 0.8);
+      }
     }
     .view-card {
       transition: opacity 0.25s ease, transform 0.25s ease;
@@ -46,7 +59,7 @@
   </style>
 </head>
 <body class="bg-[#fbfbfb] text-gray-900 antialiased font-sans">
-  <main class="flex min-h-screen w-full bg-[#fbfbfb] selection:bg-gray-200 p-3 sm:p-4 lg:p-5 transition-all duration-500 lg:h-screen lg:overflow-hidden">
+  <main class="auth-main flex w-full bg-[#fbfbfb] selection:bg-gray-200 p-3 sm:p-4 lg:p-5 transition-all duration-500 lg:overflow-hidden">
     
     <!-- ============================================================
          LEFT COLUMN (Video & Centered Floating Kryon Card)
@@ -101,10 +114,10 @@
     <!-- ============================================================
          RIGHT COLUMN (Light Theme Form: Login / Sign Up / Forgot OTP)
          ============================================================ -->
-    <section class="flex-1 flex flex-col items-center justify-center py-8 lg:py-6 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-y-auto lg:overflow-hidden bg-[#fbfbfb]">
+    <section class="flex-1 flex flex-col items-center py-6 lg:py-8 px-4 sm:px-8 lg:px-12 xl:px-16 overflow-y-auto bg-[#fbfbfb]">
       
       <!-- Main Form Wrapper (Matched exact width to StockSense: max-w-[510px]) -->
-      <div class="w-full max-w-[500px] lg:max-w-[520px] space-y-7">
+      <div class="w-full max-w-[500px] lg:max-w-[520px] space-y-6 my-auto">
 
         <!-- Top Bar / Brand Header (Same Kryon Logo as Home Page) -->
         <div class="flex items-center justify-between pb-1">
@@ -609,7 +622,7 @@
           return;
         }
         const origin = encodeURIComponent(window.location.origin);
-        window.location.href = `/api/v1/auth/google/login?mode=${encodeURIComponent(mode)}&origin=${origin}`;
+        window.location.href = kryonApiUrl(`/api/v1/auth/google/login?mode=${encodeURIComponent(mode)}&origin=${origin}`);
       } catch (err) {
         setFeedback(feedbackId, "Unable to reach authentication server. Please verify the backend is running.");
       }

@@ -91,7 +91,8 @@ eggs/
 *.pth
 *.onnx
 
-# Local test scratchpad
+# Local test scratchpad & Firebase CLI cache
 scratch/
+.firebase/
 
 

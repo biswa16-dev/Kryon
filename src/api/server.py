@@ -127,6 +127,26 @@ class RAGSystem:
         return result
 
 
+def _get_allowed_origins() -> List[str]:
+    port = os.getenv("PORT", "8000").strip()
+    origins = {
+        f"http://localhost:{port}",
+        f"http://127.0.0.1:{port}",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "https://kryon-rag.web.app",
+        "https://kryon-rag.firebaseapp.com",
+    }
+    frontend_url = os.getenv("FRONTEND_URL", "").strip().rstrip("/")
+    if frontend_url:
+        origins.add(frontend_url)
+    for item in os.getenv("ALLOWED_ORIGINS", "").split(","):
+        cleaned = item.strip().rstrip("/")
+        if cleaned:
+            origins.add(cleaned)
+    return sorted(origins)
+
+
 app = FastAPI(
     title="RAG Academic Regulations & Syllabus QA System",
     description="Production-grade RAG pipeline grounded in official academic regulations.",
@@ -135,7 +155,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -452,18 +472,25 @@ oauth_results: Dict[str, Dict[str, Any]] = {}
 def _get_google_oauth_config() -> Dict[str, str]:
     load_dotenv(override=True)
     port = os.getenv("PORT", "8000").strip()
+    render_url = os.getenv("RENDER_EXTERNAL_URL", "").strip().rstrip("/")
+    default_redirect = (
+        f"{render_url}/api/v1/auth/google/callback"
+        if render_url
+        else f"http://localhost:{port}/api/v1/auth/google/callback"
+    )
     return {
         "client_id": os.getenv("GOOGLE_CLIENT_ID", "").strip().strip("'\""),
         "client_secret": os.getenv("GOOGLE_CLIENT_SECRET", "").strip().strip("'\""),
-        "redirect_uri": os.getenv("GOOGLE_REDIRECT_URI", f"http://localhost:{port}/api/v1/auth/google/callback").strip(),
+        "redirect_uri": (os.getenv("GOOGLE_REDIRECT_URI", "").strip() or default_redirect),
         "port": port,
     }
 
 
 def _sanitize_origin(origin: str, port: str) -> str:
-    allowed = {f"http://localhost:{port}", f"http://127.0.0.1:{port}"}
+    allowed = set(_get_allowed_origins())
+    default_origin = os.getenv("FRONTEND_URL", "").strip().rstrip("/") or f"http://localhost:{port}"
     cleaned = origin.strip().rstrip("/")
-    return cleaned if cleaned in allowed else f"http://localhost:{port}"
+    return cleaned if cleaned in allowed else default_origin
 
 
 def _cleanup_oauth_stores() -> None:
@@ -638,6 +665,17 @@ if frontend_dir.exists():
         if signup_file.exists():
             return FileResponse(signup_file, headers={"Cache-Control": "no-cache, must-revalidate"})
         raise HTTPException(status_code=404, detail="Auth page not found")
+
+    @app.get("/config.js")
+    def serve_frontend_config():
+        cfg_file = frontend_dir / "config.js"
+        if cfg_file.exists():
+            return FileResponse(
+                cfg_file,
+                media_type="application/javascript",
+                headers={"Cache-Control": "no-cache, must-revalidate"},
+            )
+        return JSONResponse(status_code=404, content={"detail": "config.js not found"})
 
     @app.get("/favicon.ico")
     def serve_favicon():

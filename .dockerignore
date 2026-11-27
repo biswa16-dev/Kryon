@@ -20,5 +20,6 @@ logs/
 tmp/
 temp/
 scratch/
+.firebase/
 .DS_Store
 Thumbs.db

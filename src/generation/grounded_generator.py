@@ -1,7 +1,6 @@
 import os
 import re
 import time
-import torch
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel
@@ -61,16 +60,26 @@ class GroundedRAGGenerator:
         self.max_context_chars = max_context_chars
         self.max_new_tokens = max_new_tokens
         self.model_dir = Path(model_dir)
+        self.enable_local_model = os.getenv("ENABLE_LOCAL_MODEL", "true").lower() in ("true", "1", "yes")
         self._model = None
         self._tokenizer = None
-        self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._torch = None
+        self._device = "cpu"
         self._load_model()
 
     def _load_model(self):
-        """Load the fine-tuned flan-t5-base model from disk."""
+        """Load the fine-tuned flan-t5-base model from disk when enabled and available."""
+        if not self.enable_local_model:
+            print("[Generator] Local model loading disabled (ENABLE_LOCAL_MODEL=false) — using extractive fallback")
+            return
+
         if self.model_dir.exists() and (self.model_dir / "model.safetensors").exists():
             try:
+                import torch
                 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
+                self._torch = torch
+                self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
                 self._tokenizer = AutoTokenizer.from_pretrained(str(self.model_dir))
                 self._model = AutoModelForSeq2SeqLM.from_pretrained(str(self.model_dir))
                 self._model.to(self._device)
@@ -105,7 +114,7 @@ class GroundedRAGGenerator:
 
     def _generate_with_model(self, query: str, context: str) -> str:
         """Generate an answer using the fine-tuned flan-t5-base model."""
-        if self._model is None or self._tokenizer is None:
+        if self._model is None or self._tokenizer is None or self._torch is None:
             return ""
 
         prompt = (
@@ -122,7 +131,7 @@ class GroundedRAGGenerator:
             return_tensors="pt"
         ).to(self._device)
 
-        with torch.no_grad():
+        with self._torch.no_grad():
             outputs = self._model.generate(
                 **inputs,
                 max_new_tokens=self.max_new_tokens,

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
   <style>
     :root {
       --bg: #f7f7f5;
@@ -332,6 +333,26 @@
 
     section#assistant.view-active {
       display: flex !important;
+    }
+
+    /* Scale Agent workspace & settings to 80% while keeping Landing Page at 100% */
+    html.kryon-agent-mode {
+      zoom: 0.8;
+    }
+
+    html.kryon-agent-mode section#assistant,
+    html.kryon-agent-mode section#assistant .left-rail,
+    html.kryon-agent-mode section#assistant .main-content {
+      height: calc(100vh / 0.8);
+      max-height: calc(100vh / 0.8);
+    }
+
+    html.kryon-agent-mode .tab-view {
+      max-height: calc((100vh / 0.8) - 150px);
+    }
+
+    html.kryon-agent-mode .settings-dialog {
+      max-height: calc(88vh / 0.8);
     }
 
     section.hero.view-hidden,
@@ -4109,7 +4130,7 @@
 
     function handleGateGoogleOAuth() {
       const origin = encodeURIComponent(window.location.origin);
-      window.location.href = `/api/v1/auth/google/login?mode=signup&origin=${origin}`;
+      window.location.href = kryonApiUrl(`/api/v1/auth/google/login?mode=signup&origin=${origin}`);
     }
 
     /* Single Page View Switcher: Stores Assistant inside Get Started button */
@@ -4125,6 +4146,7 @@
         }
         heroEl.classList.add("view-hidden");
         if (showcaseEl) showcaseEl.classList.add("view-hidden");
+        document.documentElement.classList.add("kryon-agent-mode");
         appEl.classList.add("view-active");
         setDashboardTab(tab);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -4138,6 +4160,7 @@
         }, 250);
       } else {
         appEl.classList.remove("view-active");
+        document.documentElement.classList.remove("kryon-agent-mode");
         heroEl.classList.remove("view-hidden");
         if (showcaseEl) showcaseEl.classList.remove("view-hidden");
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -4412,8 +4435,9 @@
         const toggleRect = toggle.getBoundingClientRect();
         const mainContent = document.querySelector(".main-content");
         const mainRect = mainContent ? mainContent.getBoundingClientRect() : { left: 0 };
-        const leftOffset = Math.max(0, Math.round(toggleRect.left - mainRect.left));
-        const width = Math.round(toggleRect.width);
+        const zoomScale = document.documentElement.classList.contains("kryon-agent-mode") ? 0.8 : 1;
+        const leftOffset = Math.max(0, Math.round((toggleRect.left - mainRect.left) / zoomScale));
+        const width = Math.round(toggle.offsetWidth || (toggleRect.width / zoomScale));
 
         if (width > 0) {
           bar.style.width = width + "px";
@@ -4496,7 +4520,7 @@
       } catch (err) {
         loadingCard.innerHTML = `
           <div style="color: #dc2626; font-size: 13.5px;">
-            ⚠️ Unable to communicate with the local RAG API server (${err.message}). Please ensure the server is running on port 8000.
+            ⚠️ Unable to reach the Kryon RAG API server (${err.message}). If running locally, ensure the backend is running on port 8000; on cloud hosting, wait a moment if the Render service is waking up.
           </div>
         `;
       }

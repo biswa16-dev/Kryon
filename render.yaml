@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: kryon-rag-api
+    runtime: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements-render.txt
+    startCommand: uvicorn src.api.server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.11"
+      - key: ENVIRONMENT
+        value: production
+      - key: ENABLE_LOCAL_MODEL
+        value: "false"
+      - key: DATA_DIR
+        value: data/raw
+      - key: CHUNK_SIZE
+        value: "512"
+      - key: CHUNK_OVERLAP
+        value: "50"
+      - key: SEARCH_MODE
+        value: hybrid
+      - key: TOP_K
+        value: "5"
+      - key: USE_RERANKER
+        value: "true"
+      - key: CONFIDENCE_THRESHOLD
+        value: "0.50"
+      - key: FRONTEND_URL
+        value: https://kryon-rag.web.app
+      - key: ALLOWED_ORIGINS
+        value: https://kryon-rag.web.app,https://kryon-rag.firebaseapp.com
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
